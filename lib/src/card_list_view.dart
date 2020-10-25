@@ -1,3 +1,4 @@
+import 'package:alpha_gloo/src/gloo_home.dart';
 import 'package:alpha_gloo/src/gloo_theme.dart';
 import 'package:alpha_gloo/src/models/category.dart';
 import 'package:alpha_gloo/main.dart';
@@ -36,9 +37,10 @@ class _CardListViewState extends State<CardListView>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 0),
       child: Container(
-        height: 275,
+        height:
+            275, //l'altezza non deve essere fissa, ma proporzionata allo schermo usando delle misure
         width: double.infinity,
         child: FutureBuilder<bool>(
           future: getData(),
@@ -120,7 +122,6 @@ class CardView extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Container(
-
                               decoration: BoxDecoration(
                                 color: GlooTheme.nearlyPurple,
                                 borderRadius: const BorderRadius.all(
@@ -128,44 +129,37 @@ class CardView extends StatelessWidget {
                               ),
                               child: Row(
                                 children: <Widget>[
-
                                   Expanded(
                                     child: Container(
                                       child: Column(
-                                         crossAxisAlignment: CrossAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5), //bottom per il pulsante modifica
-                                            child: Center(child:Text(
-                                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-                                              textAlign: TextAlign.center,
-                                              maxLines: 5,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                                letterSpacing: 0.27,
-                                                color: GlooTheme.purple,
+                                              padding: const EdgeInsets.only(
+                                                  top: 1,
+                                                  left: 16,
+                                                  right: 8,
+                                                  bottom:
+                                                      0), //bottom per il pulsante modifica
+                                              child: Center(
+                                                child: Text(
+                                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 5,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16,
+                                                    letterSpacing: 0.27,
+                                                    color: GlooTheme.purple,
+                                                  ),
+                                                ),
                                               ),
-                                            ),),
+                                            ),
                                           ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(16.0),
-                                            child:
-                                          Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: new BoxDecoration(color: GlooTheme.purple),
-
-
-                                            child:Icon(
-                                              Icons.edit,
-                                              color: GlooTheme.nearlyPurple,
-                                          ),
-                                          ),),
                                         ],
                                       ),
                                     ),
@@ -177,7 +171,6 @@ class CardView extends StatelessWidget {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),

@@ -30,7 +30,8 @@ class _GlooHomeState extends State<GlooHome> {
           children: <Widget>[
             AspectRatio(
               aspectRatio: 1.55, //form factor immagine
-              child: Image.asset('./assets/images/Collaboration-cuate-nearlyPurple.png'),
+              child: Image.asset(
+                  './assets/images/Collaboration-cuate-nearlyPurple.png'),
             ),
             Text(
               'Cosa vuoi imparare oggi?',
@@ -123,7 +124,7 @@ class _GlooHomeState extends State<GlooHome> {
             width: MediaQuery.of(context).size.width * 0.95,
             height: 53,
             child: Padding(
-              padding: const EdgeInsets.only( bottom: 8),
+              padding: const EdgeInsets.only(bottom: 8),
               child: Container(
                 decoration: BoxDecoration(
                   color: GlooTheme.grey.withOpacity(0.35),
@@ -142,21 +143,16 @@ class _GlooHomeState extends State<GlooHome> {
                         child: TextFormField(
                           style: TextStyle(
                             fontFamily: 'WorkSans',
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w400,
                             fontSize: 16,
-                            color: GlooTheme.purple,
+                            color: GlooTheme.nearlyPurple,
                           ),
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'Ricerca un deck...',
                             border: InputBorder.none,
-                            helperStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: GlooTheme.nearlyPurple,
-                            ),
                             labelStyle: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w100,
                               fontSize: 16,
                               letterSpacing: 0.2,
                               color: GlooTheme.nearlyPurple,
@@ -169,17 +165,16 @@ class _GlooHomeState extends State<GlooHome> {
                     SizedBox(
                       width: 60,
                       height: 60,
-                      child: Icon(Icons.search,
-                          color: GlooTheme.nearlyPurple),
+                      child: Icon(Icons.search, color: GlooTheme.nearlyPurple),
                     )
                   ],
                 ),
               ),
             ),
           ),
-          const Expanded(
-            child: SizedBox(),
-          )
+          // const Expanded(
+          //   child: SizedBox(),
+          // )
         ],
       ),
     );

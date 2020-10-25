@@ -47,17 +47,11 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
 
   @override
   Widget build(BuildContext context) {
-    final double tempHeight = MediaQuery
-        .of(context)
-        .size
-        .height -
-        (MediaQuery
-            .of(context)
-            .size
-            .width / 1.2) +
+    final double tempHeight = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).size.width / 1.2) +
         24.0;
     return Container(
-      color: GlooTheme.nearlyWhite,
+      color: GlooTheme.nearlyPurple.withOpacity(0.95),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -71,19 +65,19 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               ],
             ),
             Positioned(
-              top: (MediaQuery
-                  .of(context)
-                  .size
-                  .width / 1.5) - 48.0,
+              top: (MediaQuery.of(context).size.width / 1.5) - 48.0,
               bottom: 0,
               left: 0,
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [GlooTheme.purple.withOpacity(0.9), GlooTheme.nearlyPurple]),
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        GlooTheme.purple.withOpacity(0.9),
+                        GlooTheme.nearlyPurple
+                      ]),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(32.0),
                       topRight: Radius.circular(32.0)),
@@ -98,8 +92,10 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                   padding: const EdgeInsets.only(left: 5, right: 5),
                   child: SingleChildScrollView(
                     child: Container(
-                      constraints:
-                      BoxConstraints(minHeight: infoHeight, maxHeight: 400), //questa non era così, modifica le dimensioni dello spazio in cui ci va ciò che è descritto in category_list_view.dart
+                      constraints: BoxConstraints(
+                          minHeight: infoHeight,
+                          maxHeight:
+                              400), //todo Beata tequesta non era così, modifica le dimensioni dello spazio in cui ci va ciò che è descritto in category_list_view.dart
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,11 +160,8 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             ),
                           ),
                           Container(
-                            child: getCategoryUI(),
+                            child: getCardsUI(),
                           ),
-
-
-
                         ],
                       ),
                     ),
@@ -177,10 +170,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               ),
             ),
             Positioned(
-              top: (MediaQuery
-                  .of(context)
-                  .size
-                  .width / 1.2) - 137.0,
+              top: (MediaQuery.of(context).size.width / 1.2) - 137.0,
               right: 65,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -206,11 +196,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               ),
             ),
             Positioned(
-
-              top: (MediaQuery
-                  .of(context)
-                  .size
-                  .width / 1.2) - 137,
+              top: (MediaQuery.of(context).size.width / 1.2) - 137,
               right: 10,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -235,11 +221,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 ),
               ),
             ),
-            Padding( //App bar da mettere anche nella pagina seguente
-              padding: EdgeInsets.only(top: MediaQuery
-                  .of(context)
-                  .padding
-                  .top),
+            Padding(
+              //App bar da mettere anche nella pagina seguente
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               child: SizedBox(
                 width: AppBar().preferredSize.height,
                 height: AppBar().preferredSize.height,
@@ -247,7 +231,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius:
-                    BorderRadius.circular(AppBar().preferredSize.height),
+                        BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
                       color: GlooTheme.nearlyBlack,
@@ -265,7 +249,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     );
   }
 
-  Widget getCategoryUI() {
+  Widget getCardsUI() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

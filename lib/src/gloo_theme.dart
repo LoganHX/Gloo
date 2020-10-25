@@ -28,11 +28,7 @@ class GlooTheme {
   static const TextTheme textTheme = TextTheme(
     headline4: display1,
     headline5: headline,
-    headline6: title,
-    subtitle2: subtitle,
-    bodyText1: body2,
-    bodyText2: body1,
-    caption: caption,
+
   );
 
   static const TextStyle display1 = TextStyle(
@@ -54,48 +50,48 @@ class GlooTheme {
     color: darkerText,
   );
 
-  static const TextStyle title = TextStyle(
-    // h6 -> title
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.bold,
-    fontSize: 16,
-    letterSpacing: 0.18,
-    color: darkerText,
-  );
-
-  static const TextStyle subtitle = TextStyle(
-    // subtitle2 -> subtitle
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-    letterSpacing: -0.04,
-    color: darkText,
-  );
-
-  static const TextStyle body2 = TextStyle(
-    // body1 -> body2
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-    letterSpacing: 0.2,
-    color: darkText,
-  );
-
-  static const TextStyle body1 = TextStyle(
-    // body2 -> body1
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 16,
-    letterSpacing: -0.05,
-    color: darkText,
-  );
-
-  static const TextStyle caption = TextStyle(
-    // Caption -> caption
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 12,
-    letterSpacing: 0.2,
-    color: lightText, // was lightText
-  );
+  // static const TextStyle title = TextStyle(
+  //   // h6 -> title
+  //   fontFamily: 'WorkSans',
+  //   fontWeight: FontWeight.bold,
+  //   fontSize: 16,
+  //   letterSpacing: 0.18,
+  //   color: darkerText,
+  // );
+  //
+  // static const TextStyle subtitle = TextStyle(
+  //   // subtitle2 -> subtitle
+  //   fontFamily: 'WorkSans',
+  //   fontWeight: FontWeight.w400,
+  //   fontSize: 14,
+  //   letterSpacing: -0.04,
+  //   color: darkText,
+  // );
+  //
+  // static const TextStyle body2 = TextStyle(
+  //   // body1 -> body2
+  //   fontFamily: 'WorkSans',
+  //   fontWeight: FontWeight.w400,
+  //   fontSize: 14,
+  //   letterSpacing: 0.2,
+  //   color: darkText,
+  // );
+  //
+  // static const TextStyle body1 = TextStyle(
+  //   // body2 -> body1
+  //   fontFamily: 'WorkSans',
+  //   fontWeight: FontWeight.w400,
+  //   fontSize: 16,
+  //   letterSpacing: -0.05,
+  //   color: darkText,
+  // );
+  //
+  // static const TextStyle caption = TextStyle(
+  //   // Caption -> caption
+  //   fontFamily: 'WorkSans',
+  //   fontWeight: FontWeight.w400,
+  //   fontSize: 12,
+  //   letterSpacing: 0.2,
+  //   color: lightText, // was lightText
+  // );
 }
