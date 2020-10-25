@@ -19,12 +19,12 @@ class _CardListViewState extends State<CardListView>
   @override
   void initState() {
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 10));
     return true;
   }
 
@@ -137,10 +137,11 @@ class CardView extends StatelessWidget {
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
+
                                               padding: const EdgeInsets.only(
                                                   top: 1,
-                                                  left: 16,
-                                                  right: 8,
+                                                  left: 12,
+                                                  right: 12,
                                                   bottom:
                                                       0), //bottom per il pulsante modifica
                                               child: Center(

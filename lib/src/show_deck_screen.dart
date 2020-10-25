@@ -95,7 +95,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                       constraints: BoxConstraints(
                           minHeight: infoHeight,
                           maxHeight:
-                              400), //todo Beata tequesta non era così, modifica le dimensioni dello spazio in cui ci va ciò che è descritto in category_list_view.dart
+                              double.infinity), //todo questa non era così, modifica le dimensioni dello spazio in cui ci va ciò che è descritto in category_list_view.dart
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +256,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
       children: <Widget>[
         CardListView(
           callBack: () {
-            moveTo();
+            Navigator.pushNamed(context, '/question');
           },
         ),
       ],

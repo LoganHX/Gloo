@@ -1,7 +1,10 @@
 import 'dart:io';
 //importava pure app_theme
+import 'package:alpha_gloo/src/answer_screen.dart';
+import 'package:alpha_gloo/src/question_screen.dart';
 import 'package:alpha_gloo/src/gloo_theme.dart';
 import 'package:alpha_gloo/src/gloo_home.dart';
+import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,13 +26,14 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.light,
     ));
     return MaterialApp(
-      //title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      //   textTheme: AppTheme.textTheme,
-      // ),
-      home: GlooHome(), //ho cambiato questo per farla andare dove volevo
+
+      //home: GlooHome(), //ho cambiato questo per farla andare dove volevo
+      routes: {
+        '/':(context) => GlooHome(),
+        '/question': (context) => QuestionScreen(),
+        '/answer' : (context) => AnswerScreen(),
+      }
     );
   }
 }
