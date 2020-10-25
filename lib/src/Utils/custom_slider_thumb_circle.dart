@@ -1,3 +1,4 @@
+import 'package:alpha_gloo/src/gloo_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomSliderThumbCircle extends SliderComponentShape {
@@ -41,7 +42,7 @@ class CustomSliderThumbCircle extends SliderComponentShape {
       style: new TextStyle(
         fontSize: thumbRadius * .8,
         fontWeight: FontWeight.w700,
-        color: sliderTheme.thumbColor, //Text Color of Value on Thumb
+        color: GlooTheme.purple, //Text Color of Value on Thumb
       ),
       text: getValue(value),
     );

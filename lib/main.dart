@@ -1,6 +1,7 @@
 import 'dart:io';
 //importava pure app_theme
 import 'package:alpha_gloo/src/answer_screen.dart';
+import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/question_screen.dart';
 import 'package:alpha_gloo/src/gloo_theme.dart';
 import 'package:alpha_gloo/src/gloo_home.dart';
@@ -30,9 +31,10 @@ class MyApp extends StatelessWidget {
 
       //home: GlooHome(), //ho cambiato questo per farla andare dove volevo
       routes: {
-        '/':(context) => GlooHome(),
+        '/':(context) => EditorPage(),
         '/question': (context) => QuestionScreen(),
         '/answer' : (context) => AnswerScreen(),
+        '/editor': (context) => EditorPage(),
       }
     );
   }

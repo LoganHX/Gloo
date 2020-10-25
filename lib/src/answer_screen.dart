@@ -79,10 +79,15 @@ class _AnswerScreenState extends State<AnswerScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Icon(
-                              Icons.edit_outlined,
-                              color: GlooTheme.nearlyPurple,
-                              size: 22,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, '/editor');
+                              },
+                              child: Icon(
+                                Icons.edit_outlined,
+                                color: GlooTheme.nearlyPurple,
+                                size: 22,
+                              ),
                             ),
                             Text(
                               'Risposta',
@@ -94,10 +99,13 @@ class _AnswerScreenState extends State<AnswerScreen>
                                 color: GlooTheme.nearlyWhite,
                               ),
                             ),
-                            Icon(
-                                Icons.next_plan_rounded,
-                              color: GlooTheme.nearlyPurple,
-                              size: 22,
+                            GestureDetector(
+                              onTap: (){},
+                              child: Icon(
+                                  Icons.next_plan_rounded,
+                                color: GlooTheme.nearlyPurple,
+                                size: 22,
+                              ),
                             ),
                           ],
                         ),
