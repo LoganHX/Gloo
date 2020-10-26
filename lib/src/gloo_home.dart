@@ -91,12 +91,15 @@ class _GlooHomeState extends State<GlooHome> {
   }
 
   void moveTo() {
+    Navigator.pushNamed(context, '/deck');
+    /*
     Navigator.push<dynamic>(
       context,
+
       MaterialPageRoute<dynamic>(
         builder: (BuildContext context) => ShowDeckScreen(),
       ),
-    );
+    );*/
   }
 
   Widget getDeckUI() {

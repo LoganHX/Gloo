@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
 
       //home: GlooHome(), //ho cambiato questo per farla andare dove volevo
       routes: {
-        '/':(context) => EditorPage(),
+        '/':(context) => GlooHome(),
+        '/deck': (context) => ShowDeckScreen(),
         '/question': (context) => QuestionScreen(),
         '/answer' : (context) => AnswerScreen(),
         '/editor': (context) => EditorPage(),

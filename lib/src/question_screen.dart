@@ -118,14 +118,20 @@ class _QuestionScreenState extends State<QuestionScreen>
                         padding: EdgeInsets.all(10),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              "Che significa Lorem Ipsum?",
-                              style: TextStyle(
-                                color: GlooTheme.purple.withOpacity(1),
-                                fontWeight: FontWeight.w600,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/answer');
+                            },
+
+                            child: SingleChildScrollView(
+                              child: Text(
+                                "Che significa Lorem Ipsum?",
+                                style: TextStyle(
+                                  color: GlooTheme.purple.withOpacity(1),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.left,
                             ),
                           ),
                         ),
@@ -135,37 +141,37 @@ class _QuestionScreenState extends State<QuestionScreen>
                 ),
               ),
             ),
-            Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) * 1.70,
-              right: (MediaQuery.of(context).size.width / 1.2) / 2,
-              child: ScaleTransition(
-                alignment: Alignment.center,
-                scale: CurvedAnimation(
-                    parent: animationController, curve: Curves.fastOutSlowIn),
-                child: Card(
-                  color: GlooTheme.nearlyPurple,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
-                  elevation: 10.0,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/answer');
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      child: Center(
-                        child: Icon(
-                          Icons.arrow_downward_rounded, //
-                          color: GlooTheme.purple,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: (MediaQuery.of(context).size.width / 1.2) * 1.70,
+            //   right: (MediaQuery.of(context).size.width / 1.2) / 2,
+            //   child: ScaleTransition(
+            //     alignment: Alignment.center,
+            //     scale: CurvedAnimation(
+            //         parent: animationController, curve: Curves.fastOutSlowIn),
+            //     child: Card(
+            //       color: GlooTheme.nearlyPurple,
+            //       shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(50.0)),
+            //       elevation: 10.0,
+            //       child: GestureDetector(
+            //         onTap: () {
+            //           Navigator.pushNamed(context, '/answer');
+            //         },
+            //         child: Container(
+            //           width: 50,
+            //           height: 50,
+            //           child: Center(
+            //             child: Icon(
+            //               Icons.arrow_downward_rounded, //
+            //               color: GlooTheme.purple,
+            //               size: 25,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             // Positioned(
             //   top: (MediaQuery.of(context).size.width / 1.2) - 137,
             //   right: 10,

@@ -80,6 +80,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             GestureDetector(
+
                               onTap: (){
                                 Navigator.pushNamed(context, '/editor');
                               },
@@ -123,14 +124,19 @@ class _AnswerScreenState extends State<AnswerScreen>
                         padding: EdgeInsets.all(10),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.",
-                              style: TextStyle(
-                                color: GlooTheme.purple.withOpacity(1),
-                                fontWeight: FontWeight.w600,
+                          child: GestureDetector(
+                            onTap: () {
+                        Navigator.pop(context);
+                        },
+                            child: SingleChildScrollView(
+                              child: Text(
+                                "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.",
+                                style: TextStyle(
+                                  color: GlooTheme.purple.withOpacity(1),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.left,
                             ),
                           ),
                         ),
@@ -156,38 +162,38 @@ class _AnswerScreenState extends State<AnswerScreen>
             right: (MediaQuery.of(context).size.width) /9 - 10, //todo capire come centrare la cosa perché ho messo numeri a caso
               child: SliderWidget(),
             ),
-            Positioned(
-              //top: (MediaQuery.of(context).size.width / 1.2) * 1.70 ,
-              top: 20,
-              right: (MediaQuery.of(context).size.width / 1.2) / 2,
-              child: ScaleTransition(
-                alignment: Alignment.center,
-                scale: CurvedAnimation(
-                    parent: animationController, curve: Curves.fastOutSlowIn),
-                child: Card(
-                  color: GlooTheme.nearlyPurple,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
-                  elevation: 10.0,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      child: Center(
-                        child: Icon(
-                          Icons.arrow_upward_rounded, //
-                          color: GlooTheme.purple,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   //top: (MediaQuery.of(context).size.width / 1.2) * 1.70 ,
+            //   top: 20,
+            //   right: (MediaQuery.of(context).size.width / 1.2) / 2,
+            //   child: ScaleTransition(
+            //     alignment: Alignment.center,
+            //     scale: CurvedAnimation(
+            //         parent: animationController, curve: Curves.fastOutSlowIn),
+            //     child: Card(
+            //       color: GlooTheme.nearlyPurple,
+            //       shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(50.0)),
+            //       elevation: 10.0,
+            //       child: GestureDetector(
+            //         onTap: () {
+            //           Navigator.pop(context);
+            //         },
+            //         child: Container(
+            //           width: 50,
+            //           height: 50,
+            //           child: Center(
+            //             child: Icon(
+            //               Icons.arrow_upward_rounded, //
+            //               color: GlooTheme.purple,
+            //               size: 25,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             // Positioned(
             //   top: (MediaQuery.of(context).size.width / 1.2) - 137,
             //   right: 10,
@@ -230,6 +236,8 @@ class _AnswerScreenState extends State<AnswerScreen>
                       color: GlooTheme.nearlyBlack,
                     ),
                     onTap: () {
+                      //todo è un trick, va risolto meglio
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     },
                   ),
