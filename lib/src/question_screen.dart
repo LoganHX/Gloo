@@ -123,14 +123,19 @@ class _QuestionScreenState extends State<QuestionScreen>
                               Navigator.pushNamed(context, '/answer');
                             },
 
-                            child: SingleChildScrollView(
-                              child: Text(
-                                "Che significa Lorem Ipsum?",
-                                style: TextStyle(
-                                  color: GlooTheme.purple.withOpacity(1),
-                                  fontWeight: FontWeight.w600,
+                            child: Scrollbar(
+
+                              thickness: 1,
+                              child: SingleChildScrollView(
+                                controller: ScrollController(),
+                                child: Text(
+                                  "Cos'è Lorem Ipsum?",
+                                  style: TextStyle(
+                                    color: GlooTheme.purple.withOpacity(1),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  textAlign: TextAlign.left,
                                 ),
-                                textAlign: TextAlign.left,
                               ),
                             ),
                           ),
