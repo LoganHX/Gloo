@@ -1,8 +1,10 @@
 import 'package:alpha_gloo/src/Utils/SliderWidget.dart';
 import 'package:alpha_gloo/src/card_list_view.dart';
-import 'package:alpha_gloo/src/Utils/custom_slider_thumb_circle.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../main.dart';
 import 'gloo_theme.dart';
 
@@ -68,20 +70,18 @@ class _AnswerScreenState extends State<AnswerScreen>
               child: Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Container(
-                  padding:
-                  EdgeInsets.only( left: 40, right: 40, bottom: 10),
+                  padding: EdgeInsets.only(left: 40, right: 40, bottom: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top:18.0, bottom: 8),
+                        padding: const EdgeInsets.only(top: 18.0, bottom: 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             GestureDetector(
-
-                              onTap: (){
+                              onTap: () {
                                 Navigator.pushNamed(context, '/editor');
                               },
                               child: Icon(
@@ -101,9 +101,9 @@ class _AnswerScreenState extends State<AnswerScreen>
                               ),
                             ),
                             GestureDetector(
-                              onTap: (){},
+                              onTap: () {},
                               child: Icon(
-                                  Icons.next_plan_rounded,
+                                Icons.next_plan_rounded,
                                 color: GlooTheme.nearlyPurple,
                                 size: 22,
                               ),
@@ -112,6 +112,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                         ),
                       ),
                       Container(
+                        //todo devo estrarre le parti comuni a Question e Answer per non avere codice duplicato
                         //todo devo fissare un'altezza massima
                         width: MediaQuery.of(context).size.width / 1.2,
                         constraints: BoxConstraints(maxHeight: 350),
@@ -119,27 +120,25 @@ class _AnswerScreenState extends State<AnswerScreen>
                         decoration: BoxDecoration(
                           color: GlooTheme.nearlyPurple,
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(16.0)),
+                              const BorderRadius.all(Radius.circular(16.0)),
                         ),
                         padding: EdgeInsets.all(10),
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left:8.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(
+                              top: 8.0, left: 8.0, bottom: 8.0),
                           child: GestureDetector(
                             onTap: () {
-                        Navigator.pop(context);
-                        },
+                              Navigator.pop(context);
+                            },
                             child: Scrollbar(
                               child: SingleChildScrollView(
                                 controller: ScrollController(),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.",
-                                    style: TextStyle(
-                                      color: GlooTheme.purple.withOpacity(1),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.left,
+                                  padding: const EdgeInsets.only(right: 3.0),
+                                  child: Html(
+                                    data:
+                                        """<p><b>Gloo is fantastic!</b> I write in English because this keyboard is set on an US layout, but, this excepted, I'm sure that you'll appreciate this app because:</p><ul><li>It's beautiful</li><li>It's useful</li><li>It supports images, such tech</li></ul><p><img src="https://picsum.photos/200/200/" style="width: 200px;"><br></p>""",
+                                    //Optional parameters:
                                   ),
                                 ),
                               ),
@@ -157,15 +156,15 @@ class _AnswerScreenState extends State<AnswerScreen>
                       //     print(value);
                       //   },
                       // )
-
                     ],
                   ),
                 ),
               ),
             ),
             Positioned(
-            top: 530,
-            right: (MediaQuery.of(context).size.width) /9 - 10, //todo capire come centrare la cosa perché ho messo numeri a caso
+              top: 530,
+              right: (MediaQuery.of(context).size.width) / 9 -
+                  10, //todo capire come centrare la cosa perché ho messo numeri a caso
               child: SliderWidget(),
             ),
             // Positioned(
@@ -236,7 +235,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius:
-                    BorderRadius.circular(AppBar().preferredSize.height),
+                        BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
                       color: GlooTheme.nearlyBlack,

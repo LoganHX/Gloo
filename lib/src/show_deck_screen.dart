@@ -60,7 +60,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1.7, //form factor immagine
-                  child: Image.asset('assets/images/main.png'),
+                  child: Image.asset('assets/images/maiAn.png'),
                 ),
               ],
             ),
@@ -83,7 +83,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                       topRight: Radius.circular(32.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: GlooTheme.purple.withOpacity(1),
+                        color: GlooTheme.purple.withOpacity(0.8),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 100.0),
                   ],
@@ -177,7 +177,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 scale: CurvedAnimation(
                     parent: animationController, curve: Curves.fastOutSlowIn),
                 child: Card(
-                  color: GlooTheme.nearlyPurple,
+                  color: GlooTheme.purple,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
@@ -187,7 +187,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     child: Center(
                       child: Icon(
                         Icons.add, //icona aggiungi carta
-                        color: GlooTheme.purple,
+                        color: GlooTheme.nearlyPurple,
                         size: 25,
                       ),
                     ),
@@ -203,7 +203,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 scale: CurvedAnimation(
                     parent: animationController, curve: Curves.fastOutSlowIn),
                 child: Card(
-                  color: GlooTheme.purple,
+                  color: GlooTheme.nearlyPurple,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
@@ -213,7 +213,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     child: Center(
                       child: Icon(
                         Icons.refresh, //icona ripeti deck
-                        color: GlooTheme.nearlyPurple,
+                        color: GlooTheme.purple,
                         size: 25,
                       ),
                     ),

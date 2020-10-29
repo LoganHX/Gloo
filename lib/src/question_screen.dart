@@ -2,6 +2,7 @@ import 'package:alpha_gloo/src/card_list_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../main.dart';
 import 'gloo_theme.dart';
 
