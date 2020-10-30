@@ -33,7 +33,7 @@ class _EditorPageState extends State<EditorPage> {
                 hint: "Your text here...",
                 //value: "text content initial, if any",
                 key: keyEditor,
-                height: 400,
+                height: MediaQuery.of(context).size.height * 0.75,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

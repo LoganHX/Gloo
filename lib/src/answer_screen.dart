@@ -1,11 +1,8 @@
 import 'package:alpha_gloo/src/Utils/SliderWidget.dart';
 import 'package:alpha_gloo/src/card_list_view.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import '../main.dart';
 import 'gloo_theme.dart';
 
 /**todo questa route non dovrebbe esistere, serve solo come mock e per rendermi un po'
@@ -70,11 +67,14 @@ class _AnswerScreenState extends State<AnswerScreen>
               child: Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Container(
-                  padding: EdgeInsets.only(left: 40, right: 40, bottom: 10),
+                  padding: EdgeInsets.only(left: 30, right: 30, bottom: 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      Expanded(child: Padding(
+                        padding: EdgeInsets.all(0), //todo non ne vado fiero, qui e sotto il testo ho messo due Expanded per centrare il testo e tenere in basso lo slider, credo ci siano soluzioni migliori
+                      )),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0, bottom: 8),
                         child: Row(
@@ -113,9 +113,9 @@ class _AnswerScreenState extends State<AnswerScreen>
                       ),
                       Container(
                         //todo devo estrarre le parti comuni a Question e Answer per non avere codice duplicato
-                        //todo devo fissare un'altezza massima
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        constraints: BoxConstraints(maxHeight: 350),
+
+                        width: MediaQuery.of(context).size.width,
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.69,),
 
                         decoration: BoxDecoration(
                           color: GlooTheme.nearlyPurple,
@@ -137,8 +137,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                                   padding: const EdgeInsets.only(right: 3.0),
                                   child: Html(
                                     data:
-                                        """<p><b>Gloo is fantastic!</b> I write in English because this keyboard is set on an US layout, but, this excepted, I'm sure that you'll appreciate this app because:</p><ul><li>It's beautiful</li><li>It's useful</li><li>It supports images, such tech</li></ul><p><img src="https://picsum.photos/200/200/" style="width: 200px;"><br></p>""",
-                                    //Optional parameters:
+                                        """<p><b>Gloo is fantastic!</b></p>""",  //Optional parameters:
                                   ),
                                 ),
                               ),
@@ -156,17 +155,24 @@ class _AnswerScreenState extends State<AnswerScreen>
                       //     print(value);
                       //   },
                       // )
+                      Expanded(child: Padding(
+                        padding: EdgeInsets.all(0),
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SliderWidget(),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            Positioned(
-              top: 530,
-              right: (MediaQuery.of(context).size.width) / 9 -
-                  10, //todo capire come centrare la cosa perché ho messo numeri a caso
-              child: SliderWidget(),
-            ),
+            // Positioned(
+            //   top: 530,
+            //   right: (MediaQuery.of(context).size.width) / 9 -
+            //       10, //todo capire come centrare la cosa perché ho messo numeri a caso
+            //
+            // ),
             // Positioned(
             //   //top: (MediaQuery.of(context).size.width / 1.2) * 1.70 ,
             //   top: 20,
