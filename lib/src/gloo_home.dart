@@ -1,7 +1,4 @@
-import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/deck_list_view.dart';
-import 'package:alpha_gloo/src/card_list_view.dart';
-import 'package:alpha_gloo/main.dart';
 import 'package:flutter/material.dart';
 import 'gloo_theme.dart';
 
@@ -46,11 +43,11 @@ class _GlooHomeState extends State<GlooHome> {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height*0.5, //dimensione area scrolling (dimezzata dopo l'introduzione del'immagine)
                   child: Column(
                     children: <Widget>[
                       Flexible(
-                        child: getPopularCourseUI(),
+                        child: getDecksUI(),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).padding.top,
@@ -71,9 +68,9 @@ class _GlooHomeState extends State<GlooHome> {
     );
   }
 
-  Widget getPopularCourseUI() {
+  Widget getDecksUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, left: 18, right: 16),
+      padding: const EdgeInsets.only(top: 0, left: 18, right: 16, bottom: 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

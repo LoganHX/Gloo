@@ -14,6 +14,30 @@ class AnswerScreen extends StatefulWidget {
   _AnswerScreenState createState() => _AnswerScreenState();
 }
 
+const htmlData = """
+<h1>HTML Ipsum Presents</h1>
+
+<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis.</p>
+
+<h2>Header Level 2</h2>
+
+<ol>
+   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+   <li>Aliquam tincidunt mauris eu risus.</li>
+</ol>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Lorem_Ipsum_-_WYSIWYG_en_Latex_-_tekst_als_paden.svg/220px-Lorem_Ipsum_-_WYSIWYG_en_Latex_-_tekst_als_paden.svg.png" alt="Image">
+<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+
+<h3>Header Level 3</h3>
+
+<ul>
+   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+   <li>Aliquam tincidunt mauris eu risus.</li>
+</ul>
+
+
+""";
+
 class _AnswerScreenState extends State<AnswerScreen>
     with TickerProviderStateMixin {
   final double infoHeight = 360.0;
@@ -73,7 +97,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Expanded(child: Padding(
-                        padding: EdgeInsets.all(0), //todo non ne vado fiero, qui e sotto il testo ho messo due Expanded per centrare il testo e tenere in basso lo slider, credo ci siano soluzioni migliori
+                        padding: EdgeInsets.all(0), //todo sotto il testo ho messo due Expanded per centrare il testo e tenere in basso lo slider, credo ci siano soluzioni migliori
                       )),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0, bottom: 8),
@@ -125,7 +149,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                         padding: EdgeInsets.all(10),
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              top: 8.0, left: 8.0, bottom: 8.0),
+                              top: 2.0, left: 2.0, bottom: 2.0),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
@@ -136,9 +160,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 3.0),
                                   child: Html(
-                                    data:
-                                        """<p><b>Gloo is fantastic!</b></p>""",  //Optional parameters:
-                                  ),
+                                    data: htmlData),
                                 ),
                               ),
                             ),
@@ -159,7 +181,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                         padding: EdgeInsets.all(0),
                       )),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(bottom: 12.0),
                         child: SliderWidget(),
                       ),
                     ],
@@ -167,70 +189,8 @@ class _AnswerScreenState extends State<AnswerScreen>
                 ),
               ),
             ),
-            // Positioned(
-            //   top: 530,
-            //   right: (MediaQuery.of(context).size.width) / 9 -
-            //       10, //todo capire come centrare la cosa perché ho messo numeri a caso
-            //
-            // ),
-            // Positioned(
-            //   //top: (MediaQuery.of(context).size.width / 1.2) * 1.70 ,
-            //   top: 20,
-            //   right: (MediaQuery.of(context).size.width / 1.2) / 2,
-            //   child: ScaleTransition(
-            //     alignment: Alignment.center,
-            //     scale: CurvedAnimation(
-            //         parent: animationController, curve: Curves.fastOutSlowIn),
-            //     child: Card(
-            //       color: GlooTheme.nearlyPurple,
-            //       shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(50.0)),
-            //       elevation: 10.0,
-            //       child: GestureDetector(
-            //         onTap: () {
-            //           Navigator.pop(context);
-            //         },
-            //         child: Container(
-            //           width: 50,
-            //           height: 50,
-            //           child: Center(
-            //             child: Icon(
-            //               Icons.arrow_upward_rounded, //
-            //               color: GlooTheme.purple,
-            //               size: 25,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Positioned(
-            //   top: (MediaQuery.of(context).size.width / 1.2) - 137,
-            //   right: 10,
-            //   child: ScaleTransition(
-            //     alignment: Alignment.center,
-            //     scale: CurvedAnimation(
-            //         parent: animationController, curve: Curves.fastOutSlowIn),
-            //     child: Card(
-            //       color: GlooTheme.purple,
-            //       shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(50.0)),
-            //       elevation: 10.0,
-            //       child: Container(
-            //         width: 50,
-            //         height: 50,
-            //         child: Center(
-            //           child: Icon(
-            //             Icons.refresh, //icona ripeti deck
-            //             color: GlooTheme.nearlyPurple,
-            //             size: 25,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+         
+
             Padding(
               //App bar da mettere anche nella pagina seguente
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),

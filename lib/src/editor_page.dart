@@ -19,57 +19,47 @@ class _EditorPageState extends State<EditorPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: GlooTheme.purple,
-        title: Text("Edit Flashcard"),
+        title: Text("Modifica Flashcard"),
         elevation: 0,
+        actions: <Widget>[
+          // IconButton(
+          //   icon: const Icon(Icons.cancel),
+          //   tooltip: 'Rimuovi flashcard',
+          //   onPressed: () {
+          //     setState(() {
+          //       keyEditor.currentState.setEmpty();
+          //     });
+          //   },
+          // ),
+          IconButton(
+            icon: const Icon(Icons.save),
+            tooltip: 'Salva flashcard',
+            onPressed: () async {
+              final txt = await keyEditor.currentState.getText();
+              setState(() {
+                // result = txt;
+                print(txt);
+              });
+            },
+          ),
+        ],
       ),
       backgroundColor: GlooTheme.nearlyWhite,
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              HtmlEditor(
-                hint: "Your text here...",
-                //value: "text content initial, if any",
-                key: keyEditor,
-                height: MediaQuery.of(context).size.height * 0.75,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    FlatButton(
-                      color: Colors.blueGrey,
-                      onPressed: (){
-                        setState(() {
-                          keyEditor.currentState.setEmpty();
-                        });
-                      },
-                      child: Text("Reset", style: TextStyle(color: Colors.white)),
-                    ),
-                    SizedBox(width: 16,),
-                    FlatButton(
-                      color: Colors.blue,
-                      onPressed: () async {
-                        final txt = await keyEditor.currentState.getText();
-                        setState(() {
-                          // result = txt;
-                          print(txt);
-                        });
-                      },
-                      child: Text("Submit", style: TextStyle(color: Colors.white),),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(result),
-              )
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            HtmlEditor(
+              hint: "Inserisci qui il tuo testo...",
+              //value: "text content initial, if any",
+              key: keyEditor,
+              height: MediaQuery.of(context).size.height * 0.87, //todo controllare se il parametro va bene su ogni device
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top:8.0),
+              child: Text(result),
+            )
+          ],
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.

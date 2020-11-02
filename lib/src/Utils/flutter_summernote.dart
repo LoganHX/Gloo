@@ -12,11 +12,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-/*
-* Created by: Chandra Abdul Fattah on 13 July 2020
-* Inspired from: https://github.com/xrb21/flutter-html-editor
-* link:
-* */
 
 class FlutterSummernote extends StatefulWidget {
   final String value;

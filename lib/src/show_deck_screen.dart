@@ -60,7 +60,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1.7, //form factor immagine
-                  child: Image.asset('assets/images/maiAn.png'),
+                  child: Image.asset('assets/images/main.png'),
                 ),
               ],
             ),

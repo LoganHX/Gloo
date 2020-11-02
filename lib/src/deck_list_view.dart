@@ -227,9 +227,7 @@ class CategoryView extends StatelessWidget {
                                       ),),
                                     ),
                                   ),
-                                  /**const SizedBox(
-                                    width: 8,
-                                  ),*/
+
                                 ],
                               ),
                             ),
