@@ -25,33 +25,38 @@ class _GlooHomeState extends State<GlooHome> {
         backgroundColor: Colors.transparent,
         body: Column(
           children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.55, //form factor immagine
+            Container(
+              height: MediaQuery.of(context).size.height*0.37, //altezza immagine
               child: Image.asset(
                   './assets/images/Collaboration-cuate-nearlyPurple.png'),
             ),
-            Text(
-              'Cosa vuoi imparare oggi?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 22,
-                letterSpacing: 0.27,
-                color: GlooTheme.nearlyWhite,
+            Container(
+              height: 0.05*MediaQuery.of(context).size.height,
+              width: 0.8*MediaQuery.of(context).size.width,
+              child: FittedBox(
+
+                child: Text(
+                  'Cosa vuoi imparare oggi?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 22,
+                    letterSpacing: 0.27,
+                    color: GlooTheme.nearlyWhite,
+                  ),
+                ),
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  height: MediaQuery.of(context).size.height*0.5, //dimensione area scrolling (dimezzata dopo l'introduzione del'immagine)
+                  height: MediaQuery.of(context).size.height*0.5, //dimensione area scrolling
                   child: Column(
                     children: <Widget>[
                       Flexible(
                         child: getDecksUI(),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
+
                     ],
                   ),
                 ),
@@ -70,7 +75,7 @@ class _GlooHomeState extends State<GlooHome> {
 
   Widget getDecksUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, left: 18, right: 16, bottom: 0),
+      padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0), //left era a 18 e right a 16
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,14 +120,14 @@ class _GlooHomeState extends State<GlooHome> {
 
   Widget getSearchBarUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 0.0, left: 8.0, right: 8.0, bottom: 0),
+      padding: const EdgeInsets.only( left: 8.0, right: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: 53,
+            height: (MediaQuery.of(context).size.height ) * 0.08,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Container(

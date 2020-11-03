@@ -45,21 +45,23 @@ class _EditorPageState extends State<EditorPage> {
         ],
       ),
       backgroundColor: GlooTheme.nearlyWhite,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            HtmlEditor(
-              hint: "Inserisci qui il tuo testo...",
-              //value: "text content initial, if any",
-              key: keyEditor,
-              height: MediaQuery.of(context).size.height * 0.87, //todo controllare se il parametro va bene su ogni device
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:8.0),
-              child: Text(result),
-            )
-          ],
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              HtmlEditor(
+                hint: "Inserisci qui il tuo testo...",
+                //value: "text content initial, if any",
+                key: keyEditor,
+                height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - kToolbarHeight, //Altezza pagina - altezza status bar - altezza appbar
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top:8.0),
+              //   child: Text(result),
+              // )
+            ],
+          ),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
