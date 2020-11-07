@@ -1,5 +1,8 @@
 import 'dart:io';
 //importava pure app_theme
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/screens/wrapper.dart';
+import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/Utils/flutter_summernote.dart';
 import 'package:alpha_gloo/src/answer_screen.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
@@ -9,6 +12,7 @@ import 'package:alpha_gloo/src/gloo_home.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,17 +31,21 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.light,
     ));
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return StreamProvider<User>.value(
+      value: AuthService().user,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
 
-      //home: GlooHome(), //ho cambiato questo per farla andare dove volevo
-      routes: {
-        '/':(context) => GlooHome(),
-        '/deck': (context) => ShowDeckScreen(),
-        '/question': (context) => QuestionScreen(),
-        '/answer' : (context) => AnswerScreen(),
-        '/editor': (context) => EditorPage(),
-      }
+        home: Wrapper(),
+        routes: {
+          //'/':(context) => LoginScreen(),
+          '/home':(context) => GlooHome(),
+          '/deck': (context) => ShowDeckScreen(),
+          '/question': (context) => QuestionScreen(),
+          '/answer' : (context) => AnswerScreen(),
+          '/editor': (context) => EditorPage(),
+        }
+      ),
     );
   }
 }
