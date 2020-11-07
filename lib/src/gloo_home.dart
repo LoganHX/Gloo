@@ -147,7 +147,7 @@ class _GlooHomeState extends State<GlooHome> {
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           style: TextStyle(
-                            fontFamily: 'WorkSans',
+
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
                             color: GlooTheme.nearlyPurple,
