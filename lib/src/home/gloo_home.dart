@@ -1,8 +1,6 @@
 import 'package:alpha_gloo/src/deck_list_view.dart';
 import 'package:flutter/material.dart';
 import '../gloo_theme.dart';
-import 'package:alpha_gloo/services/auth.dart';
-
 
 class GlooHome extends StatefulWidget {
   @override
@@ -10,33 +8,9 @@ class GlooHome extends StatefulWidget {
 }
 
 class _GlooHomeState extends State<GlooHome> {
-  final AuthService _auth = AuthService();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Gloo Home",
-            style: TextStyle(
-              color: GlooTheme.purple,
-            )
-        ),
-
-        backgroundColor: GlooTheme.nearlyPurple,
-        elevation: 8.0,
-        actions: <Widget>[
-          IconButton(
-              onPressed: () async {
-                await _auth.signOut();
-              },
-              icon: Icon(
-                  Icons.person
-                  , color: GlooTheme.purple,
-              ),
-
-          )
-        ],
-      ),
       body: Container(
         //color: GlooTheme.nearlyPurple,
         decoration: BoxDecoration(
@@ -53,12 +27,12 @@ class _GlooHomeState extends State<GlooHome> {
           body: Column(
             children: <Widget>[
               Container(
-                height: (MediaQuery.of(context).size.height - kToolbarHeight)*0.35, //altezza immagine
+                height: MediaQuery.of(context).size.height*0.37, //altezza immagine
                 child: Image.asset(
                     './assets/images/Collaboration-cuate-nearlyPurple.png'),
               ),
               Container(
-                height: 0.05*(MediaQuery.of(context).size.height - kToolbarHeight),
+                height: 0.05*MediaQuery.of(context).size.height,
                 width: 0.8*MediaQuery.of(context).size.width,
                 child: FittedBox(
 
@@ -77,14 +51,13 @@ class _GlooHomeState extends State<GlooHome> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
-                    height: (MediaQuery.of(context).size.height - kToolbarHeight)*0.6, //dimensione area scrolling
+                    height: MediaQuery.of(context).size.height*0.5, //dimensione area scrolling
                     child: Column(
                       children: <Widget>[
                         Flexible(
                           child: getDecksUI(),
                         ),
 
-                        SizedBox(height:20)
                       ],
                     ),
                   ),
@@ -156,7 +129,7 @@ class _GlooHomeState extends State<GlooHome> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: ((MediaQuery.of(context).size.height - kToolbarHeight) ) * 0.08,
+            height: (MediaQuery.of(context).size.height ) * 0.08,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Container(
