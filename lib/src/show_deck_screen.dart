@@ -47,9 +47,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
 
   @override
   Widget build(BuildContext context) {
-    final double tempHeight = MediaQuery.of(context).size.height -
+    /*final double tempHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.width / 1.2) +
-        24.0;
+        24.0;*/
     return Container(
       color: GlooTheme.nearlyPurple.withOpacity(0.95),
       child: Scaffold(

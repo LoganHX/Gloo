@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "359653166129",
+    "firebase_url": "https://gloodb-28914.firebaseio.com",
+    "project_id": "gloodb-28914",
+    "storage_bucket": "gloodb-28914.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359653166129:android:3b1919ecb06ed24dedd910",
+        "android_client_info": {
+          "package_name": "com.example.alpha_gloo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359653166129-pfnsbnfkr3a1fihdnfdla0bf5d703r0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyD3rJ_N1vPP0bPCjj_gG3I9xmAQ40MCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359653166129-pfnsbnfkr3a1fihdnfdla0bf5d703r0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
