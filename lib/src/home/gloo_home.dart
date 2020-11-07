@@ -1,6 +1,6 @@
 import 'package:alpha_gloo/src/deck_list_view.dart';
 import 'package:flutter/material.dart';
-import 'gloo_theme.dart';
+import '../gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:alpha_gloo/src/gloo_home.dart';
+import 'package:alpha_gloo/src/home/gloo_home.dart';
 import 'package:alpha_gloo/src/gloo_theme.dart';
 import 'package:alpha_gloo/src/models/category.dart';
 import 'package:alpha_gloo/main.dart';

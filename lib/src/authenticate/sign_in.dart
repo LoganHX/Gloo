@@ -1,20 +1,19 @@
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class Register extends StatefulWidget {
+class SignIn extends StatefulWidget {
 
   final Function toggleView;
-  Register({this.toggleView});
+  SignIn({this.toggleView});
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _SignInState createState() => _SignInState();
 }
 
-class _RegisterState extends State<Register> {
+class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-
   //text field state
   String email = "";
   String password = "";
@@ -27,11 +26,11 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text("Sign up to Gloo"),
+        title: Text("Sign in to Gloo"),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text("Sign in"),
+            label: Text("Register"),
             onPressed: () {
               widget.toggleView();
             },
@@ -41,6 +40,7 @@ class _RegisterState extends State<Register> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),
         child: RaisedButton(
+          onPressed: () => {},
           child: Form(
             key: _formKey,
             child: Column(
@@ -64,22 +64,22 @@ class _RegisterState extends State<Register> {
                 RaisedButton(
                   color: Colors.pink[400],
                   child: Text(
-                    "Register",
+                    "Sign in",
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
-                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                       if(result == null){
-                        setState(() => error = "please supply a valid email");
+                        setState(() => error = "Can't sign in with those credentials");
                       }
                     }
                   },
                 ),
                 SizedBox(height: 12.0,),
                 Text(
-                  error,
-                  style: TextStyle(color: Colors.red, fontSize: 14.0)
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0)
                 ),
               ],
             ),
