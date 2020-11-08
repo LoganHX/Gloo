@@ -65,7 +65,6 @@ class _GlooHomeState extends State<GlooHome> {
               ),
               Container(
                 child: Center(
-
                   child: getSearchBarUI(),
                 ),
               ),
@@ -170,11 +169,14 @@ class _GlooHomeState extends State<GlooHome> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: Icon(Icons.search, color: GlooTheme.nearlyPurple),
+                    
+                    Icon(Icons.search, color: GlooTheme.nearlyPurple),
+                    VerticalDivider(color: GlooTheme.nearlyPurple, thickness: 0.8, indent: 8, endIndent: 8,),
+                    Padding(
+                      padding: const EdgeInsets.only(right:8.0),
+                      child: IconButton(icon: Icon(Icons.add, color: GlooTheme.nearlyPurple), onPressed: null),
                     )
+                    
                   ],
                 ),
               ),

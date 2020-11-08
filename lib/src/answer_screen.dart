@@ -206,7 +206,7 @@ class _AnswerScreenState extends State<AnswerScreen>
                         BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
-                      color: GlooTheme.nearlyBlack,
+                      color: GlooTheme.nearlyPurple,
                     ),
                     onTap: () {
                       //todo è un trick, va risolto meglio

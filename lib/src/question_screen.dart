@@ -217,7 +217,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                         BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
-                      color: GlooTheme.nearlyBlack,
+                      color: GlooTheme.nearlyPurple,
                     ),
                     onTap: () {
                       Navigator.pop(context);
