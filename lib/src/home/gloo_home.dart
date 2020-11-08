@@ -65,6 +65,7 @@ class _GlooHomeState extends State<GlooHome> {
               ),
               Container(
                 child: Center(
+
                   child: getSearchBarUI(),
                 ),
               ),
