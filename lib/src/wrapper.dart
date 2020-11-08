@@ -4,6 +4,8 @@ import 'package:alpha_gloo/src/home/gloo_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'home/home.dart';
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class Wrapper extends StatelessWidget {
     if(user == null){
       return Authenticate();
     } else {
-      return GlooHome();
+      return Home();
     }
   }
 }
