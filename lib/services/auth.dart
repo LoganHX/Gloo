@@ -1,4 +1,5 @@
 import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService{
@@ -31,6 +32,11 @@ class AuthService{
     try{
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+
+      // create a new document for the user with the uid
+      await DatabaseService(uid: user.uid).updateUserData("GuestName", "GuestSurname", "GuestUniversity", "GuestCourse", "GuestNickname");
+      await DatabaseService(uid: user.uid).updateDeckData("ExampleSubject", "ExampleUniversity", "ExampleCourse", "ExampleProf", "ExampleYear");
+      await DatabaseService(uid: user.uid).updateFlashcardData("ExampleSubject", "ExampleQuestion", "ExampleAnswer");
       return _userFromFirebaseUser(user);
     } catch(e){
       print(e.toString());
