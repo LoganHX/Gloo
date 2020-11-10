@@ -68,13 +68,17 @@ class _SignInState extends State<SignIn> {
                   decoration: InputDecoration(
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
+                      
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: GlooTheme.purple),
+                        borderRadius: BorderRadius.circular(8),
+
                       ),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: "Email",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: GlooTheme.nearlyPurple),
+                        borderRadius: BorderRadius.circular(8),
                       )
                   ),
                   validator: (val) => val.isEmpty ? "Enter an email" : null,
@@ -89,11 +93,13 @@ class _SignInState extends State<SignIn> {
                         filled: true,
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: GlooTheme.purple),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         labelText: "Password",
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: GlooTheme.nearlyPurple),
+                          borderRadius: BorderRadius.circular(8),
                         )
                     ),
                   obscureText: true,

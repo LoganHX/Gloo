@@ -74,9 +74,11 @@ class _RegisterState extends State<Register> {
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     labelText: "Email",
                       focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: GlooTheme.purple),
                       ),
                     border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(color: GlooTheme.nearlyPurple ),
                     )
                   ),
@@ -92,11 +94,13 @@ class _RegisterState extends State<Register> {
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: GlooTheme.purple),
                       ),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: "Password",
                        border: OutlineInputBorder(
+                         borderRadius: BorderRadius.circular(8),
                          borderSide: BorderSide(color: GlooTheme.nearlyPurple),
                        )
                   ),
