@@ -1,5 +1,8 @@
+import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/deck_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:alpha_gloo/services/database.dart';
 import '../gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
@@ -10,7 +13,21 @@ class GlooHome extends StatefulWidget {
 class _GlooHomeState extends State<GlooHome> {
   @override
   Widget build(BuildContext context) {
+    final AuthService _auth = AuthService();
+
+    final  totalHeight = MediaQuery.of(context).size.height;
+    final  imageHeight = (totalHeight * 0.4).roundToDouble();
+    final  titleHeight = (totalHeight*0.08).roundToDouble();
+    final  scrollableHeight = totalHeight - imageHeight -titleHeight;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: GlooTheme.purple.withOpacity(0.7),
+        onPressed: () async {
+            await _auth.signOut();
+        },
+        child: Icon(Icons.logout,
+        color: GlooTheme.nearlyPurple,),
+      ),
       body: Container(
         //color: GlooTheme.nearlyPurple,
         decoration: BoxDecoration(
@@ -27,12 +44,12 @@ class _GlooHomeState extends State<GlooHome> {
           body: Column(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height*0.37, //altezza immagine
+                height: imageHeight, //altezza immagine
                 child: Image.asset(
                     './assets/images/Collaboration-cuate-nearlyPurple.png'),
               ),
               Container(
-                height: 0.05*MediaQuery.of(context).size.height,
+                height: titleHeight,
                 width: 0.8*MediaQuery.of(context).size.width,
                 child: FittedBox(
 
@@ -48,28 +65,31 @@ class _GlooHomeState extends State<GlooHome> {
                   ),
                 ),
               ),
+
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
-                    height: MediaQuery.of(context).size.height*0.5, //dimensione area scrolling
+                    height: scrollableHeight, //dimensione area scrolling
                     child: Column(
                       children: <Widget>[
                         Flexible(
                           child: getDecksUI(),
                         ),
-
+                       // SizedBox(height: 16,)
                       ],
                     ),
                   ),
                 ),
               ),
-              Container(
-                child: Center(
-                  child: getSearchBarUI(),
-                ),
-              ),
+              // Container(
+              //   child: Center(
+              //     child: getSearchBarUI(),
+              //   ),
+              // ),
+
             ],
           ),
+          
         ),
       ),
     );
@@ -134,7 +154,7 @@ class _GlooHomeState extends State<GlooHome> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Container(
                 decoration: BoxDecoration(
-                  color: GlooTheme.grey.withOpacity(0.35),
+                  color: GlooTheme.grey.withOpacity(0.8),
                   borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(13.0),
                     bottomLeft: Radius.circular(13.0),
@@ -169,14 +189,14 @@ class _GlooHomeState extends State<GlooHome> {
                         ),
                       ),
                     ),
-                    
+
                     Icon(Icons.search, color: GlooTheme.nearlyPurple),
                     VerticalDivider(color: GlooTheme.nearlyPurple, thickness: 0.8, indent: 8, endIndent: 8,),
                     Padding(
                       padding: const EdgeInsets.only(right:8.0),
                       child: IconButton(icon: Icon(Icons.add, color: GlooTheme.nearlyPurple), onPressed: null),
                     )
-                    
+
                   ],
                 ),
               ),

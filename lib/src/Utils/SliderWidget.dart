@@ -38,8 +38,8 @@ class _SliderWidgetState extends State<SliderWidget> {
         ),
         gradient: new LinearGradient(
             colors: [
-              GlooTheme.grey.withOpacity(0.35),
-              GlooTheme.grey.withOpacity(0.35),
+              GlooTheme.grey,
+              GlooTheme.grey,
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 1.00),
