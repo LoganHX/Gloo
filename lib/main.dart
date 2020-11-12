@@ -35,7 +35,11 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-
+        theme: ThemeData(
+          primaryColor: GlooTheme.purple,
+          secondaryHeaderColor: GlooTheme.nearlyPurple,
+          accentColor: GlooTheme.nearlyPurple,
+        ),
         home: Wrapper(),
         routes: {
           //'/':(context) => LoginScreen(),

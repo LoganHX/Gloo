@@ -100,8 +100,6 @@ class DeckView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-
             return AnimatedBuilder(
               animation: animationController,
               builder: (BuildContext context, Widget child) {

@@ -16,10 +16,12 @@ class _GlooHomeState extends State<GlooHome> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
+
     final totalHeight = MediaQuery.of(context).size.height;
-    final imageHeight = (totalHeight * 0.4).roundToDouble();
+    final imageHeight = (totalHeight * 0.38).roundToDouble();
     final titleHeight = (totalHeight*0.08).roundToDouble();
-    final scrollableHeight = totalHeight - imageHeight -titleHeight;
+    final barHeight = titleHeight - titleHeight; //eliminare la sottrazione in caso di necessità della Bar
+    final scrollableHeight = totalHeight - imageHeight -titleHeight - barHeight;
 
 
     return Scaffold(
@@ -84,11 +86,11 @@ class _GlooHomeState extends State<GlooHome> {
                   ),
                 ),
               ),
-              // Container(
-              //   child: Center(
-              //     child: getSearchBarUI(),
-              //   ),
-              // ),
+               Container(
+                 child: Center(
+                   child: getBarUI(barHeight),
+                 ),
+              ),
 
             ],
           ),
@@ -122,8 +124,11 @@ class _GlooHomeState extends State<GlooHome> {
   }
 
 
-/*
-  Widget getSearchBarUI() {
+
+  Widget getBarUI(double barHeight) {
+
+
+
     return Padding(
       padding: const EdgeInsets.only( left: 8.0, right: 8.0),
       child: Row(
@@ -132,7 +137,7 @@ class _GlooHomeState extends State<GlooHome> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: (MediaQuery.of(context).size.height ) * 0.08,
+            height: barHeight,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Container(
@@ -146,39 +151,28 @@ class _GlooHomeState extends State<GlooHome> {
                   ),
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: TextFormField(
-                          style: TextStyle(
-
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: GlooTheme.nearlyPurple,
-                          ),
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            labelText: 'Ricerca un deck...',
-                            border: InputBorder.none,
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.w100,
-                              fontSize: 16,
-                              letterSpacing: 0.2,
-                              color: GlooTheme.nearlyPurple,
-                            ),
-                          ),
-                          onEditingComplete: () {},
-                        ),
-                      ),
+                    Icon(
+                      Icons.add,
+                      color: GlooTheme.nearlyPurple,
+                      //size: 36.0,
                     ),
-
-                    Icon(Icons.search, color: GlooTheme.nearlyPurple),
-                    VerticalDivider(color: GlooTheme.nearlyPurple, thickness: 0.8, indent: 8, endIndent: 8,),
-                    Padding(
-                      padding: const EdgeInsets.only(right:8.0),
-                      child: IconButton(icon: Icon(Icons.add, color: GlooTheme.nearlyPurple), onPressed: null),
-                    )
+                    Icon(
+                      Icons.search,
+                      color: GlooTheme.nearlyPurple,
+                      //size: 36.0,
+                    ),
+                    Icon(
+                      Icons.explore,
+                      color: GlooTheme.nearlyPurple,
+                      //size: 36.0,
+                    ),
+                    Icon(
+                      Icons.person,
+                      color: GlooTheme.nearlyPurple,
+                      //size: 36.0,
+                    ),
 
                   ],
                 ),
@@ -191,5 +185,5 @@ class _GlooHomeState extends State<GlooHome> {
         ],
       ),
     );
-  }*/
+  }
 }
