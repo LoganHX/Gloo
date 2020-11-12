@@ -1,4 +1,5 @@
 import 'package:alpha_gloo/models/deck.dart';
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -61,13 +62,39 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return userCollection.document(uid).collection("decks").snapshots().map(_deckListFromSnapshot);
   }
 
-  Deck _deckFromSnapshot(DocumentSnapshot snapshot) {
+  // get flashcards stream
+  Stream<List<Flashcard>> flashcards(String subject) {
+
+    return userCollection.document(uid).collection("decks").document(subject).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
+
+  }
+
+
+
+  Deck _deckFromSnapshot(DocumentSnapshot snapshot){
     return Deck(
         university: snapshot.data['university'],
         course: snapshot.data['course'],
         prof: snapshot.data['prof'],
         year: snapshot.data['year']
     );
+  }
+  Flashcard _flashcardFromSnapshot(DocumentSnapshot snapshot){
+    return Flashcard(
+        question: snapshot.data['question'],
+        answer: snapshot.data['answer']
+    );
+  }
+
+  List<Flashcard> _flashcardListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      //print(doc.data);
+      return Flashcard(
+          question: doc.data['answer'] ?? '',
+          answer: doc.data['question'] ?? '',
+
+      );
+    }).toList();
   }
 
   List<Deck> _deckListFromSnapshot(QuerySnapshot snapshot) {
@@ -81,10 +108,5 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
       );
     }).toList();
   }
-  // // get flashcards stream
-  // Stream<Deck> flashcards(String subject) {
-  //   return userCollection.document(uid).collection("decks").document(subject).collection("flashcards").snapshots();
-  //
-  // }
 
 }

@@ -1,8 +1,12 @@
+import 'package:alpha_gloo/models/flashcard.dart';
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/shared/transparent_loading.dart';
 import 'package:alpha_gloo/src/home/gloo_home.dart';
 import 'package:alpha_gloo/src/gloo_theme.dart';
-import 'package:alpha_gloo/src/models/category.dart';
 import 'package:alpha_gloo/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CardListView extends StatefulWidget {
   const CardListView({Key key, this.callBack}) : super(key: key);
@@ -23,9 +27,10 @@ class _CardListViewState extends State<CardListView>
     super.initState();
   }
 
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 10));
-    return true;
+  Stream<List<Flashcard>> getData(){
+    final user = Provider.of<User>(context);
+    return DatabaseService(uid: user.uid).flashcards("ExampleSubject");
+
   }
 
   @override
@@ -42,21 +47,21 @@ class _CardListViewState extends State<CardListView>
         height:
             275, //l'altezza non deve essere fissa, ma proporzionata allo schermo usando delle misure
         width: double.infinity,
-        child: FutureBuilder<bool>(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        child: StreamBuilder<List<Flashcard>>(
+          stream: getData(),
+          builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return const SizedBox();
+              return TransparentLoading();
             } else {
               return ListView.builder(
                 padding: const EdgeInsets.only(
                     top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: Category.categoryList.length,
+                itemCount: snapshot.data.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = Category.categoryList.length > 10
+                  final int count = snapshot.data.length > 10
                       ? 10
-                      : Category.categoryList.length;
+                      : snapshot.data.length;
                   final Animation<double> animation =
                       Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
@@ -66,7 +71,7 @@ class _CardListViewState extends State<CardListView>
                   animationController.forward();
 
                   return CardView(
-                    category: Category.categoryList[index],
+                    flashcard: snapshot.data[index],
                     animation: animation,
                     animationController: animationController,
                     callback: () {
@@ -86,14 +91,14 @@ class _CardListViewState extends State<CardListView>
 class CardView extends StatelessWidget {
   const CardView(
       {Key key,
-      this.category,
+      this.flashcard,
       this.animationController,
       this.animation,
       this.callback})
       : super(key: key);
 
   final VoidCallback callback;
-  final Category category;
+  final Flashcard flashcard;
   final AnimationController animationController;
   final Animation<dynamic> animation;
 
@@ -146,7 +151,8 @@ class CardView extends StatelessWidget {
                                                       0), //bottom per il pulsante modifica
                                               child: Center(
                                                 child: Text(
-                                                  "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.",
+                                                  //"Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.",
+                                                  '${flashcard.question}',
                                                   textAlign: TextAlign.center,
                                                   maxLines: 5,
                                                   overflow:
