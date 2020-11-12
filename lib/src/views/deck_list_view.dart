@@ -1,7 +1,7 @@
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
-import 'package:alpha_gloo/shared/transparent_loading.dart';
-import 'package:alpha_gloo/src/gloo_theme.dart';
+import 'package:alpha_gloo/shared/loading.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

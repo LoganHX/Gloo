@@ -1,9 +1,9 @@
 import 'package:alpha_gloo/src/Utils/SliderWidget.dart';
-import 'package:alpha_gloo/src/card_list_view.dart';
+import 'package:alpha_gloo/src/views/card_list_view.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'gloo_theme.dart';
+import '../graphics/gloo_theme.dart';
 
 /**todo questa route non dovrebbe esistere, serve solo come mock e per rendermi un po'
  * conto del tutto. DOBBIAMO FARE TUTTO DA QUESTION_SCREEN e usare le animazioni, se non

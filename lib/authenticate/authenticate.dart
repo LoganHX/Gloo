@@ -1,5 +1,5 @@
-import 'package:alpha_gloo/src/authenticate/register.dart';
-import 'package:alpha_gloo/src/authenticate/sign_in.dart';
+import 'package:alpha_gloo/authenticate/register.dart';
+import 'package:alpha_gloo/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {

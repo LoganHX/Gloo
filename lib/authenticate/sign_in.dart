@@ -2,7 +2,7 @@ import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/shared/constants.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:alpha_gloo/src/gloo_theme.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 
 class SignIn extends StatefulWidget {
 

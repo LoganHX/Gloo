@@ -1,4 +1,4 @@
-import 'package:alpha_gloo/src/gloo_theme.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomSliderThumbCircle extends SliderComponentShape {

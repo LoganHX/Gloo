@@ -1,10 +1,8 @@
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
-import 'package:alpha_gloo/shared/transparent_loading.dart';
-import 'package:alpha_gloo/src/home/gloo_home.dart';
-import 'package:alpha_gloo/src/gloo_theme.dart';
-import 'package:alpha_gloo/main.dart';
+import 'package:alpha_gloo/shared/loading.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

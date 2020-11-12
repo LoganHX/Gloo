@@ -1,11 +1,11 @@
 import 'package:alpha_gloo/services/auth.dart';
-import 'package:alpha_gloo/src/deck_list_view.dart';
+import 'package:alpha_gloo/src/views/deck_list_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:alpha_gloo/services/database.dart';
-import '../gloo_theme.dart';
+import '../../graphics/gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
   @override
