@@ -1,7 +1,9 @@
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/deck_list_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:alpha_gloo/services/database.dart';
 import '../gloo_theme.dart';
 
@@ -14,11 +16,12 @@ class _GlooHomeState extends State<GlooHome> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
+    final totalHeight = MediaQuery.of(context).size.height;
+    final imageHeight = (totalHeight * 0.4).roundToDouble();
+    final titleHeight = (totalHeight*0.08).roundToDouble();
+    final scrollableHeight = totalHeight - imageHeight -titleHeight;
 
-    final  totalHeight = MediaQuery.of(context).size.height;
-    final  imageHeight = (totalHeight * 0.4).roundToDouble();
-    final  titleHeight = (totalHeight*0.08).roundToDouble();
-    final  scrollableHeight = totalHeight - imageHeight -titleHeight;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: GlooTheme.purple.withOpacity(0.7),
@@ -44,7 +47,7 @@ class _GlooHomeState extends State<GlooHome> {
           body: Column(
             children: <Widget>[
               Container(
-                height: imageHeight, //altezza immagine
+                height: imageHeight,
                 child: Image.asset(
                     './assets/images/Collaboration-cuate-nearlyPurple.png'),
               ),
@@ -89,7 +92,7 @@ class _GlooHomeState extends State<GlooHome> {
 
             ],
           ),
-          
+
         ),
       ),
     );
@@ -116,30 +119,10 @@ class _GlooHomeState extends State<GlooHome> {
 
   void moveTo() {
     Navigator.pushNamed(context, '/deck');
-    /*
-    Navigator.push<dynamic>(
-      context,
-
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => ShowDeckScreen(),
-      ),
-    );*/
   }
 
-  Widget getDeckUI() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        DeckListView(
-          callBack: () {
-            moveTo();
-          },
-        ),
-      ],
-    );
-  }
 
+/*
   Widget getSearchBarUI() {
     return Padding(
       padding: const EdgeInsets.only( left: 8.0, right: 8.0),
@@ -208,5 +191,5 @@ class _GlooHomeState extends State<GlooHome> {
         ],
       ),
     );
-  }
+  }*/
 }

@@ -1,3 +1,4 @@
+import 'package:alpha_gloo/models/deck.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -43,6 +44,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
 
   Future updateFlashcardData(String subject, String question, String answer) async {
     return await userCollection.document(uid).collection("decks").document(subject).collection("flashcards").document(question).setData({
+      "question": question,
       "answer": answer,
     });
   }
@@ -53,14 +55,36 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return userCollection.snapshots();
   }
 
+
   // get deck stream
-  Stream<QuerySnapshot> get decks {
-    return userCollection.document(uid).collection("decks").snapshots();
+  Stream<List<Deck>> get decks {
+    return userCollection.document(uid).collection("decks").snapshots().map(_deckListFromSnapshot);
   }
 
-  // get flashcards stream
-  Stream<QuerySnapshot> flashcards(String subject) {
-    return userCollection.document(uid).collection("decks").document(subject).collection("flashcards").snapshots();
+  Deck _deckFromSnapshot(DocumentSnapshot snapshot) {
+    return Deck(
+        university: snapshot.data['university'],
+        course: snapshot.data['course'],
+        prof: snapshot.data['prof'],
+        year: snapshot.data['year']
+    );
   }
+
+  List<Deck> _deckListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc){
+      //print(doc.data);
+      return Deck(
+          university: doc.data['university'] ?? '',
+          course: doc.data['course'] ?? '',
+          prof: doc.data['prof'] ?? '',
+          year: doc.data['year'] ?? ''
+      );
+    }).toList();
+  }
+  // // get flashcards stream
+  // Stream<Deck> flashcards(String subject) {
+  //   return userCollection.document(uid).collection("decks").document(subject).collection("flashcards").snapshots();
+  //
+  // }
 
 }
