@@ -46,7 +46,7 @@ class _GlooHomeState extends State<GlooHome> {
       SizedBox(
         height: 89,
         child: Padding(
-          padding: const EdgeInsets.only(top:55.0),
+          padding: const EdgeInsets.only(top:55.0), //todo studiare meglio come funziona Align per migliorare questo trick
           child: Align(
             alignment: Alignment.topRight,
             child: GestureDetector(
@@ -54,9 +54,9 @@ class _GlooHomeState extends State<GlooHome> {
                 Navigator.pushNamed(context, '/profile');
               },
               child: CircleAvatar(
-
+                //todo mettere un bordino al circle avatar
                 //backgroundColor: GlooTheme.nearlyPurple,
-                backgroundImage: AssetImage("./assets/images/elon.png"),
+                backgroundImage: AssetImage("./assets/images/carra.jpg"),
           ),
             ),
         ),

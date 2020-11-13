@@ -1,6 +1,7 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/home/gloo_home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -9,24 +10,29 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
 
-
     return new Scaffold(
-      backgroundColor: GlooTheme.purple.withOpacity(0.8),
-        body: new Stack(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [GlooTheme.purple, GlooTheme.nearlyPurple]),
+      ),
+      child:  Center(
+        child: Stack(
+
           children: <Widget>[
             ClipPath(
               child: Container(color: GlooTheme.nearlyPurple),
               clipper: getClipper(),
             ),
             Positioned(
-                width: 350.0,
-                top: MediaQuery.of(context).size.height / 5,
+                width: MediaQuery.of(context).size.width,
+                top: MediaQuery.of(context).size.height / 6,
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -35,73 +41,60 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         decoration: BoxDecoration(
                             color: GlooTheme.nearlyPurple,
                             image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/elon.png'),
+                                image: AssetImage('assets/images/carra.jpg'),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
                             boxShadow: [
                               BoxShadow(blurRadius: 7.0, color: Colors.black)
                             ])),
-                    SizedBox(height: 90.0),
+                    SizedBox(height: 45.0),
                     Text(
-                      'Elon Musk',
+                      'Raffaella Carrà',
                       style: TextStyle(
-                          color: GlooTheme.nearlyPurple,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                          ),
+                        color: GlooTheme.nearlyPurple,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 20.0),
                     Text(
-                      'Wow, Gloo is fantastic',
+                      'Credo molto nel lifelong learning',
                       style: TextStyle(
-                          color: GlooTheme.nearlyPurple,
-                          fontSize: 17.0,
-                          fontStyle: FontStyle.italic,
-                          ),
+                        color: GlooTheme.nearlyPurple,
+                        fontSize: 17.0,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 25.0),
-                    Container(
-                        height: 30.0,
-                        width: 95.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          //shadowColor: GlooTheme.grey,
-                          color: GlooTheme.grey,
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Center(
-                              child: Text(
-                                'Edit Name',
-                                style: TextStyle(color: GlooTheme.nearlyPurple),
-                              ),
-                            ),
-                          ),
-                        )),
-                    SizedBox(height: 25.0),
-                    Container(
-                        height: 30.0,
-                        width: 95.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          //shadowColor: GlooTheme.nearlyPurple,
-                          color: GlooTheme.nearlyPurple,
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () async {
-                              await _auth.signOut();
-                              Navigator.pushNamed(context, '/'); //todo da fare meglio, dubito si faccia così
+                    MaterialButton(
+                      onPressed: () {},
+                      color: GlooTheme.grey,
+                      textColor: GlooTheme.nearlyPurple,
+                      child: Icon(
+                        Icons.edit_outlined,
+                        size: 24,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      shape: CircleBorder(),
+                    ),
 
-                            },
-                            child: Center(
-                              child: Text(
-                                'Log out',
-                                style: TextStyle(color: GlooTheme.purple),
-                              ),
-                            ),
-                          ),
-                        ))
+                    SizedBox(height: 25.0),
+                    MaterialButton(
+                      onPressed: () async {
+                        await _auth.signOut();
+                        Navigator.pushNamed(context,
+                            '/'); //todo da fare meglio, dubito si faccia così
+                      },
+                      color: GlooTheme.purple,
+                      textColor: GlooTheme.nearlyPurple,
+                      child: Icon(
+                        Icons.logout,
+                        size: 24,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      shape: CircleBorder(),
+                    ),
+
                   ],
                 )),
             Padding(
@@ -114,10 +107,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius:
-                    BorderRadius.circular(AppBar().preferredSize.height),
+                        BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
-                      color: GlooTheme.grey,
+                      color: GlooTheme.nearlyPurple,
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -127,7 +120,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
             )
           ],
-        ));
+        ),
+      ),
+    ));
   }
 }
 
@@ -136,8 +131,8 @@ class getClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = new Path();
 
-    path.lineTo(0.0, size.height / 1.9);
-    path.lineTo(size.width + 125, 0.0);
+    path.lineTo(0.0, 0.0 / 1.9);
+    path.lineTo(0.0, 0.0);
     path.close();
     return path;
   }

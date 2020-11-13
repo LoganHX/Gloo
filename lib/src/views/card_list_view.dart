@@ -27,7 +27,7 @@ class _CardListViewState extends State<CardListView>
 
   Stream<List<Flashcard>> getData(){
     final user = Provider.of<User>(context);
-    return DatabaseService(uid: user.uid).flashcards("ExampleCourse");
+    return DatabaseService(uid: user.uid).flashcards("EMAD");
 
   }
 
