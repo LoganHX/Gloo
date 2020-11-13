@@ -234,7 +234,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                         BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
-                      color: GlooTheme.nearlyBlack,
+                      color: GlooTheme.grey,
                     ),
                     onTap: () {
                       Navigator.pop(context);

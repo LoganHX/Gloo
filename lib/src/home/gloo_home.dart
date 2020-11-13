@@ -15,7 +15,7 @@ class GlooHome extends StatefulWidget {
 class _GlooHomeState extends State<GlooHome> {
   @override
   Widget build(BuildContext context) {
-    final AuthService _auth = AuthService();
+    //final AuthService _auth = AuthService();
 
     final totalHeight = MediaQuery.of(context).size.height;
     final imageHeight = (totalHeight * 0.38).roundToDouble();
@@ -25,15 +25,49 @@ class _GlooHomeState extends State<GlooHome> {
 
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: GlooTheme.purple.withOpacity(0.7),
-        onPressed: () async {
-            await _auth.signOut();
-        },
-        child: Icon(Icons.logout,
-        color: GlooTheme.nearlyPurple,),
+
+
+      floatingActionButton:
+
+      Stack(
+    children: <Widget>[
+
+      Align(
+        alignment: Alignment.bottomRight,
+        child: FloatingActionButton(
+          backgroundColor: GlooTheme.purple.withOpacity(0.7),
+          onPressed: () {
+            //await _auth.signOut();
+          },
+          child: Icon(Icons.add,
+            color: GlooTheme.nearlyPurple,),
+        ),
       ),
-      body: Container(
+      SizedBox(
+        height: 89,
+        child: Padding(
+          padding: const EdgeInsets.only(top:55.0),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              child: CircleAvatar(
+
+                //backgroundColor: GlooTheme.nearlyPurple,
+                backgroundImage: AssetImage("./assets/images/elon.png"),
+          ),
+            ),
+        ),
+      ),),
+    ],
+    ),
+
+
+
+      body:
+      Container(
         //color: GlooTheme.nearlyPurple,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -126,9 +160,6 @@ class _GlooHomeState extends State<GlooHome> {
 
 
   Widget getBarUI(double barHeight) {
-
-
-
     return Padding(
       padding: const EdgeInsets.only( left: 8.0, right: 8.0),
       child: Row(

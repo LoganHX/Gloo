@@ -10,6 +10,7 @@ import 'package:alpha_gloo/src/question_screen.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/home/gloo_home.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
+import 'package:alpha_gloo/src/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           '/question': (context) => QuestionScreen(),
           '/answer' : (context) => AnswerScreen(),
           '/editor': (context) => EditorPage(),
+          '/profile': (context) => UserProfileScreen(),
         }
       ),
     );
