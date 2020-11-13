@@ -58,7 +58,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     SizedBox(height: 20.0),
                     Text(
-                      'Credo molto nel lifelong learning',
+                      "Com'è bello far l'amore da Trieste in Gloo'",
                       style: TextStyle(
                         color: GlooTheme.nearlyPurple,
                         fontSize: 17.0,
