@@ -2,11 +2,10 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
-import 'package:alpha_gloo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:alpha_gloo/services/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class DeckListView extends StatefulWidget {
   const DeckListView({Key key, this.callBack}) : super(key: key);
@@ -29,7 +28,6 @@ class _DeckListViewState extends State<DeckListView>
   Stream<List<Deck>> getData(){
     final user = Provider.of<User>(context);
     return DatabaseService(uid: user.uid).decks;
-    
   }
 
   @override

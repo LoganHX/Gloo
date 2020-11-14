@@ -24,18 +24,18 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
   final CollectionReference userCollection = Firestore.instance.collection("users");
 
 
-  Future updateUserData(String name, String surname, String university, String course, String nickname) async {
+  Future updateUserData(String name, String surname, String university, String department, String nickname) async {
     return await userCollection.document(uid).setData({
       "name": name,
       "surname": surname,
       "nickname": nickname,
       "university": university,
-      "course": course,
+      "department": department,
     });
   }
 
-  Future updateDeckData(String subject, String university, String course, String prof, String year) async {
-    return await userCollection.document(uid).collection("decks").document(subject).setData({
+  Future updateDeckData(String university, String course, String prof, String year) async {
+    return await userCollection.document(uid).collection("decks").document(course).setData({
       "university": university,
       "course": course,
       "prof": prof,
@@ -43,8 +43,8 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     });
   }
 
-  Future updateFlashcardData(String subject, String question, String answer) async {
-    return await userCollection.document(uid).collection("decks").document(subject).collection("flashcards").document(question).setData({
+  Future updateFlashcardData(String course, String question, String answer) async {
+    return await userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(question).setData({
       "question": question,
       "answer": answer,
     });
@@ -63,10 +63,8 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
   }
 
   // get flashcards stream
-  Stream<List<Flashcard>> flashcards(String subject) {
-
-    return userCollection.document(uid).collection("decks").document(subject).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
-
+  Stream<List<Flashcard>> flashcards(String course) {
+    return userCollection.document(uid).collection("decks").document(course).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
   }
 
 

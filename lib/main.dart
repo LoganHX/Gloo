@@ -1,14 +1,13 @@
-import 'dart:io';
 //importava pure app_theme
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/src/Utils/wrapper.dart';
 import 'package:alpha_gloo/services/auth.dart';
-import 'package:alpha_gloo/src/Utils/flutter_summernote.dart';
 import 'package:alpha_gloo/src/answer_screen.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/question_screen.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/home/gloo_home.dart';
+import 'package:alpha_gloo/src/views/new_deck_view.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/user_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +44,7 @@ class MyApp extends StatelessWidget {
         routes: {
           //'/':(context) => LoginScreen(),
           '/home':(context) => GlooHome(),
+          '/newDeck':(context) => NewDeckScreen(),
           '/deck': (context) => ShowDeckScreen(),
           '/question': (context) => QuestionScreen(),
           '/answer' : (context) => AnswerScreen(),

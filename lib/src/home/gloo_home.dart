@@ -1,10 +1,5 @@
-import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:alpha_gloo/services/database.dart';
 import '../../graphics/gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
@@ -37,6 +32,7 @@ class _GlooHomeState extends State<GlooHome> {
         child: FloatingActionButton(
           backgroundColor: GlooTheme.purple.withOpacity(0.7),
           onPressed: () {
+            Navigator.pushNamed(context, '/newDeck');
             //await _auth.signOut();
           },
           child: Icon(Icons.add,
