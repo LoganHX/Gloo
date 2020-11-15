@@ -19,58 +19,55 @@ class _GlooHomeState extends State<GlooHome> {
 
     final totalHeight = MediaQuery.of(context).size.height;
     final imageHeight = (totalHeight * 0.38).roundToDouble();
-    final titleHeight = (totalHeight*0.08).roundToDouble();
-    final barHeight = titleHeight - titleHeight; //eliminare la sottrazione in caso di necessità della Bar
-    final scrollableHeight = totalHeight - imageHeight -titleHeight - barHeight;
-
+    final titleHeight = (totalHeight * 0.08).roundToDouble();
+    final barHeight = titleHeight -
+        titleHeight; //eliminare la sottrazione in caso di necessità della Bar
+    final scrollableHeight =
+        totalHeight - imageHeight - titleHeight - barHeight;
 
     return Scaffold(
-
-
-      floatingActionButton:
-
-      Stack(
-    children: <Widget>[
-
-      Align(
-        alignment: Alignment.bottomRight,
-        child: FloatingActionButton(
-          backgroundColor: GlooTheme.purple.withOpacity(0.7),
-          onPressed: () {
-            //await _auth.signOut();
-          },
-          child: Icon(Icons.add,
-            color: GlooTheme.nearlyPurple,),
-        ),
-      ),
-      SizedBox(
-
-        child: Padding(
-          padding: const EdgeInsets.only(top:55.0), //todo studiare meglio come funziona Align per migliorare questo trick
-          child: Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/profile');
+      floatingActionButton: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              backgroundColor: GlooTheme.purple.withOpacity(0.7),
+              onPressed: () {
+                //await _auth.signOut();
               },
-              child:CircleAvatar(
-                radius: 20,
-                backgroundColor: GlooTheme.nearlyPurple,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/carra.jpg'),
-                  radius: 18,
+              child: Icon(
+                Icons.add,
+                color: GlooTheme.nearlyPurple,
+              ),
+            ),
+          ),
+          SizedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top:
+                      55.0), //todo studiare meglio come funziona Align per migliorare questo trick
+              child: Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: GlooTheme.nearlyPurple.withOpacity(0.65),
+                    child: CircleAvatar(
+                      backgroundColor: GlooTheme.nearlyPurple.withOpacity(0.65),
+                      backgroundImage: AssetImage('assets/images/carra.jpg'),
+                      radius: 18,
+                    ),
+                  ),
                 ),
               ),
             ),
-        ),
-      ),),
-    ],
-    ),
-
-
-
-      body:
-      Container(
+          ),
+        ],
+      ),
+      body: Container(
         //color: GlooTheme.nearlyPurple,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -92,9 +89,8 @@ class _GlooHomeState extends State<GlooHome> {
               ),
               Container(
                 height: titleHeight,
-                width: 0.8*MediaQuery.of(context).size.width,
+                width: 0.8 * MediaQuery.of(context).size.width,
                 child: FittedBox(
-
                   child: Text(
                     'Cosa vuoi imparare oggi?',
                     textAlign: TextAlign.center,
@@ -107,7 +103,6 @@ class _GlooHomeState extends State<GlooHome> {
                   ),
                 ),
               ),
-
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
@@ -117,21 +112,19 @@ class _GlooHomeState extends State<GlooHome> {
                         Flexible(
                           child: getDecksUI(),
                         ),
-                       // SizedBox(height: 16,)
+                        // SizedBox(height: 16,)
                       ],
                     ),
                   ),
                 ),
               ),
-               Container(
-                 child: Center(
-                   child: getBarUI(barHeight),
-                 ),
+              Container(
+                child: Center(
+                  child: getBarUI(barHeight),
+                ),
               ),
-
             ],
           ),
-
         ),
       ),
     );
@@ -139,7 +132,8 @@ class _GlooHomeState extends State<GlooHome> {
 
   Widget getDecksUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0), //left era a 18 e right a 16
+      padding: const EdgeInsets.only(
+          top: 0, left: 16, right: 16, bottom: 0), //left era a 18 e right a 16
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,11 +154,9 @@ class _GlooHomeState extends State<GlooHome> {
     Navigator.pushNamed(context, '/deck');
   }
 
-
-
   Widget getBarUI(double barHeight) {
     return Padding(
-      padding: const EdgeInsets.only( left: 8.0, right: 8.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -207,7 +199,6 @@ class _GlooHomeState extends State<GlooHome> {
                       color: GlooTheme.nearlyPurple,
                       //size: 36.0,
                     ),
-
                   ],
                 ),
               ),

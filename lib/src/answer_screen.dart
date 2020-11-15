@@ -1,4 +1,4 @@
-import 'package:alpha_gloo/src/Utils/SliderWidget.dart';
+import 'package:alpha_gloo/src/components/SliderWidget.dart';
 import 'package:alpha_gloo/src/views/card_list_view.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
@@ -15,29 +15,19 @@ class AnswerScreen extends StatefulWidget {
 }
 
 const htmlData = """
-
-<h1>HTML Ipsum Presents</h1>
-<img src="https://picsum.photos/200/200/" alt="Image">
-
-<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis.</p>
-
-<h2>Header Level 2</h2>
-
-<ol>
-    <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-    <li>Aliquam tincidunt mauris eu risus.</li>
-</ol>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Lorem_Ipsum_-_WYSIWYG_en_Latex_-_tekst_als_paden.svg/220px-Lorem_Ipsum_-_WYSIWYG_en_Latex_-_tekst_als_paden.svg.png" alt="Image">
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-
-<h3>Header Level 3</h3>
+<img src="https://www.chedonna.it/wp-content/uploads/2015/03/download2.jpg">
+<br/>
+<p>
+Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. </p>
 
 <ul>
-    <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-    <li>Aliquam tincidunt mauris eu risus.</li>
+<li>Lorem</li>
+<li>Ipsum</li>
+<li>dolor</li>
+<li>sit</li>
+<li>amet</li>
+
 </ul>
-
-
 """;
 
 class _AnswerScreenState extends State<AnswerScreen>

@@ -160,7 +160,8 @@ class DeckView extends StatelessWidget {
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  '${deck.prof}',
+                                                   //'${deck.year} '
+                                                  '28 cards',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,
@@ -174,7 +175,7 @@ class DeckView extends StatelessWidget {
                                                     children: <Widget>[
                                                       Text(
                                                         //'${deck.year} ',
-                                                        '',
+                                                        '4.8 ',
                                                         textAlign:
                                                             TextAlign.right,
                                                         style: TextStyle(

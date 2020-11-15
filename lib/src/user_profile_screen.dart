@@ -45,7 +45,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
                             boxShadow: [
-                              BoxShadow(blurRadius: 7.0, color: Colors.black)
+                              BoxShadow(blurRadius: 7.0, color: GlooTheme.nearlyPurple)
                             ])),
                     SizedBox(height: 45.0),
                     Text(
@@ -57,13 +57,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     SizedBox(height: 20.0),
-                    Text(
-                      "Com'è bello far l'amore da Trieste in Gloo'",
-                      style: TextStyle(
-                        color: GlooTheme.nearlyPurple,
-                        fontSize: 17.0,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+                      child: Text(
+                        "Com'è bello far l'amore da Trieste in Gloo",
+                        style: TextStyle(
+                          color: GlooTheme.nearlyPurple,
+                          fontSize: 17.0,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 25.0),
                     MaterialButton(

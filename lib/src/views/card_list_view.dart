@@ -43,7 +43,7 @@ class _CardListViewState extends State<CardListView>
       padding: const EdgeInsets.only(top: 10, bottom: 0),
       child: Container(
         height:
-            275, //l'altezza non deve essere fissa, ma proporzionata allo schermo usando delle misure
+            385, //l'altezza non deve essere fissa, ma proporzionata allo schermo usando delle misure
         width: double.infinity,
         child: StreamBuilder<List<Flashcard>>(
           stream: getData(),
@@ -149,8 +149,9 @@ class CardView extends StatelessWidget {
                                                       0), //bottom per il pulsante modifica
                                               child: Center(
                                                 child: Text(
-                                                  //"Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.",
-                                                  '${flashcard.question}',
+
+                                                 "Cos'è il Lorem Ipsum?",
+                                                  //'${flashcard.question}',
                                                   textAlign: TextAlign.center,
                                                   maxLines: 5,
                                                   overflow:
