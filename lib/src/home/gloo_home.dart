@@ -33,7 +33,7 @@ class _GlooHomeState extends State<GlooHome> {
             child: FloatingActionButton(
               backgroundColor: GlooTheme.purple.withOpacity(0.7),
               onPressed: () {
-                //await _auth.signOut();
+                Navigator.pushNamed(context, '/newDeck');
               },
               child: Icon(
                 Icons.add,

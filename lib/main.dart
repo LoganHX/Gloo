@@ -13,7 +13,7 @@ import 'package:alpha_gloo/src/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
+import 'package:alpha_gloo/src/new_deck_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
           '/answer' : (context) => AnswerScreen(),
           '/editor': (context) => EditorPage(),
           '/profile': (context) => UserProfileScreen(),
+          '/newDeck':(context) => NewDeckScreen(),
         }
       ),
     );
