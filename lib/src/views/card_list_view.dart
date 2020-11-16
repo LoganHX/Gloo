@@ -1,3 +1,4 @@
+import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
@@ -7,9 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CardListView extends StatefulWidget {
-  const CardListView({Key key, this.callBack}) : super(key: key);
+  const CardListView({Key key, this.callBack, this.deck}) : super(key: key);
 
   final Function callBack;
+  final Deck deck;
   @override
   _CardListViewState createState() => _CardListViewState();
 }
@@ -27,7 +29,7 @@ class _CardListViewState extends State<CardListView>
 
   Stream<List<Flashcard>> getData(){
     final user = Provider.of<User>(context);
-    return DatabaseService(uid: user.uid).flashcards("EMAD");
+    return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
 
   }
 
@@ -150,7 +152,7 @@ class CardView extends StatelessWidget {
                                               child: Center(
                                                 child: Text(
 
-                                                 "Cos'è il Lorem Ipsum?",
+                                                 flashcard.question,
                                                   //'${flashcard.question}',
                                                   textAlign: TextAlign.center,
                                                   maxLines: 5,

@@ -67,6 +67,11 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return userCollection.document(uid).collection("decks").document(course).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
   }
 
+  Future<String> flashcardsCount(String course) async {
+    String toReturn;
+    await userCollection.document(uid).collection("decks").document(course).collection("flashcards").getDocuments().then((value) => toReturn=value.documents.length.toString());
+    return toReturn;
+  }
 
 
   Deck _deckFromSnapshot(DocumentSnapshot snapshot){
@@ -88,8 +93,8 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return snapshot.documents.map((doc){
       //print(doc.data);
       return Flashcard(
-          question: doc.data['answer'] ?? '',
-          answer: doc.data['question'] ?? '',
+          question: doc.data['question'] ?? '',
+          answer: doc.data['answer'] ?? '',
 
       );
     }).toList();

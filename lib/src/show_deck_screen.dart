@@ -1,22 +1,31 @@
+import 'package:alpha_gloo/models/deck.dart';
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/src/views/card_list_view.dart';
-
 import 'package:flutter/material.dart';
-import '../main.dart';
+import 'package:provider/provider.dart';
 import '../graphics/gloo_theme.dart';
 
 class ShowDeckScreen extends StatefulWidget {
+
+  final Deck deck;
+
+  const ShowDeckScreen({Key key, this.deck}) : super(key: key);
+
   @override
   _ShowDeckScreenState createState() => _ShowDeckScreenState();
 }
 
 class _ShowDeckScreenState extends State<ShowDeckScreen>
     with TickerProviderStateMixin {
+
   final double infoHeight = 360.0;
   AnimationController animationController;
   Animation<double> animation;
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
+  String count="";
 
   @override
   void initState() {
@@ -45,11 +54,17 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     });
   }
 
+  void getFlashcardsCount() async {
+    final user = Provider.of<User>(context);
+    count = await DatabaseService(uid: user.uid).flashcardsCount(widget.deck.course);
+  }
+
   @override
   Widget build(BuildContext context) {
     /*final double tempHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;*/
+    getFlashcardsCount();
     return Container(
       color: GlooTheme.nearlyPurple.withOpacity(0.95),
       child: Scaffold(
@@ -104,7 +119,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             padding: const EdgeInsets.only(
                                 top: 24.0, left: 16, right: 16, bottom: 0.0),
                             child: Text(
-                              'EMAD',
+                              widget.deck.course,
                               textAlign: TextAlign.left,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -126,7 +141,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  '28 cards',
+                                  count,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w200,
@@ -255,6 +270,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CardListView(
+          deck: widget.deck,
           callBack: () {
             Navigator.pushNamed(context, '/question');
           },

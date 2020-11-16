@@ -10,7 +10,7 @@ import 'package:alpha_gloo/services/database.dart';
 class DeckListView extends StatefulWidget {
   const DeckListView({Key key, this.callBack}) : super(key: key);
 
-  final Function callBack;
+  final Function(Deck deck) callBack;
   @override
   _DeckListViewState createState() => _DeckListViewState();
 }
@@ -18,6 +18,7 @@ class DeckListView extends StatefulWidget {
 class _DeckListViewState extends State<DeckListView>
     with TickerProviderStateMixin {
   AnimationController animationController;
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -59,9 +60,7 @@ class _DeckListViewState extends State<DeckListView>
                 );
                 animationController.forward();
                 return DeckView(
-                  callback: () {
-                    widget.callBack();
-                  },
+                  callback: widget.callBack,
                   deck: snapshot.data[index],
                   animation: animation,
                   animationController: animationController,
@@ -90,10 +89,12 @@ class DeckView extends StatelessWidget {
       this.callback})
       : super(key: key);
 
-  final VoidCallback callback;
+  final Function(Deck deck) callback;
   final Deck deck;
   final AnimationController animationController;
   final Animation<dynamic> animation;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +110,7 @@ class DeckView extends StatelessWidget {
                     child: InkWell(
                       splashColor: Colors.transparent,
                       onTap: () {
-                        callback();
+                        callback(deck);
                       },
                       child: SizedBox(
                         height: 280,
@@ -159,7 +160,7 @@ class DeckView extends StatelessWidget {
                                               children: <Widget>[
                                                 Text(
                                                    //'${deck.year} '
-                                                  '28 cards',
+                                                  "28",
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,

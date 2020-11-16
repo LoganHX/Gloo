@@ -1,10 +1,7 @@
-import 'package:alpha_gloo/services/auth.dart';
+import 'package:alpha_gloo/models/deck.dart';
+import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:alpha_gloo/services/database.dart';
 import '../../graphics/gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
@@ -140,8 +137,8 @@ class _GlooHomeState extends State<GlooHome> {
         children: <Widget>[
           Flexible(
             child: DeckListView(
-              callBack: () {
-                moveTo();
+              callBack: (Deck deck) {
+                moveTo(deck);
               },
             ),
           )
@@ -150,8 +147,15 @@ class _GlooHomeState extends State<GlooHome> {
     );
   }
 
-  void moveTo() {
-    Navigator.pushNamed(context, '/deck');
+  void moveTo(Deck deck) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ShowDeckScreen(
+            deck: deck,
+          )),
+    );
+    //Navigator.pushNamed(context, '/deck');
   }
 
   Widget getBarUI(double barHeight) {
