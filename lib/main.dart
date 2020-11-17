@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/src/add_deck_screen.dart';
 import 'package:alpha_gloo/src/components/wrapper.dart';
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/components/flutter_summernote.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           '/answer' : (context) => AnswerScreen(),
           '/editor': (context) => EditorPage(),
           '/profile': (context) => UserProfileScreen(),
-          '/newDeck':(context) => NewDeckScreen(),
+          '/newDeck':(context) => AddDeckScreen(),
         }
       ),
     );
