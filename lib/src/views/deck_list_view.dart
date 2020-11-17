@@ -158,15 +158,30 @@ class DeckView extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
-                                                Text(
-                                                   //'${deck.year} '
-                                                  "20/21",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 12,
-                                                    letterSpacing: 0.27,
-                                                    color: GlooTheme.purple,
+                                                Container(
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Icon(
+                                                        Icons.calendar_today,
+                                                        color: GlooTheme.purple,
+                                                        size: 12,
+                                                      ),
+                                                      Text(
+                                                        //'${deck.year} ',
+                                                        '20/21 ',
+                                                        textAlign:
+                                                        TextAlign.right,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                          FontWeight.w200,
+                                                          fontSize: 12,
+                                                          letterSpacing: 0.0,
+                                                          color:
+                                                          GlooTheme.purple,
+                                                        ),
+                                                      ),
+
+                                                    ],
                                                   ),
                                                 ),
                                                 Container(
