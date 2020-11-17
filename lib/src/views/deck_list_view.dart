@@ -160,7 +160,7 @@ class DeckView extends StatelessWidget {
                                               children: <Widget>[
                                                 Text(
                                                    //'${deck.year} '
-                                                  "28",
+                                                  "20/21",
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,

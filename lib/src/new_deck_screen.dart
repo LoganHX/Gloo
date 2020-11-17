@@ -67,6 +67,10 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                 TextFormField(
 
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(
+                         12.0,
+                      ),
+                      isCollapsed: true,
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -89,6 +93,10 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                 TextFormField(
 
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
+                      isCollapsed: true,
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
@@ -112,6 +120,10 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                 TextFormField(
 
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
+                      isCollapsed: true,
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
@@ -135,6 +147,10 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                 TextFormField(
 
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
+                      isCollapsed: true,
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       focusedBorder: OutlineInputBorder(

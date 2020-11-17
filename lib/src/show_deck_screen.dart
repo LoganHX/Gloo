@@ -141,12 +141,12 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  count,
+                                  count + ' cards',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w200,
-                                    fontSize: 12,
-                                    letterSpacing: 0.2,
+                                    fontSize: 18,
+                                    letterSpacing: 0.27,
                                     color: GlooTheme.nearlyPurple,
                                   ),
                                 ),
