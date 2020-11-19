@@ -45,7 +45,9 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return new Scaffold(
+//
+//
+//     return  Scaffold(
 //       key: _scaffoldKey,
 //       body: NotificationListener<OverscrollIndicatorNotification>(
 //         onNotification: (overscroll) {
@@ -75,12 +77,12 @@
 //                 Padding(
 //                   padding: EdgeInsets.only(top: 5.0),
 //                   child: new Image(
-//                       height: 300,
+//                       height: 280,
 //                       fit: BoxFit.fill,
 //                       image: new AssetImage('assets/images/login.png')),
 //                 ),
 //                 Padding(
-//                   padding: EdgeInsets.only(top: 20.0),
+//                   padding: EdgeInsets.only(top: 10.0),
 //                   child: _buildMenuBar(context),
 //                 ),
 //                 Expanded(
@@ -151,7 +153,7 @@
 //         style: TextStyle(
 //             color: Colors.white,
 //             fontSize: 16.0,
-//             fontFamily: "WorkSansSemiBold"),
+//             ),
 //       ),
 //       backgroundColor: Colors.blue,
 //       duration: Duration(seconds: 3),
@@ -177,11 +179,11 @@
 //                 highlightColor: Colors.transparent,
 //                 onPressed: _onSignInButtonPress,
 //                 child: Text(
-//                   "Existing",
+//                   "Accedi",
 //                   style: TextStyle(
 //                       color: left,
 //                       fontSize: 16.0,
-//                       fontFamily: "WorkSansSemiBold"),
+//                      ),
 //                 ),
 //               ),
 //             ),
@@ -192,11 +194,11 @@
 //                 highlightColor: Colors.transparent,
 //                 onPressed: _onSignUpButtonPress,
 //                 child: Text(
-//                   "New",
+//                   "Nuovo Utente",
 //                   style: TextStyle(
 //                       color: right,
 //                       fontSize: 16.0,
-//                       fontFamily: "WorkSansSemiBold"),
+//                       ),
 //                 ),
 //               ),
 //             ),
@@ -207,6 +209,10 @@
 //   }
 //
 //   Widget _buildSignIn(BuildContext context) {
+//     String email = "";
+//     String password = "";
+//     String error = "";
+//
 //     return Container(
 //       padding: EdgeInsets.only(top: 23.0),
 //       child: Column(
@@ -230,11 +236,15 @@
 //                         padding: EdgeInsets.only(
 //                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
 //                         child: TextField(
+//                           onChanged: (value) {
+//                             email = value;
+//                             print(email);
+//                           },
 //                           focusNode: myFocusNodeEmailLogin,
 //                           controller: loginEmailController,
 //                           keyboardType: TextInputType.emailAddress,
 //                           style: TextStyle(
-//                               fontFamily: "WorkSansSemiBold",
+//
 //                               fontSize: 16.0,
 //                               color: GlooTheme.grey),
 //                           decoration: InputDecoration(
@@ -244,9 +254,9 @@
 //                               color: GlooTheme.grey,
 //                               size: 22.0,
 //                             ),
-//                             hintText: "Email Address",
+//                             hintText: "Email",
 //                             hintStyle: TextStyle(
-//                                 fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+//                                  fontSize: 17.0),
 //                           ),
 //                         ),
 //                       ),
@@ -259,11 +269,15 @@
 //                         padding: EdgeInsets.only(
 //                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
 //                         child: TextField(
+//                           onChanged: (value) {
+//                             password = value;
+//                             print(password);
+//                           },
 //                           focusNode: myFocusNodePasswordLogin,
 //                           controller: loginPasswordController,
 //                           obscureText: _obscureTextLogin,
 //                           style: TextStyle(
-//                               fontFamily: "WorkSansSemiBold",
+//
 //                               fontSize: 16.0,
 //                               color: GlooTheme.grey),
 //                           decoration: InputDecoration(
@@ -275,7 +289,7 @@
 //                             ),
 //                             hintText: "Password",
 //                             hintStyle: TextStyle(
-//                                 fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+//                                  fontSize: 17.0),
 //                             suffixIcon: GestureDetector(
 //                               onTap: _toggleLogin,
 //                               child: Icon(
@@ -297,19 +311,8 @@
 //                 margin: EdgeInsets.only(top: 170.0),
 //                 decoration: new BoxDecoration(
 //                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                   boxShadow: <BoxShadow>[
-//                     BoxShadow(
-//                       color: GlooTheme.nearlyPurple,
-//                       offset: Offset(1.0, 6.0),
-//                       blurRadius: 20.0,
-//                     ),
-//                     BoxShadow(
-//                       color: GlooTheme.purple,
-//                       offset: Offset(1.0, 6.0),
-//                       blurRadius: 20.0,
-//                     ),
-//                   ],
-//                   gradient: new LinearGradient(
+//
+//                   gradient: LinearGradient(
 //                       colors: [
 //                         GlooTheme.purple,
 //                         GlooTheme.purple
@@ -320,6 +323,7 @@
 //                       tileMode: TileMode.clamp),
 //                 ),
 //                 child: MaterialButton(
+//
 //                     highlightColor: Colors.transparent,
 //                     //splashColor: Theme.Colors.loginGradientEnd,
 //                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
@@ -331,11 +335,23 @@
 //                         style: TextStyle(
 //                             color: Colors.white,
 //                             fontSize: 25.0,
-//                             fontFamily: "WorkSansBold"),
+//                             ),
 //                       ),
 //                     ),
-//                     onPressed: () =>
-//                         showInSnackBar("Login button pressed")),
+//                     onPressed: () async {
+// //                         if(_formKey.currentState.validate()){
+// //                           setState(() => loading = true);
+// //                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+// //                           if(result == null){
+// //                             setState(() {
+// //                               error = "Can't sign in with those credentials";
+// //                               loading = false;
+// //                             });
+// //                           }
+// //                         }
+// //
+//                     }
+//                     ),
 //               ),
 //             ],
 //           ),
@@ -344,12 +360,12 @@
 //             child: FlatButton(
 //                 onPressed: () {},
 //                 child: Text(
-//                   "Forgot Password?",
+//                   "Non ricordi la Password?",
 //                   style: TextStyle(
 //                       decoration: TextDecoration.underline,
 //                       color: Colors.white,
 //                       fontSize: 16.0,
-//                       fontFamily: "WorkSansMedium"),
+//                    ),
 //                 )),
 //           ),
 //           // Padding(
@@ -435,7 +451,7 @@
 //                           keyboardType: TextInputType.text,
 //                           textCapitalization: TextCapitalization.words,
 //                           style: TextStyle(
-//                               fontFamily: "WorkSansSemiBold",
+//
 //                               fontSize: 16.0,
 //                               color: GlooTheme.grey),
 //                           decoration: InputDecoration(
@@ -444,9 +460,9 @@
 //                               FontAwesomeIcons.user,
 //                               color: GlooTheme.grey,
 //                             ),
-//                             hintText: "Name",
+//                             hintText: "Nome",
 //                             hintStyle: TextStyle(
-//                                 fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+//                                 fontSize: 16.0),
 //                           ),
 //                         ),
 //                       ),
@@ -463,7 +479,7 @@
 //                           controller: signupEmailController,
 //                           keyboardType: TextInputType.emailAddress,
 //                           style: TextStyle(
-//                               fontFamily: "WorkSansSemiBold",
+//
 //                               fontSize: 16.0,
 //                               color: GlooTheme.grey),
 //                           decoration: InputDecoration(
@@ -472,9 +488,9 @@
 //                               FontAwesomeIcons.envelope,
 //                               color: GlooTheme.grey,
 //                             ),
-//                             hintText: "Email Address",
+//                             hintText: "Email",
 //                             hintStyle: TextStyle(
-//                                 fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+//                                 fontSize: 16.0),
 //                           ),
 //                         ),
 //                       ),
@@ -491,7 +507,7 @@
 //                           controller: signupPasswordController,
 //                           obscureText: _obscureTextSignup,
 //                           style: TextStyle(
-//                               fontFamily: "WorkSansSemiBold",
+//
 //                               fontSize: 16.0,
 //                               color: GlooTheme.grey),
 //                           decoration: InputDecoration(
@@ -502,7 +518,7 @@
 //                             ),
 //                             hintText: "Password",
 //                             hintStyle: TextStyle(
-//                                 fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+//                                  fontSize: 16.0),
 //                             suffixIcon: GestureDetector(
 //                               onTap: _toggleSignup,
 //                               child: Icon(
@@ -528,7 +544,7 @@
 //                           controller: signupConfirmPasswordController,
 //                           obscureText: _obscureTextSignupConfirm,
 //                           style: TextStyle(
-//                               fontFamily: "WorkSansSemiBold",
+//
 //                               fontSize: 16.0,
 //                               color: GlooTheme.grey),
 //                           decoration: InputDecoration(
@@ -537,9 +553,9 @@
 //                               FontAwesomeIcons.lock,
 //                               color: GlooTheme.grey,
 //                             ),
-//                             hintText: "Confirmation",
+//                             hintText: "Conferma password",
 //                             hintStyle: TextStyle(
-//                                 fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+//                                  fontSize: 14.0),
 //                             suffixIcon: GestureDetector(
 //                               onTap: _toggleSignupConfirm,
 //                               child: Icon(
@@ -561,22 +577,11 @@
 //                 margin: EdgeInsets.only(top: 340.0),
 //                 decoration: new BoxDecoration(
 //                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                   boxShadow: <BoxShadow>[
-//                     BoxShadow(
-//                       color: GlooTheme.nearlyPurple,
-//                       offset: Offset(1.0, 6.0),
-//                       blurRadius: 20.0,
-//                     ),
-//                     BoxShadow(
-//                       color:GlooTheme.purple,
-//                       offset: Offset(1.0, 6.0),
-//                       blurRadius: 20.0,
-//                     ),
-//                   ],
+//
 //                   gradient: new LinearGradient(
 //                       colors: [
 //                         GlooTheme.purple,
-//                         GlooTheme.nearlyPurple
+//                         GlooTheme.purple
 //                       ],
 //                       begin: const FractionalOffset(0.2, 0.2),
 //                       end: const FractionalOffset(1.0, 1.0),
@@ -589,13 +594,13 @@
 //                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
 //                     child: Padding(
 //                       padding: const EdgeInsets.symmetric(
-//                           vertical: 10.0, horizontal: 42.0),
+//                           vertical: 8.0, horizontal: 42.0),
 //                       child: Text(
-//                         "SIGN UP",
+//                         "Registrati",
 //                         style: TextStyle(
 //                             color: Colors.white,
 //                             fontSize: 25.0,
-//                             fontFamily: "WorkSansBold"),
+//                             ),
 //                       ),
 //                     ),
 //                     onPressed: () =>
@@ -637,6 +642,7 @@
 //   }
 // }
 
+//todo wewe
 
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/shared/constants.dart';
@@ -667,21 +673,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      // backgroundColor: Colors.transparent,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0.0,
-      //   title: Text("Sign in to Gloo"),
-      //   actions: <Widget>[
-      //     // FlatButton.icon(
-      //     //   icon: Icon(Icons.person),
-      //     //   label: Text("Register"),
-      //     //   onPressed: () {
-      //     //     widget.toggleView();
-      //     //   },
-      //     // )
-      //   ],
-      // ),
+    
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
