@@ -19,8 +19,17 @@ class _AnswerScreenState extends State<AnswerScreen>
   double opacity2 = 0.0;
   double opacity3 = 0.0;
 
+  String htmlData;
+  String label;
+  int counter = 0;
   bool isQuestion = true;
   List<Flashcard> flashcards;
+  
+  var labels ={
+    'answer': "Risposta",
+    'question': "Domanda"
+  };
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -34,21 +43,26 @@ class _AnswerScreenState extends State<AnswerScreen>
 
   void toggleFlashcard() {
     if (isQuestion) {
-      isQuestion = false;
+      isQuestion = !isQuestion;
       htmlData = flashcards[counter].answer;
-      label = "Risposta";
+      label = labels['answer'];
     } else {
-      isQuestion = true;
+      isQuestion = !isQuestion;
       htmlData = flashcards[counter].question;
-      label = "Domanda";
+      label = labels['question'];
     }
   }
 
   void nextFlashcard() {
+    if(flashcards.length == counter+1)
+      {
+        Navigator.pop(context);
+        return;
+      }
     counter += 1;
     isQuestion = true;
     htmlData = flashcards[counter].question;
-    label = "Domanda";
+    label = labels['question'];
   }
 
   Future<void> setData() async {
@@ -68,15 +82,16 @@ class _AnswerScreenState extends State<AnswerScreen>
       opacity3 = 1.0;
     });
 
+    startStudyProcedure();
+  }
+
+  void startStudyProcedure() {
     flashcards = ModalRoute.of(context).settings.arguments;
     htmlData = flashcards.first.question;
-    label = "Domanda";
+    label = labels['question'];
     isQuestion = true;
   }
 
-  String htmlData;
-  String label;
-  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
