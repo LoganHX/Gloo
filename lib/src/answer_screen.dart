@@ -24,11 +24,8 @@ class _AnswerScreenState extends State<AnswerScreen>
   int counter = 0;
   bool isQuestion = true;
   List<Flashcard> flashcards;
-  
-  var labels ={
-    'answer': "Risposta",
-    'question': "Domanda"
-  };
+
+  var labels = {'answer': "Risposta", 'question': "Domanda"};
 
   @override
   void initState() {
@@ -54,16 +51,31 @@ class _AnswerScreenState extends State<AnswerScreen>
   }
 
   void nextFlashcard() {
-    if(flashcards.length == counter+1)
-      {
-        Navigator.pop(context);
-        return;
-      }
+    if (flashcards.length == counter + 1) {
+      Navigator.pop(context);
+      return;
+    }
     counter += 1;
     isQuestion = true;
     htmlData = flashcards[counter].question;
     label = labels['question'];
+
   }
+  void previousFlashcard() {
+    //print(counter);
+    if (counter == 0) {
+      Navigator.pop(context);
+      return;
+    }
+//todo non il massimo dell'eleganza
+    counter -= 1;
+    isQuestion = true;
+    htmlData = flashcards[counter].question;
+    label = labels['question'];
+
+  }
+
+
 
   Future<void> setData() async {
     animationController.forward();
@@ -156,6 +168,19 @@ class _AnswerScreenState extends State<AnswerScreen>
                           setState(() {
                             toggleFlashcard();
                           });
+                        },
+                        onHorizontalDragEnd: (details) {
+                          if (details.primaryVelocity < 0) {
+                            setState(() {
+                              nextFlashcard();
+                            });
+                          }
+                          if (details.primaryVelocity > 0) {
+                            print("Sinistra");
+                            setState(() {
+                              previousFlashcard();
+                            });
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
