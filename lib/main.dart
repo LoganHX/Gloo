@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/src/add_deck_screen.dart';
-import 'package:alpha_gloo/src/components/wrapper.dart';
+import 'package:alpha_gloo/services/wrapper.dart';
 import 'package:alpha_gloo/services/auth.dart';
-import 'package:alpha_gloo/src/components/flutter_summernote.dart';
 import 'package:alpha_gloo/src/answer_screen.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/question_screen.dart';
@@ -14,7 +12,7 @@ import 'package:alpha_gloo/src/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:alpha_gloo/src/new_deck_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
@@ -27,9 +25,8 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      //statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: GlooTheme.nearlyPurple,
-      systemNavigationBarDividerColor: Colors.white,
+      systemNavigationBarDividerColor: GlooTheme.purple,
       systemNavigationBarIconBrightness: Brightness.light,
     ));
     return StreamProvider<User>.value(

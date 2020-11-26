@@ -1,3 +1,4 @@
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/views/card_list_view.dart';
 
 import 'package:flutter/material.dart';
@@ -238,8 +239,8 @@ class _QuestionScreenState extends State<QuestionScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CardListView(
-          callBack: () {
-            Navigator.pushNamed(context, '/question');
+          callBack: (Flashcard flashcard) {
+            Navigator.pushNamed(context, '/answer');
           },
         ),
       ],

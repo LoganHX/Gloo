@@ -673,7 +673,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-    
+
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -700,7 +700,10 @@ class _SignInState extends State<SignIn> {
                   decoration: InputDecoration(
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
-
+                      isCollapsed: true,
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: GlooTheme.purple),
                         borderRadius: BorderRadius.circular(8),
@@ -721,6 +724,10 @@ class _SignInState extends State<SignIn> {
                 SizedBox(height: 20.0),
                 TextFormField(
                   decoration: InputDecoration(
+                      isCollapsed: true,
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
@@ -775,6 +782,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       onPressed: () {
                         widget.toggleView();
+
                       },
                     ),
                   ],

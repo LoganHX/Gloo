@@ -1,38 +1,20 @@
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
-import 'package:alpha_gloo/src/views/card_list_view.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import '../graphics/gloo_theme.dart';
 
-/**todo questa route non dovrebbe esistere, serve solo come mock e per rendermi un po'
- * conto del tutto. DOBBIAMO FARE TUTTO DA QUESTION_SCREEN e usare le animazioni, se non
- * lo facciamo avremo problemi col context (non saremo più in grdo di andare avanti e indietro nell'app
- */
+
 class AnswerScreen extends StatefulWidget {
+  final List<Flashcard> flashcards;
+  const AnswerScreen({Key key, this.flashcards}):super(key: key);
   @override
   _AnswerScreenState createState() => _AnswerScreenState();
 }
 
-const htmlData = """
-<img src="https://www.chedonna.it/wp-content/uploads/2015/03/download2.jpg">
-<br/>
-<p>
-Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. </p>
-
-<ul>
-<li>Lorem</li>
-<li>Ipsum</li>
-<li>dolor</li>
-<li>sit</li>
-<li>amet</li>
-
-</ul>
-""";
-
 class _AnswerScreenState extends State<AnswerScreen>
     with TickerProviderStateMixin {
-  //final double infoHeight = 360.0;
   AnimationController animationController;
   Animation<double> animation;
   double opacity1 = 0.0;
@@ -68,6 +50,7 @@ class _AnswerScreenState extends State<AnswerScreen>
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -96,16 +79,17 @@ class _AnswerScreenState extends State<AnswerScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/editor');
-                              },
-                              child: Icon(
-                                Icons.edit_outlined,
-                                color: GlooTheme.nearlyPurple,
-                                size: 22,
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.pushNamed(context, '/editor');
+                            //   },
+                            //
+                            //   child: Icon(
+                            //     Icons.edit_outlined,
+                            //     color: GlooTheme.nearlyPurple,
+                            //     size: 22,
+                            //   ),
+                            // ),
                             Text(
                               'Risposta',
                               textAlign: TextAlign.center,
@@ -116,20 +100,18 @@ class _AnswerScreenState extends State<AnswerScreen>
                                 color: GlooTheme.nearlyWhite,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.next_plan_rounded,
-                                color: GlooTheme.nearlyPurple,
-                                size: 22,
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {},
+                            //   child: Icon(
+                            //     Icons.next_plan_rounded,
+                            //     color: GlooTheme.nearlyPurple,
+                            //     size: 22,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                       Container(
-                        //todo devo estrarre le parti comuni a Question e Answer per non avere codice duplicato
-
                         width: MediaQuery.of(context).size.width,
                         constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.69,),
 
@@ -143,8 +125,10 @@ class _AnswerScreenState extends State<AnswerScreen>
                           padding: const EdgeInsets.only(
                               top: 2.0, left: 2.0, bottom: 2.0),
                           child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
+                            onTap: () async {
+                              setState(() {
+
+                              });
                             },
                             child: Scrollbar(
                               child: SingleChildScrollView(
@@ -152,36 +136,33 @@ class _AnswerScreenState extends State<AnswerScreen>
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 3.0),
                                   child: Html(
-                                    data: htmlData),
+                                    data: '-',
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      // Slider(
-                      //   value: 40,
-                      //   min: 0,
-                      //   max: 80,
-                      //   divisions: 4,
-                      //
-                      //   onChanged: (double value) {
-                      //     print(value);
-                      //   },
-                      // )
+
                       Expanded(child: Padding(
                         padding: EdgeInsets.all(0),
                       )),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: SliderWidget(),
+                      Visibility(
+                        visible: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: SliderWidget(
+
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-         
+
 
             Padding(
               //App bar da mettere anche nella pagina seguente
@@ -199,9 +180,8 @@ class _AnswerScreenState extends State<AnswerScreen>
                       color: GlooTheme.nearlyPurple,
                     ),
                     onTap: () {
-                      //todo è un trick, va risolto meglio
                       Navigator.pop(context);
-                      Navigator.pop(context);
+                      //Navigator.pop(context);
                     },
                   ),
                 ),
@@ -213,26 +193,26 @@ class _AnswerScreenState extends State<AnswerScreen>
     );
   }
 
-  Widget getCardsUI() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        CardListView(
-          callBack: () {
-            Navigator.pushNamed(context, '/answer');
-          },
-        ),
-      ],
-    );
-  }
+  // Widget getCardsUI() {
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: <Widget>[
+  //       CardListView(
+  //         callBack: () {
+  //           Navigator.pushNamed(context, '/answer');
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  void moveTo() {
-    Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => AnswerScreen(),
-      ),
-    );
-  }
+  // void moveTo() {
+  //   Navigator.push<dynamic>(
+  //     context,
+  //     MaterialPageRoute<dynamic>(
+  //       builder: (BuildContext context) => AnswerScreen(),
+  //     ),
+  //   );
+  // }
 }

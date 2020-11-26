@@ -69,6 +69,10 @@ class _RegisterState extends State<Register> {
                 TextFormField(
 
                   decoration: InputDecoration(
+                      isCollapsed: true,
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
                     fillColor: GlooTheme.nearlyPurple,
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -91,6 +95,10 @@ class _RegisterState extends State<Register> {
                 TextFormField(
 
                   decoration: InputDecoration(
+                      isCollapsed: true,
+                      contentPadding: EdgeInsets.all(
+                        12.0,
+                      ),
                       fillColor: GlooTheme.nearlyPurple,
                       filled: true,
                       focusedBorder: OutlineInputBorder(

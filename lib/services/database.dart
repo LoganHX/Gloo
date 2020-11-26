@@ -35,7 +35,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
   }
 
   Future updateDeckData(String university, String course, String prof, String year) async {
-    return await userCollection.document(uid).collection("decks").document(course).setData({
+    return await userCollection.document(uid).collection("decks").document(course).setData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
       "university": university,
       "course": course,
       "prof": prof,
@@ -44,7 +44,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
   }
 
   Future updateFlashcardData(String course, String question, String answer) async {
-    return await userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(question).setData({
+    return await userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(question).setData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
       "question": question,
       "answer": answer,
     });
@@ -95,14 +95,12 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
       return Flashcard(
           question: doc.data['question'] ?? '',
           answer: doc.data['answer'] ?? '',
-
       );
     }).toList();
   }
 
   List<Deck> _deckListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
-      //print(doc.data);
       return Deck(
           university: doc.data['university'] ?? '',
           course: doc.data['course'] ?? '',

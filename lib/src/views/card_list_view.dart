@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CardListView extends StatefulWidget {
-  const CardListView({Key key, this.callBack, this.deck}) : super(key: key);
+  const CardListView({Key key, this.callBack, this.deck, this.flashcards}) : super(key: key);
 
-  final Function callBack;
+  final Function(Flashcard) callBack;
   final Deck deck;
+  final List<Flashcard> flashcards;
+
   @override
   _CardListViewState createState() => _CardListViewState();
 }
@@ -30,7 +32,6 @@ class _CardListViewState extends State<CardListView>
   Stream<List<Flashcard>> getData(){
     final user = Provider.of<User>(context);
     return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
-
   }
 
   @override
@@ -45,23 +46,18 @@ class _CardListViewState extends State<CardListView>
       padding: const EdgeInsets.only(top: 10, bottom: 0),
       child: Container(
         height:
-            385, //l'altezza non deve essere fissa, ma proporzionata allo schermo usando delle misure
+            385, // todo l'altezza non deve essere fissa, ma proporzionata allo schermo usando context size
         width: double.infinity,
-        child: StreamBuilder<List<Flashcard>>(
-          stream: getData(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return TransparentLoading();
-            } else {
-              return ListView.builder(
+
+               child: ListView.builder(
                 padding: const EdgeInsets.only(
                     top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: snapshot.data.length,
+                itemCount: widget.flashcards.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = snapshot.data.length > 10
+                  final int count = widget.flashcards.length > 10
                       ? 10
-                      : snapshot.data.length;
+                      : widget.flashcards.length;
                   final Animation<double> animation =
                       Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
@@ -71,18 +67,16 @@ class _CardListViewState extends State<CardListView>
                   animationController.forward();
 
                   return CardView(
-                    flashcard: snapshot.data[index],
+                    flashcard: widget.flashcards[index],
                     animation: animation,
                     animationController: animationController,
-                    callback: () {
-                      widget.callBack();
+                    callback: (Flashcard flashcard) {
+                      widget.callBack(flashcard);
                     },
                   );
                 },
-              );
-            }
-          },
-        ),
+              ),
+
       ),
     );
   }
@@ -97,7 +91,7 @@ class CardView extends StatelessWidget {
       this.callback})
       : super(key: key);
 
-  final VoidCallback callback;
+  final Function(Flashcard) callback;
   final Flashcard flashcard;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -115,7 +109,7 @@ class CardView extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.transparent,
               onTap: () {
-                callback();
+                callback(flashcard);
               },
               child: SizedBox(
                 width: 270,
@@ -153,7 +147,6 @@ class CardView extends StatelessWidget {
                                                 child: Text(
 
                                                  flashcard.question,
-                                                  //'${flashcard.question}',
                                                   textAlign: TextAlign.center,
                                                   maxLines: 5,
                                                   overflow:
