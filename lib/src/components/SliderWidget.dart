@@ -7,12 +7,14 @@ class SliderWidget extends StatefulWidget {
   final int min;
   final int max;
   final fullWidth;
+  final Function onSelectedValue;
 
   SliderWidget(
       {this.sliderHeight = 45,
-        this.max = 5,
-        this.min = 0,
-        this.fullWidth = false});
+      this.max = 5,
+      this.min = 0,
+      this.fullWidth = false,
+      this.onSelectedValue});
 
   @override
   _SliderWidgetState createState() => _SliderWidgetState();
@@ -58,7 +60,6 @@ class _SliderWidgetState extends State<SliderWidget> {
                 fontSize: this.widget.sliderHeight * .3,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
-
               ),
             ),
             SizedBox(
@@ -83,12 +84,16 @@ class _SliderWidgetState extends State<SliderWidget> {
                     inactiveTickMarkColor: Colors.red.withOpacity(.7),
                   ),
                   child: Slider(
-                      value: _value,
-                      onChanged: (value) {
-                        setState(() {
-                          _value = value;
-                        });
-                      }),
+                    value: _value,
+                    onChanged: (value) {
+                      setState(() {
+                        _value = value;
+                      });
+                    },
+                    onChangeEnd: (value) {
+                      widget.onSelectedValue((value*5).round());
+                    },
+                  ),
                 ),
               ),
             ),

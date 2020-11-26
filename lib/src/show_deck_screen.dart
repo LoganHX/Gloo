@@ -21,6 +21,7 @@ class ShowDeckScreen extends StatefulWidget {
 class _ShowDeckScreenState extends State<ShowDeckScreen>
     with TickerProviderStateMixin {
   final double infoHeight = 360.0;
+  bool loading = false;
   AnimationController animationController;
   Animation<double> animation;
   double opacity1 = 0.0;
@@ -234,8 +235,11 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             borderRadius: BorderRadius.circular(50.0)),
                         elevation: 10.0,
                         child: GestureDetector(
-                          onTap: () {
-
+                          onTap: () async {
+                            setState(() {
+                              loading = true;
+                            });
+                            Navigator.pushNamed(context, '/answer', arguments: snapshot.data);
                           },
                           child: Container(
                             width: 50,
