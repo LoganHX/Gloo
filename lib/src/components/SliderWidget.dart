@@ -84,6 +84,8 @@ class _SliderWidgetState extends State<SliderWidget> {
                     inactiveTickMarkColor: Colors.red.withOpacity(.7),
                   ),
                   child: Slider(
+                    min: widget.min.toDouble(),
+                    max: widget.max.toDouble(),
                     value: _value,
                     onChanged: (value) {
                       setState(() {
@@ -91,7 +93,8 @@ class _SliderWidgetState extends State<SliderWidget> {
                       });
                     },
                     onChangeEnd: (value) {
-                      widget.onSelectedValue((value*5).round()); //todo sicuramente ci sta una soluzione migliore impostando cose direttamente da slider
+                      _value = 0;
+                      widget.onSelectedValue((value).round());
                     },
                   ),
                 ),

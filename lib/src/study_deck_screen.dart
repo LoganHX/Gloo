@@ -1,34 +1,27 @@
-import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:provider/provider.dart';
 import '../graphics/gloo_theme.dart';
 
-class AnswerScreen extends StatefulWidget {
+class StudyDeckScreen extends StatefulWidget {
   final List<Flashcard> flashcards;
-  const AnswerScreen({Key key, this.flashcards}) : super(key: key);
+  const StudyDeckScreen({Key key, this.flashcards}) : super(key: key);
   @override
-  _AnswerScreenState createState() => _AnswerScreenState();
+  _StudyDeckScreenState createState() => _StudyDeckScreenState();
 }
 
-class _AnswerScreenState extends State<AnswerScreen>
-    {
-
-
+class _StudyDeckScreenState extends State<StudyDeckScreen> {
   String htmlData;
   String label;
   int counter = 0;
   bool isQuestion = true;
 
-
   var labels = {'answer': "Risposta", 'question': "Domanda"};
 
   @override
   void initState() {
-
     setData();
     super.initState();
   }
@@ -47,8 +40,7 @@ class _AnswerScreenState extends State<AnswerScreen>
 
   void nextFlashcard() {
     if (widget.flashcards.length == counter + 1) {
-      Navigator.pop(
-          context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
+      Navigator.pop(context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
       return;
     }
     counter += 1;
@@ -71,11 +63,10 @@ class _AnswerScreenState extends State<AnswerScreen>
   }
 
   Future<void> setData() async {
-
     startStudyProcedure();
   }
 
-  void startStudyProcedure(){
+  void startStudyProcedure() {
     htmlData = widget.flashcards.first.question;
     label = labels['question'];
     isQuestion = true;
@@ -83,7 +74,6 @@ class _AnswerScreenState extends State<AnswerScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -130,14 +120,6 @@ class _AnswerScreenState extends State<AnswerScreen>
                                 color: GlooTheme.nearlyWhite,
                               ),
                             ),
-                            // GestureDetector(
-                            //   onTap: () {},
-                            //   child: Icon(
-                            //     Icons.next_plan_rounded,
-                            //     color: GlooTheme.nearlyPurple,
-                            //     size: 22,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -154,13 +136,13 @@ class _AnswerScreenState extends State<AnswerScreen>
                             });
                           }
                           if (details.primaryVelocity > 0) {
-                            print("Sinistra");
                             setState(() {
                               previousFlashcard();
                             });
                           }
                         },
                         child: Container(
+
                           width: MediaQuery.of(context).size.width,
                           constraints: BoxConstraints(
                             maxHeight:
@@ -217,7 +199,6 @@ class _AnswerScreenState extends State<AnswerScreen>
                           // isQuestion = false;
                           // counter = 0;
                           Navigator.pop(context);
-                          //Navigator.pop(context);
                         },
                       ),
                     ),
@@ -270,8 +251,10 @@ class _AnswerScreenState extends State<AnswerScreen>
               width: MediaQuery.of(context).size.width * 0.8,
               top: MediaQuery.of(context).size.height * 0.9,
               right: (MediaQuery.of(context).size.width * 0.2) / 2,
-              child: Visibility(
-                visible: !isQuestion,
+              child: AnimatedOpacity(
+
+                opacity: isQuestion ? 0.0 : 1.0,
+                duration: Duration(milliseconds: 400),
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: SliderWidget(

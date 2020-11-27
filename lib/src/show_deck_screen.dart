@@ -3,7 +3,7 @@ import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/shared/loading.dart';
-import 'package:alpha_gloo/src/answer_screen.dart';
+import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/views/card_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +66,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     return StreamBuilder<List<Flashcard>>(
       stream: _getFlashcards(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (!snapshot.hasData || loading) {
           return Loading();
         } else {
 
@@ -239,7 +239,11 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             setState(() {
                               loading = true;
                             });
-                            Navigator.push(context, MaterialPageRoute(builder:(context) => AnswerScreen(flashcards: snapshot.data)));
+                            print("Tap bottone studio flashcards");
+                            Navigator.push(context, MaterialPageRoute(builder:(context) => StudyDeckScreen(flashcards: snapshot.data)));
+                            setState(() {
+                              loading = false;
+                            });
                           },
                           child: Container(
                             width: 50,

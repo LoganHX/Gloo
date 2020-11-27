@@ -67,13 +67,6 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return userCollection.document(uid).collection("decks").document(course).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
   }
 
-  Future<String> flashcardsCount(String course) async {
-    String toReturn;
-    await userCollection.document(uid).collection("decks").document(course).collection("flashcards").getDocuments().then((value) => toReturn=value.documents.length.toString());
-    return toReturn;
-  }
-
-
   Deck _deckFromSnapshot(DocumentSnapshot snapshot){
     return Deck(
         university: snapshot.data['university'],
