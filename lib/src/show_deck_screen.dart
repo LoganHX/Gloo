@@ -239,7 +239,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             setState(() {
                               loading = true;
                             });
-                            Navigator.pushNamed(context, '/answer', arguments: snapshot.data);
+                            Navigator.push(context, MaterialPageRoute(builder:(context) => AnswerScreen(flashcards: snapshot.data)));
                           },
                           child: Container(
                             width: 50,

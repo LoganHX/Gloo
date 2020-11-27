@@ -2,6 +2,7 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../graphics/gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
@@ -12,8 +13,6 @@ class GlooHome extends StatefulWidget {
 class _GlooHomeState extends State<GlooHome> {
   @override
   Widget build(BuildContext context) {
-    //final AuthService _auth = AuthService();
-
     final totalHeight = MediaQuery.of(context).size.height;
     final imageHeight = (totalHeight * 0.38).roundToDouble();
     final titleHeight = (totalHeight * 0.08).roundToDouble();

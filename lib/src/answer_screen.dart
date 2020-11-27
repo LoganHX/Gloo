@@ -1,39 +1,34 @@
+import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
 import '../graphics/gloo_theme.dart';
 
 class AnswerScreen extends StatefulWidget {
-  const AnswerScreen({Key key}) : super(key: key);
+  final List<Flashcard> flashcards;
+  const AnswerScreen({Key key, this.flashcards}) : super(key: key);
   @override
   _AnswerScreenState createState() => _AnswerScreenState();
 }
 
 class _AnswerScreenState extends State<AnswerScreen>
-    with TickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
-  double opacity1 = 0.0;
-  double opacity2 = 0.0;
-  double opacity3 = 0.0;
+    {
+
 
   String htmlData;
   String label;
   int counter = 0;
   bool isQuestion = true;
-  List<Flashcard> flashcards;
+
 
   var labels = {'answer': "Risposta", 'question': "Domanda"};
 
   @override
   void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+
     setData();
     super.initState();
   }
@@ -41,26 +36,27 @@ class _AnswerScreenState extends State<AnswerScreen>
   void toggleFlashcard() {
     if (isQuestion) {
       isQuestion = !isQuestion;
-      htmlData = flashcards[counter].answer;
+      htmlData = widget.flashcards[counter].answer;
       label = labels['answer'];
     } else {
       isQuestion = !isQuestion;
-      htmlData = flashcards[counter].question;
+      htmlData = widget.flashcards[counter].question;
       label = labels['question'];
     }
   }
 
   void nextFlashcard() {
-    if (flashcards.length == counter + 1) {
-      Navigator.pop(context);
+    if (widget.flashcards.length == counter + 1) {
+      Navigator.pop(
+          context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
       return;
     }
     counter += 1;
     isQuestion = true;
-    htmlData = flashcards[counter].question;
+    htmlData = widget.flashcards[counter].question;
     label = labels['question'];
-
   }
+
   void previousFlashcard() {
     //print(counter);
     if (counter == 0) {
@@ -70,42 +66,24 @@ class _AnswerScreenState extends State<AnswerScreen>
 //todo non il massimo dell'eleganza
     counter -= 1;
     isQuestion = true;
-    htmlData = flashcards[counter].question;
+    htmlData = widget.flashcards[counter].question;
     label = labels['question'];
-
   }
 
-
-
   Future<void> setData() async {
-    animationController.forward();
-
-    await Future<dynamic>.delayed(const Duration(milliseconds: 00));
-    setState(() {
-      opacity1 = 1.0;
-    });
-
-    await Future<dynamic>.delayed(const Duration(milliseconds: 00));
-    setState(() {
-      opacity2 = 1.0;
-    });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 00));
-    setState(() {
-      opacity3 = 1.0;
-    });
 
     startStudyProcedure();
   }
 
-  void startStudyProcedure() {
-    flashcards = ModalRoute.of(context).settings.arguments;
-    htmlData = flashcards.first.question;
+  void startStudyProcedure(){
+    htmlData = widget.flashcards.first.question;
     label = labels['question'];
     isQuestion = true;
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(

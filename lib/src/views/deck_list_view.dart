@@ -32,6 +32,7 @@ class _DeckListViewState extends State<DeckListView>
 
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder<List<Deck>>(
       stream: getData(),
       builder: (context, snapshot) {
@@ -94,6 +95,7 @@ class DeckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget child) {

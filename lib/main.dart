@@ -1,4 +1,6 @@
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/src/add_deck_screen.dart';
 import 'package:alpha_gloo/services/wrapper.dart';
 import 'package:alpha_gloo/services/auth.dart';
@@ -13,10 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'models/deck.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
-      .then((_) => runApp(MyApp()));
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]).then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,27 +35,31 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: GlooTheme.purple,
       systemNavigationBarIconBrightness: Brightness.light,
     ));
-    return StreamProvider<User>.value(
-      value: AuthService().user,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: GlooTheme.purple,
-          secondaryHeaderColor: GlooTheme.nearlyPurple,
-          accentColor: GlooTheme.nearlyPurple,
+
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>(
+          create: (_) =>  AuthService().user,
         ),
-        home: Wrapper(),
-        routes: {
-          //'/':(context) => LoginScreen(),
-          '/home':(context) => GlooHome(),
-          '/deck': (context) => ShowDeckScreen(),
-          '/question': (context) => QuestionScreen(),
-          '/answer' : (context) => AnswerScreen(),
-          '/editor': (context) => EditorPage(),
-          '/profile': (context) => UserProfileScreen(),
-          '/newDeck':(context) => AddDeckScreen(),
-        }
-      ),
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: GlooTheme.purple,
+            secondaryHeaderColor: GlooTheme.nearlyPurple,
+            accentColor: GlooTheme.nearlyPurple,
+          ),
+          home: Wrapper(),
+          routes: {
+            //'/':(context) => LoginScreen(),
+            '/home': (context) => GlooHome(),
+            '/deck': (context) => ShowDeckScreen(),
+            '/question': (context) => QuestionScreen(),
+            '/answer': (context) => AnswerScreen(),
+            '/editor': (context) => EditorPage(),
+            '/profile': (context) => UserProfileScreen(),
+            '/newDeck': (context) => AddDeckScreen(),
+          }),
     );
   }
 }

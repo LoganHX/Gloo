@@ -91,7 +91,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                       });
                     },
                     onChangeEnd: (value) {
-                      widget.onSelectedValue((value*5).round());
+                      widget.onSelectedValue((value*5).round()); //todo sicuramente ci sta una soluzione migliore impostando cose direttamente da slider
                     },
                   ),
                 ),
