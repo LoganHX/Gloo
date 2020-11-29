@@ -120,17 +120,16 @@ class DeckView extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: GlooTheme.nearlyPurple,
+                                color: GlooTheme.cardColor,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
                                 boxShadow: [
                                   BoxShadow(
                                     color:
-                                        GlooTheme.nearlyPurple.withOpacity(0.5),
+                                        GlooTheme.cardColor.withOpacity(0.5),
                                     spreadRadius: 2,
                                     blurRadius: 1,
-                                    offset: Offset(
-                                        -5, 3), // changes position of shadow
+                                    offset: Offset(-5, 3), // changes position of shadow
                                   ),
                                 ],
                                 // border: new Border.all(

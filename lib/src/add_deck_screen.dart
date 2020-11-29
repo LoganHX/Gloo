@@ -29,13 +29,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          GlooTheme.purple.withOpacity(0.9),
-                          GlooTheme.nearlyPurple
-                        ]),
+                    gradient: GlooTheme.bgGradient,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

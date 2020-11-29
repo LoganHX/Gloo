@@ -20,7 +20,6 @@ class ShowDeckScreen extends StatefulWidget {
 
 class _ShowDeckScreenState extends State<ShowDeckScreen>
     with TickerProviderStateMixin {
-  final double infoHeight = 360.0;
   bool loading = false;
   AnimationController animationController;
   Animation<double> animation;
@@ -69,220 +68,194 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         if (!snapshot.hasData || loading) {
           return Loading();
         } else {
-
           return Container(
             color: GlooTheme.nearlyPurple.withOpacity(0.95),
             child: Scaffold(
               backgroundColor: Colors.transparent,
-              body: Stack(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      AspectRatio(
-                        aspectRatio: 1.7, //form factor immagine
-                        child: Image.asset('assets/images/main.png'),
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                    top: (MediaQuery.of(context).size.width / 1.5) - 48.0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              GlooTheme.purple.withOpacity(0.9),
-                              GlooTheme.nearlyPurple
-                            ]),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(32.0),
-                            topRight: Radius.circular(32.0)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: GlooTheme.purple.withOpacity(0.8),
-                              offset: const Offset(1.1, 1.1),
-                              blurRadius: 100.0),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: SingleChildScrollView(
-                          child: Container(
-                            constraints: BoxConstraints(
-                                minHeight: infoHeight,
-                                maxHeight: double
-                                    .infinity), //todo questa non era così, modifica le dimensioni dello spazio in cui ci va ciò che è descritto in category_list_view.dart
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 24.0,
-                                      left: 16,
-                                      right: 16,
-                                      bottom: 0.0),
-                                  child: Text(
-                                    widget.deck.course,
-                                    textAlign: TextAlign.left,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 22,
-                                      letterSpacing: 0.27,
-                                      color: GlooTheme.nearlyPurple,
+              body: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(gradient: GlooTheme.bgGradient),
+                child: Stack(
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          child: SingleChildScrollView(
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 24.0,
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 0.0),
+                                    child: Text(
+                                      widget.deck.course,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 22,
+                                        letterSpacing: 0.27,
+                                        color: GlooTheme.nearlyPurple,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 16,
-                                    right: 16,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        snapshot.data.length.toString() + ' cards',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w200,
-                                          fontSize: 18,
-                                          letterSpacing: 0.27,
-                                          color: GlooTheme.nearlyPurple,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 16,
+                                      right: 16,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          snapshot.data.length.toString() +
+                                              ' cards',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w200,
+                                            fontSize: 18,
+                                            letterSpacing: 0.27,
+                                            color: GlooTheme.nearlyPurple,
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Text(
-                                              '4.3 ',
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 18,
-                                                letterSpacing: 0.27,
-                                                color: GlooTheme.nearlyPurple,
+                                        Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '4.3 ',
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w200,
+                                                  fontSize: 18,
+                                                  letterSpacing: 0.27,
+                                                  color: GlooTheme.nearlyPurple,
+                                                ),
                                               ),
-                                            ),
-                                            Icon(
-                                              Icons.star,
-                                              color: GlooTheme.nearlyPurple,
-                                              size: 18,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                                              Icon(
+                                                Icons.star,
+                                                color: GlooTheme.nearlyPurple,
+                                                size: 18,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  child: getCardsUI(flashcards: snapshot.data.toList()),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: (MediaQuery.of(context).size.width / 1.2) - 137.0,
-                    right: 65,
-                    child: ScaleTransition(
-                      alignment: Alignment.center,
-                      scale: CurvedAnimation(
-                          parent: animationController,
-                          curve: Curves.fastOutSlowIn),
-                      child: Card(
-                        color: GlooTheme.purple,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
-                        elevation: 10.0,
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Icon(
-                              Icons.add, //icona aggiungi carta
-                              color: GlooTheme.nearlyPurple,
-                              size: 25,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: (MediaQuery.of(context).size.width / 1.2) - 137,
-                    right: 10,
-                    child: ScaleTransition(
-                      alignment: Alignment.center,
-                      scale: CurvedAnimation(
-                          parent: animationController,
-                          curve: Curves.fastOutSlowIn),
-                      child: Card(
-                        color: GlooTheme.nearlyPurple,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
-                        elevation: 10.0,
-                        child: GestureDetector(
-                          onTap: () async {
-                            setState(() {
-                              loading = true;
-                            });
-                            print("Tap bottone studio flashcards");
-                            Navigator.push(context, MaterialPageRoute(builder:(context) => StudyDeckScreen(flashcards: snapshot.data)));
-                            setState(() {
-                              loading = false;
-                            });
-                          },
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            child: Center(
-                              child: Icon(
-                                Icons.refresh, //icona ripeti deck
-                                color: GlooTheme.purple,
-                                size: 25,
+                                  Container(
+                                    child: getCardsUI(
+                                        flashcards: snapshot.data.toList()),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ),
+                        Row(
+                          children: [
+                            ScaleTransition(
+                              alignment: Alignment.center,
+                              scale: CurvedAnimation(
+                                  parent: animationController,
+                                  curve: Curves.fastOutSlowIn),
+                              child: Card(
+                                color: GlooTheme.nearlyPurple,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                elevation: 10.0,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    print("Tap bottone studio flashcards");
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                StudyDeckScreen(
+                                                    flashcards:
+                                                        snapshot.data)));
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 50,
+                                    height: 50,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.refresh, //icona ripeti deck
+                                        color: GlooTheme.purple,
+                                        size: 25,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ScaleTransition(
+                              alignment: Alignment.center,
+                              scale: CurvedAnimation(
+                                  parent: animationController,
+                                  curve: Curves.fastOutSlowIn),
+                              child: Card(
+                                color: GlooTheme.purple,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0)),
+                                elevation: 10.0,
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.add, //icona aggiungi carta
+                                      color: GlooTheme.nearlyPurple,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
-                    child: SizedBox(
-                      width: AppBar().preferredSize.height,
-                      height: AppBar().preferredSize.height,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(
-                              AppBar().preferredSize.height),
-                          child: Icon(
-                            Icons.arrow_back_ios, //ios
-                            color: GlooTheme.grey,
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top),
+                      child: SizedBox(
+                        width: AppBar().preferredSize.height,
+                        height: AppBar().preferredSize.height,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(
+                                AppBar().preferredSize.height),
+                            child: Icon(
+                              Icons.arrow_back_ios, //ios
+                              color: GlooTheme.nearlyWhite,
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           );

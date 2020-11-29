@@ -17,10 +17,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return new Scaffold(
         body: Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [GlooTheme.purple, GlooTheme.nearlyPurple]),
+        gradient: GlooTheme.bgGradient
       ),
       child:  Center(
         child: Stack(

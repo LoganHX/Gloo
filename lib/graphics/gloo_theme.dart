@@ -5,14 +5,13 @@ class GlooTheme {
 
   static const Color purple = Color(0xFF5c53f8); //colore principale app
   static const Color nearlyPurple = Color(0xFFf1f1ff); //colore secondario app
+  static const Color cardColor = Color(0xFFf1f1ff);
   static const Color grey = Color(0xFF6D72A6); //colore terziario app
   static const Color ice = Color(0xFFE9EFFF);
   static const Color nearlyWhite = Color(0xFFFFFFFF);
-  static const Color nearlyBlue = Color(0xFF00B6F0);
   static const Color nearlyBlack = Color(0xFF2F4F75);
 
   static const Color dark_grey = Color(0xFF313A44);
-
 
   static const Color darkText = Color(0xFF253840);
   static const Color darkerText = Color(0xFF17262A);
@@ -21,6 +20,16 @@ class GlooTheme {
   static const Color dismissibleBackground = Color(0xFF364A54);
   static const Color chipBackground = Color(0xFFEEF1F3);
   static const Color spacer = Color(0xFFF2F2F2);
+
+  static var bgGradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        GlooTheme.purple,
+        GlooTheme.purple.withOpacity(0.75),
+        GlooTheme.purple.withOpacity(0.6),
+        //Color(0xFFAAAAAA),
+      ]);
 
   //static const Color purple = Color(0xFFA1E7E5);
   //static const Color nearlyPurple = Color(0xFFb4f8c7);

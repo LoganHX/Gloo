@@ -66,13 +66,7 @@ class _GlooHomeState extends State<GlooHome> {
       body: Container(
         //color: GlooTheme.nearlyPurple,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                GlooTheme.purple.withOpacity(0.9),
-                GlooTheme.nearlyPurple
-              ]),
+          gradient: GlooTheme.bgGradient,
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,

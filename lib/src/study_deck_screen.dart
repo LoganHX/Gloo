@@ -74,16 +74,15 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [GlooTheme.purple, GlooTheme.nearlyPurple]),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
+
+
+    return Scaffold(
+
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: GlooTheme.bgGradient,
+        ),
+        child: Stack(
           children: <Widget>[
             Container(
               child: Padding(

@@ -44,13 +44,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                GlooTheme.purple.withOpacity(0.9),
-                GlooTheme.nearlyPurple
-              ]),
+          gradient: GlooTheme.bgGradient,
         ),
         padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),
         child: SingleChildScrollView(
