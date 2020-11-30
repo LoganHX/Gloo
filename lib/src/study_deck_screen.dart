@@ -1,6 +1,7 @@
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -19,6 +20,67 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   String label;
   int counter = 0;
   bool isQuestion = true;
+
+  Widget cardWidget(String text, String label) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 0.0, bottom: 8),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 24,
+              letterSpacing: 0.27,
+              color: GlooTheme.nearlyWhite,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.69,
+            decoration: BoxDecoration(
+              color: GlooTheme.nearlyPurple,
+              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            ),
+            padding: EdgeInsets.all(10),
+            child: Center(
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 2.0, left: 2.0, bottom: 2.0),
+                child: Scrollbar(
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 3.0),
+                      child: Html(
+                        style: {
+                          "html": Style(
+                            fontSize:
+                                text.length < 70 ? FontSize(21) : FontSize(17),
+                            //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
+                            textAlign: text.length < 70
+                                ? TextAlign.center
+                                : TextAlign.left,
+                            //todo qui assumo che il testo delle domande sia sostanzialmente plain text e non html
+                          ),
+                        },
+                        onLinkTap: (url) {},
+                        data: '$text',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   var labels = {'answer': "Risposta", 'question': "Domanda"};
 
@@ -86,96 +148,33 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
           children: <Widget>[
             Container(
               child: Padding(
-                padding: const EdgeInsets.only(left: 5, right: 5),
-                child: Container(
-                  padding: EdgeInsets.only(left: 30, right: 30, bottom: 0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0.0, bottom: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '$label',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 24,
-                                letterSpacing: 0.27,
-                                color: GlooTheme.nearlyWhite,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          setState(() {
-                            toggleFlashcard();
-                          });
+                padding: const EdgeInsets.only(
+                    left: 0, right: 0), //era 5 left  5 right
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    //Expanded(child: Padding(padding: EdgeInsets.zero,)),
+                    CarouselSlider.builder(
+                        itemCount: widget.flashcards.length,
+                        itemBuilder: (BuildContext context, int itemIndex) {
+                          return FlipCard(
+                            front: cardWidget(
+                                widget.flashcards[itemIndex].question,
+                                "Domanda"),
+                            back: cardWidget(
+                                widget.flashcards[itemIndex].answer,
+                                "Risposta"),
+                          );
                         },
-                        onHorizontalDragEnd: (details) {
-                          if (details.primaryVelocity < 0) {
-                            setState(() {
-                              nextFlashcard();
-                            });
-                          }
-                          if (details.primaryVelocity > 0) {
-                            setState(() {
-                              previousFlashcard();
-                            });
-                          }
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.69,
-                          // constraints: BoxConstraints(
-                          //   maxHeight:
-                          //       MediaQuery.of(context).size.height * 0.69,
-                          // ),
-                          decoration: BoxDecoration(
-                            color: GlooTheme.nearlyPurple,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16.0)),
-                          ),
-                          padding: EdgeInsets.all(10),
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 2.0, left: 2.0, bottom: 2.0),
-                              child: Scrollbar(
-                                child: SingleChildScrollView(
-                                  controller: ScrollController(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 3.0),
-                                    child: Html(
-                                      style: {
-                                        "html": Style(
-                                          fontSize: htmlData.length < 70
-                                              ? FontSize(21)
-                                              : FontSize(
-                                                  16), //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
-                                          textAlign: htmlData.length < 70
-                                              ? TextAlign.center
-                                              : TextAlign
-                                                  .left, //todo qui assumo che il testo delle domande sia sostanzialmente plain text e non html
-                                        ),
-                                      },
-                                      onLinkTap: (url) {},
-                                      data: '$htmlData',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+
+                        options: CarouselOptions(
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          scrollDirection: Axis.horizontal,
+                          enableInfiniteScroll: false,
+                          disableCenter: true,
+                        )),
+                  ],
                 ),
               ),
             ),
@@ -241,8 +240,8 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                               ]),
                             ),
                           ],
-                          child: Icon(Icons.more_vert,
-                              color: GlooTheme.nearlyWhite),
+                          child:
+                              Icon(Icons.check, color: GlooTheme.nearlyWhite),
                         ),
                       ),
                     ),
@@ -250,26 +249,26 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                 ],
               ),
             ),
-            Positioned(
-              width: MediaQuery.of(context).size.width * 0.8,
-              top: MediaQuery.of(context).size.height * 0.9,
-              right: (MediaQuery.of(context).size.width * 0.2) / 2,
-              child: AnimatedOpacity(
-                opacity: isQuestion ? 0.0 : 1.0,
-                duration: Duration(milliseconds: 400),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: SliderWidget(
-                    onSelectedValue: (value) {
-                      print(value);
-                      setState(() {
-                        nextFlashcard();
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   width: MediaQuery.of(context).size.width * 0.8,
+            //   top: MediaQuery.of(context).size.height * 0.9,
+            //   right: (MediaQuery.of(context).size.width * 0.2) / 2,
+            //   child: AnimatedOpacity(
+            //     opacity: isQuestion ? 0.0 : 1.0,
+            //     duration: Duration(milliseconds: 400),
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(bottom: 12.0),
+            //       child: SliderWidget(
+            //         onSelectedValue: (value) {
+            //           print(value);
+            //           setState(() {
+            //             nextFlashcard();
+            //           });
+            //         },
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
