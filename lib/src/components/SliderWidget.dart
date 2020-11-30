@@ -93,7 +93,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                       });
                     },
                     onChangeEnd: (value) {
-                      _value = 0;
+                      //_value = 0;
                       widget.onSelectedValue((value).round());
                     },
                   ),

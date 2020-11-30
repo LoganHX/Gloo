@@ -17,31 +17,45 @@ class StudyDeckScreen extends StatefulWidget {
 
 class _StudyDeckScreenState extends State<StudyDeckScreen> {
   String htmlData;
-  String label;
   int counter = 0;
   bool isQuestion = true;
 
-  Widget cardWidget(String text, String label) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 0.0, bottom: 8),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 24,
-              letterSpacing: 0.27,
-              color: GlooTheme.nearlyWhite,
+  Widget cardWidget(String text, bool isQuestion) {
+    return Container(
+      height: MediaQuery.of(context).size.height -
+          MediaQuery.of(context).padding.top -
+          AppBar().preferredSize.height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 0.075 *
+                (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top -
+                    AppBar().preferredSize.height),
+            child: FittedBox(
+              child: Text(
+                isQuestion ? labels['question'] : labels['answer'],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
+                  letterSpacing: 0.27,
+                  color: GlooTheme.nearlyWhite,
+                ),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.69,
+          SizedBox(
+              height: 0.018 *
+                  (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height)),
+          Container(
+            height: 0.755 *
+                (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top -
+                    AppBar().preferredSize.height),
             decoration: BoxDecoration(
               color: GlooTheme.nearlyPurple,
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
@@ -77,8 +91,38 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
               ),
             ),
           ),
-        ),
-      ],
+          SizedBox(
+            height: 0.05 *
+                (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top -
+                    AppBar().preferredSize.height),
+          ),
+          Container(
+            height: 0.1 *
+                (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top -
+                    AppBar().preferredSize.height),
+            width: MediaQuery.of(context).size.width * 0.75,
+            // top: MediaQuery.of(context).size.height * 0.88,
+            // right: (MediaQuery.of(context).size.width * 0.2) / 2 +(-25), //todo il valore tra parentesi andrebbe calcolato
+            child: AnimatedOpacity(
+              opacity: isQuestion ? 0.0 : 1.0,
+              duration: Duration(milliseconds: 400),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: SliderWidget(
+                  onSelectedValue: (value) {
+                    print(value);
+                    setState(() {
+                      nextFlashcard();
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -90,17 +134,17 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
     super.initState();
   }
 
-  void toggleFlashcard() {
-    if (isQuestion) {
-      isQuestion = !isQuestion;
-      htmlData = widget.flashcards[counter].answer;
-      label = labels['answer'];
-    } else {
-      isQuestion = !isQuestion;
-      htmlData = widget.flashcards[counter].question;
-      label = labels['question'];
-    }
-  }
+  // void toggleFlashcard() {
+  //   if (isQuestion) {
+  //     isQuestion = !isQuestion;
+  //     htmlData = widget.flashcards[counter].answer;
+  //     label = labels['answer'];
+  //   } else {
+  //     isQuestion = !isQuestion;
+  //     htmlData = widget.flashcards[counter].question;
+  //     label = labels['question'];
+  //   }
+  // }
 
   void nextFlashcard() {
     if (widget.flashcards.length == counter + 1) {
@@ -111,7 +155,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
     counter += 1;
     isQuestion = true;
     htmlData = widget.flashcards[counter].question;
-    label = labels['question'];
+    //label = labels['question'];
   }
 
   void previousFlashcard() {
@@ -124,7 +168,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
     counter -= 1;
     isQuestion = true;
     htmlData = widget.flashcards[counter].question;
-    label = labels['question'];
+    //label = labels['question'];
   }
 
   Future<void> setData() async {
@@ -133,7 +177,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   void startStudyProcedure() {
     htmlData = widget.flashcards.first.question;
-    label = labels['question'];
+    //label = labels['question'];
     isQuestion = true;
   }
 
@@ -141,41 +185,44 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: GlooTheme.bgGradient,
         ),
         child: Stack(
           children: <Widget>[
             Container(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 0, right: 0), //era 5 left  5 right
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    //Expanded(child: Padding(padding: EdgeInsets.zero,)),
-                    CarouselSlider.builder(
-                        itemCount: widget.flashcards.length,
-                        itemBuilder: (BuildContext context, int itemIndex) {
-                          return FlipCard(
-                            front: cardWidget(
-                                widget.flashcards[itemIndex].question,
-                                "Domanda"),
-                            back: cardWidget(
-                                widget.flashcards[itemIndex].answer,
-                                "Risposta"),
-                          );
-                        },
-
-                        options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height * 0.9,
-                          scrollDirection: Axis.horizontal,
-                          enableInfiniteScroll: false,
-                          disableCenter: true,
-                        )),
-                  ],
-                ),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).padding.top +
+                        AppBar().preferredSize.height,
+                  ),
+                  //Expanded(child: Padding(padding: EdgeInsets.zero,)),
+                  //Text("////"),
+                  CarouselSlider.builder(
+                      itemCount: widget.flashcards.length,
+                      itemBuilder: (BuildContext context, int itemIndex) {
+                        return FlipCard(
+                          front: cardWidget(
+                              widget.flashcards[itemIndex].question, true),
+                          back: cardWidget(
+                              widget.flashcards[itemIndex].answer, false),
+                        );
+                      },
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).padding.top -
+                            AppBar().preferredSize.height,
+                        scrollDirection: Axis.horizontal,
+                        enableInfiniteScroll: false,
+                        disableCenter: true,
+                        enlargeCenterPage: true,
+                      )),
+                ],
               ),
             ),
             Padding(
@@ -228,7 +275,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                               ]),
                             ),
                             PopupMenuItem<IconButton>(
-                              //value: WhyFarther.harder,
                               child: Row(children: [
                                 Icon(
                                   Icons.edit,
@@ -236,7 +282,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Text("Modifica $label"),
+                                Text("Modifica"),
                               ]),
                             ),
                           ],
@@ -249,26 +295,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                 ],
               ),
             ),
-            // Positioned(
-            //   width: MediaQuery.of(context).size.width * 0.8,
-            //   top: MediaQuery.of(context).size.height * 0.9,
-            //   right: (MediaQuery.of(context).size.width * 0.2) / 2,
-            //   child: AnimatedOpacity(
-            //     opacity: isQuestion ? 0.0 : 1.0,
-            //     duration: Duration(milliseconds: 400),
-            //     child: Padding(
-            //       padding: const EdgeInsets.only(bottom: 12.0),
-            //       child: SliderWidget(
-            //         onSelectedValue: (value) {
-            //           print(value);
-            //           setState(() {
-            //             nextFlashcard();
-            //           });
-            //         },
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
