@@ -1,8 +1,10 @@
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_html/style.dart';
 import '../graphics/gloo_theme.dart';
 
 class StudyDeckScreen extends StatefulWidget {
@@ -40,7 +42,8 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   void nextFlashcard() {
     if (widget.flashcards.length == counter + 1) {
-      Navigator.pop(context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
+      Navigator.pop(
+          context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
       return;
     }
     counter += 1;
@@ -74,10 +77,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
-
       body: Container(
         decoration: BoxDecoration(
           gradient: GlooTheme.bgGradient,
@@ -98,17 +98,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Navigator.pushNamed(context, '/editor');
-                            //   },
-                            //
-                            //   child: Icon(
-                            //     Icons.edit_outlined,
-                            //     color: GlooTheme.nearlyPurple,
-                            //     size: 22,
-                            //   ),
-                            // ),
                             Text(
                               '$label',
                               textAlign: TextAlign.center,
@@ -141,28 +130,43 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                           }
                         },
                         child: Container(
-
                           width: MediaQuery.of(context).size.width,
-                          constraints: BoxConstraints(
-                            maxHeight:
-                                MediaQuery.of(context).size.height * 0.69,
-                          ),
+                          height: MediaQuery.of(context).size.height * 0.69,
+                          // constraints: BoxConstraints(
+                          //   maxHeight:
+                          //       MediaQuery.of(context).size.height * 0.69,
+                          // ),
                           decoration: BoxDecoration(
                             color: GlooTheme.nearlyPurple,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(16.0)),
                           ),
                           padding: EdgeInsets.all(10),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 2.0, left: 2.0, bottom: 2.0),
-                            child: Scrollbar(
-                              child: SingleChildScrollView(
-                                controller: ScrollController(),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 3.0),
-                                  child: Html(
-                                    data: '$htmlData',
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 2.0, left: 2.0, bottom: 2.0),
+                              child: Scrollbar(
+                                child: SingleChildScrollView(
+                                  controller: ScrollController(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 3.0),
+                                    child: Html(
+                                      style: {
+                                        "html": Style(
+                                          fontSize: htmlData.length < 70
+                                              ? FontSize(21)
+                                              : FontSize(
+                                                  16), //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
+                                          textAlign: htmlData.length < 70
+                                              ? TextAlign.center
+                                              : TextAlign
+                                                  .left, //todo qui assumo che il testo delle domande sia sostanzialmente plain text e non html
+                                        ),
+                                      },
+                                      onLinkTap: (url) {},
+                                      data: '$htmlData',
+                                    ),
                                   ),
                                 ),
                               ),
@@ -251,7 +255,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
               top: MediaQuery.of(context).size.height * 0.9,
               right: (MediaQuery.of(context).size.width * 0.2) / 2,
               child: AnimatedOpacity(
-
                 opacity: isQuestion ? 0.0 : 1.0,
                 duration: Duration(milliseconds: 400),
                 child: Padding(

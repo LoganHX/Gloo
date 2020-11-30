@@ -91,7 +91,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 24.0,
-                                        left: 16,
+                                        left: 42,
                                         right: 16,
                                         bottom: 0.0),
                                     child: Text(
@@ -114,7 +114,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
@@ -162,8 +162,15 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 8,
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            SizedBox(
+                              width: 30,
+                            ),
                             ScaleTransition(
                               alignment: Alignment.center,
                               scale: CurvedAnimation(
@@ -174,32 +181,34 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50.0)),
                                 elevation: 10.0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    setState(() {
-                                      loading = true;
-                                    });
-                                    print("Tap bottone studio flashcards");
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                StudyDeckScreen(
-                                                    flashcards:
-                                                        snapshot.data)));
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.refresh, //icona ripeti deck
-                                        color: GlooTheme.purple,
-                                        size: 25,
-                                      ),
+                                child: Center(
+                                  child: FlatButton.icon(
+                                    onPressed: () async {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      print("Tap bottone studio flashcards");
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  StudyDeckScreen(
+                                                      flashcards:
+                                                          snapshot.data)));
+                                      setState(() {
+                                        loading = false;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.refresh, //icona ripeti deck
+                                      color: GlooTheme.purple,
+                                      size: 35,
+                                    ),
+                                    label: Text(
+                                      "Studia Deck",
+                                      style: TextStyle(
+                                          color: GlooTheme.purple,
+                                          fontSize: 18),
                                     ),
                                   ),
                                 ),
