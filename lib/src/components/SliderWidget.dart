@@ -35,7 +35,6 @@ class _SliderWidgetState extends State<SliderWidget> {
       width: this.widget.fullWidth
           ? double.infinity
           : (this.widget.sliderHeight) * 6.6,
-
       decoration: new BoxDecoration(
         borderRadius: new BorderRadius.all(
           Radius.circular((this.widget.sliderHeight * 0.7)),
@@ -82,12 +81,13 @@ class _SliderWidgetState extends State<SliderWidget> {
                     max: widget.max.toDouble(),
                     value: _value,
                     onChanged: (value) {
-                      setState(() {
-                        _value = value;
-                      });
+                      if (_value != value) {
+                        setState(() {
+                          _value = value;
+                        });
+                      }
                     },
                     onChangeEnd: (value) {
-                      //_value = 0;
                       widget.onSelectedValue((value).round());
                     },
                   ),

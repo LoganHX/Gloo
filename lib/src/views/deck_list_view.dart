@@ -32,7 +32,6 @@ class _DeckListViewState extends State<DeckListView>
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<List<Deck>>(
       stream: getData(),
       builder: (context, snapshot) {
@@ -95,7 +94,6 @@ class DeckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget child) {
@@ -125,11 +123,11 @@ class DeckView extends StatelessWidget {
                                     Radius.circular(20.0)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color:
-                                        GlooTheme.cardColor.withOpacity(0.5),
+                                    color: GlooTheme.cardColor.withOpacity(0.5),
                                     spreadRadius: 2,
                                     blurRadius: 1,
-                                    offset: Offset(-5, 3), // changes position of shadow
+                                    offset: Offset(
+                                        -5, 3), // changes position of shadow
                                   ),
                                 ],
                                 // border: new Border.all(
@@ -152,21 +150,24 @@ class DeckView extends StatelessWidget {
                                           child: Row(
                                             children: <Widget>[
                                               Icon(
-                                                Icons.calendar_today,
+                                                deck.course.length >= 5
+                                                    ? Icons.person
+                                                    : Icons
+                                                        .supervisor_account, //calendar
                                                 color: GlooTheme.purple,
-                                                size: 12,
+                                                size: 18,
                                               ),
-                                              Text(
-                                                //'${deck.year} ',
-                                                '20/21',
-                                                textAlign: TextAlign.right,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w200,
-                                                  fontSize: 12,
-                                                  letterSpacing: 0.0,
-                                                  color: GlooTheme.purple,
-                                                ),
-                                              ),
+                                              // Text(
+                                              //   //'${deck.year} ',
+                                              //   '20/21',
+                                              //   textAlign: TextAlign.right,
+                                              //   style: TextStyle(
+                                              //     fontWeight: FontWeight.w200,
+                                              //     fontSize: 12,
+                                              //     letterSpacing: 0.0,
+                                              //     color: GlooTheme.purple,
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -215,7 +216,7 @@ class DeckView extends StatelessWidget {
                                                   textAlign: TextAlign.center,
                                                   overflow:
                                                       TextOverflow.ellipsis,
-                                                  maxLines: 2,
+                                                  maxLines: 3,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 16,

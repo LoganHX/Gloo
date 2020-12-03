@@ -15,12 +15,13 @@ class StudyDeckScreen extends StatefulWidget {
   _StudyDeckScreenState createState() => _StudyDeckScreenState();
 }
 
-
-
 class _StudyDeckScreenState extends State<StudyDeckScreen> {
   String htmlData;
   List _value = [];
   bool isQuestion = true;
+  CarouselController carouselController = CarouselController();
+  var labels = {'answer': "Risposta", 'question': "Domanda"};
+
 
   Widget _getCardWidget(String text, bool isQuestion, int item) {
     return Container(
@@ -31,7 +32,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-
             child: FittedBox(
               child: Text(
                 isQuestion ? labels['question'] : labels['answer'],
@@ -96,19 +96,14 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                       MediaQuery.of(context).padding.top -
                       AppBar().preferredSize.height)),
           Container(
-            // height: 0.1 *
-            //     (MediaQuery.of(context).size.height -
-            //         MediaQuery.of(context).padding.top -
-            //         AppBar().preferredSize.height),
-            // width: MediaQuery.of(context).size.width * 0.73,
             child: AnimatedOpacity(
               opacity: isQuestion ? 0.0 : 1.0,
               duration: Duration(milliseconds: 400),
               child: SliderWidget(
                 onSelectedValue: (value) {
-                  _value.insert(item, value);
-                  print(_value[item]);
-                  //todo a questo punto dovrebbe passare alla card successiva automaticamente
+                  //_value.insert(item, value);
+                  //print(_value[item]);
+                  carouselController.nextPage();
                 },
               ),
             ),
@@ -118,7 +113,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
     );
   }
 
-  var labels = {'answer': "Risposta", 'question': "Domanda"};
+
 
   @override
   void initState() {
@@ -190,30 +185,36 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: MediaQuery.of(context).padding.top*0.5 +
+                    height: MediaQuery.of(context).padding.top * 0.5 +
                         AppBar().preferredSize.height,
                   ),
                   //Expanded(child: Padding(padding: EdgeInsets.zero,)),
                   //Text("////"),
                   CarouselSlider.builder(
+                      carouselController: carouselController,
                       itemCount: widget.flashcards.length,
                       itemBuilder: (BuildContext context, int itemIndex) {
                         return FlipCard(
                           front: _getCardWidget(
-                              widget.flashcards[itemIndex].question, true, itemIndex),
+                              widget.flashcards[itemIndex].question,
+                              true,
+                              itemIndex),
                           back: _getCardWidget(
-                              widget.flashcards[itemIndex].answer, false, itemIndex),
+                              widget.flashcards[itemIndex].answer,
+                              false,
+                              itemIndex),
                         );
                       },
                       options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - AppBar().preferredSize.height,
+                        height: MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).padding.top -
+                            AppBar().preferredSize.height,
                         scrollDirection: Axis.horizontal,
                         enableInfiniteScroll: false,
                         disableCenter: true,
                         enlargeCenterPage: true,
                         pageSnapping: true,
-                      )
-                  ),
+                      )),
                 ],
               ),
             ),
