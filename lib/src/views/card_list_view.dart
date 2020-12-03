@@ -128,7 +128,6 @@ class _CardViewState extends State<CardView> {
 
   Widget _getCardWidget(String text) {
     return Container(
-
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -139,7 +138,7 @@ class _CardViewState extends State<CardView> {
               width: 0.75*MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: GlooTheme.nearlyPurple,
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(32.0)),
               ),
               padding: EdgeInsets.all(4),
               child: Center(

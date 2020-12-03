@@ -122,7 +122,7 @@ class DeckView extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: GlooTheme.cardColor,
                                 borderRadius: const BorderRadius.all(
-                                    Radius.circular(16.0)),
+                                    Radius.circular(20.0)),
                                 boxShadow: [
                                   BoxShadow(
                                     color:

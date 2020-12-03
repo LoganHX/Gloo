@@ -51,13 +51,13 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                       MediaQuery.of(context).padding.top -
                       AppBar().preferredSize.height)),
           Container(
-            height: 0.80 *
+            height: 0.77 *
                 (MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top -
                     AppBar().preferredSize.height),
             decoration: BoxDecoration(
               color: GlooTheme.nearlyPurple,
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(32.0)),
             ),
             padding: EdgeInsets.all(4),
             child: Center(
@@ -91,16 +91,16 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
             ),
           ),
           SizedBox(
-              height: 0.015 *
+              height: 0.03 *
                   (MediaQuery.of(context).size.height -
                       MediaQuery.of(context).padding.top -
                       AppBar().preferredSize.height)),
           Container(
-            height: 0.1 *
-                (MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).padding.top -
-                    AppBar().preferredSize.height),
-            width: MediaQuery.of(context).size.width * 0.73,
+            // height: 0.1 *
+            //     (MediaQuery.of(context).size.height -
+            //         MediaQuery.of(context).padding.top -
+            //         AppBar().preferredSize.height),
+            // width: MediaQuery.of(context).size.width * 0.73,
             child: AnimatedOpacity(
               opacity: isQuestion ? 0.0 : 1.0,
               duration: Duration(milliseconds: 400),

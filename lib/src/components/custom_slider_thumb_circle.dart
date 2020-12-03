@@ -35,14 +35,14 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
-      ..color = Colors.white //Thumb Background Color
+      ..color = GlooTheme.purple.withOpacity(0.85) //Thumb Background Color
       ..style = PaintingStyle.fill;
 
     TextSpan span = new TextSpan(
       style: new TextStyle(
         fontSize: thumbRadius * .8,
         fontWeight: FontWeight.w700,
-        color: GlooTheme.grey, //Text Color of Value on Thumb
+        color: GlooTheme.nearlyPurple, //Text Color of Value on Thumb
       ),
       text: getValue(value),
     );

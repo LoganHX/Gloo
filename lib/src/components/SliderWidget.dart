@@ -1,4 +1,5 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'custom_slider_thumb_circle.dart';
 
@@ -30,23 +31,16 @@ class _SliderWidgetState extends State<SliderWidget> {
     if (this.widget.fullWidth) paddingFactor = .3;
 
     return Container(
+      padding: EdgeInsets.only(left: 8, right: 8),
       width: this.widget.fullWidth
           ? double.infinity
           : (this.widget.sliderHeight) * 6.6,
-      height: (this.widget.sliderHeight),
+
       decoration: new BoxDecoration(
         borderRadius: new BorderRadius.all(
-          Radius.circular((this.widget.sliderHeight * .3)),
+          Radius.circular((this.widget.sliderHeight * 0.7)),
         ),
-        gradient: new LinearGradient(
-            colors: [
-              GlooTheme.grey.withOpacity(0.6),
-              GlooTheme.grey.withOpacity(0.6),
-            ],
-            begin: const FractionalOffset(0.0, 0.0),
-            end: const FractionalOffset(1.0, 1.00),
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp),
+        color: GlooTheme.nearlyPurple,
       ),
       child: Padding(
         padding: EdgeInsets.fromLTRB(this.widget.sliderHeight * paddingFactor,
@@ -59,7 +53,7 @@ class _SliderWidgetState extends State<SliderWidget> {
               style: TextStyle(
                 fontSize: this.widget.sliderHeight * .3,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: GlooTheme.purple.withOpacity(0.85),
               ),
             ),
             SizedBox(
@@ -69,8 +63,8 @@ class _SliderWidgetState extends State<SliderWidget> {
               child: Center(
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: Colors.white.withOpacity(1),
-                    inactiveTrackColor: Colors.white.withOpacity(.5),
+                    activeTrackColor: GlooTheme.purple.withOpacity(0.85),
+                    inactiveTrackColor: GlooTheme.purple.withOpacity(0.85),
 
                     trackHeight: 4.0,
                     thumbShape: CustomSliderThumbCircle(
@@ -78,10 +72,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                       min: this.widget.min,
                       max: this.widget.max,
                     ),
-                    overlayColor: Colors.white.withOpacity(.4),
+                    overlayColor: GlooTheme.nearlyPurple.withOpacity(.4),
                     //valueIndicatorColor: Colors.white,
-                    activeTickMarkColor: Colors.white,
-                    inactiveTickMarkColor: Colors.red.withOpacity(.7),
+                    activeTickMarkColor: GlooTheme.nearlyPurple,
+                    inactiveTickMarkColor: GlooTheme.purple.withOpacity(.7),
                   ),
                   child: Slider(
                     min: widget.min.toDouble(),
@@ -109,7 +103,7 @@ class _SliderWidgetState extends State<SliderWidget> {
               style: TextStyle(
                 fontSize: this.widget.sliderHeight * .3,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: GlooTheme.purple.withOpacity(0.85),
               ),
             ),
           ],

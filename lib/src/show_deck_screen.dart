@@ -28,8 +28,8 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   AnimationController animationController;
   PageController _pageController;
   bool loading = false;
-  Color left = GlooTheme.grey;
-  Color right = GlooTheme.nearlyPurple;
+  Color left = GlooTheme.nearlyPurple;
+  Color right = GlooTheme.purple;
 
   double opacity1 = 0.0;
   double opacity2 = 0.0;
@@ -83,26 +83,22 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           height: MediaQuery.of(context).padding.top * 0.5 +
                               AppBar().preferredSize.height,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 0.0, left: 0, right: 0, bottom: 0.0),
-                          child: Text(
-                            //"Enterprise Mobile Application Development",
-                            widget.deck.course,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 27,
-                              letterSpacing: 0.27,
-                              color: GlooTheme.nearlyPurple,
-                            ),
+                        Text(
+                          //"Enterprise Mobile Application Development",
+                          widget.deck.course,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 27,
+                            letterSpacing: 0.27,
+                            color: GlooTheme.nearlyPurple,
                           ),
                         ),
 
                         Padding(
-                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                          padding: EdgeInsets.only(top: 10.0, bottom: 0.0),
                           child: _buildMenuBar(context),
                         ),
 
@@ -113,13 +109,13 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             onPageChanged: (i) {
                               if (i == 0) {
                                 setState(() {
-                                  right = GlooTheme.nearlyPurple;
-                                  left = GlooTheme.grey;
+                                  right = GlooTheme.purple;
+                                  left = GlooTheme.nearlyPurple;
                                 });
                               } else if (i == 1) {
                                 setState(() {
-                                  right = GlooTheme.grey;
-                                  left = GlooTheme.nearlyPurple;
+                                  right = GlooTheme.nearlyPurple;
+                                  left = GlooTheme.purple;
                                 });
                               }
                             },
@@ -250,29 +246,12 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     _pageController = PageController();
   }
 
-  // void showInSnackBar(String value) {
-  //   FocusScope.of(context).requestFocus(new FocusNode());
-  //   _scaffoldKey.currentState?.removeCurrentSnackBar();
-  //   _scaffoldKey.currentState.showSnackBar(new SnackBar(
-  //     content: new Text(
-  //       value,
-  //       textAlign: TextAlign.center,
-  //       style: TextStyle(
-  //         color: Colors.white,
-  //         fontSize: 16.0,
-  //       ),
-  //     ),
-  //     backgroundColor: Colors.blue,
-  //     duration: Duration(seconds: 3),
-  //   ));
-  // }
-
   Widget _buildMenuBar(BuildContext context) {
     return Container(
       width: 300.0,
       height: 50.0,
       decoration: BoxDecoration(
-        color: Color(0x552B2B2B),
+        color: GlooTheme.nearlyPurple,
         borderRadius: BorderRadius.all(Radius.circular(25.0)),
       ),
       child: CustomPaint(
@@ -337,12 +316,12 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   }
 
   Widget _buildStats(BuildContext context) {
+    final fakeValue = 69.0;
     return Container(
       color: Colors.transparent,
-      padding: EdgeInsets.only(top: 23.0),
-      child: Stack(
-        alignment: Alignment.topCenter,
-        overflow: Overflow.clip,
+      //padding: EdgeInsets.only(top: 23.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             // decoration: BoxDecoration(
@@ -351,87 +330,43 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
             // ),
             width: 280.0,
             height: 310.0,
-            child: Padding(
-                padding: EdgeInsets.all(0.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      //color: GlooTheme.nearlyPurple.withOpacity(0.1),
-
-                      // borderRadius: BorderRadius.all(Radius.circular(360.0)),
-                      // boxShadow: [
-                      //   BoxShadow(blurRadius: 0.0, color: GlooTheme.nearlyPurple.withOpacity(0.7))
-                      // ]
-                      ),
-                  // child: SfCircularChart(
-                  //   onPointTapped: (args){
-                  //     print(args.pointIndex.toString());
-                  //   },
-                  //   legend: Legend(isVisible: false),
-                  //   palette: [
-                  //     GlooTheme.nearlyPurple,
-                  //
-                  //     GlooTheme.grey,
-                  //   ],
-                  //   series: <DoughnutSeries<ChartData, String>>[
-                  //     DoughnutSeries<ChartData, String>(
-                  //
-                  //         innerRadius: '50%',
-                  //         dataSource: <ChartData>[
-                  //           ChartData('Ok', 3),
-                  //           ChartData('No', 2),
-                  //
-                  //         ],
-                  //         startAngle: 0,
-                  //         endAngle: 0,
-                  //         enableSmartLabels: true,
-                  //         enableTooltip: false,
-                  //         radius: "100%",
-                  //         xValueMapper: (ChartData data, _) => data.xVal,
-                  //         yValueMapper: (ChartData data, _) => data.yVal,
-                  //         dataLabelMapper: (ChartData data, _) => data.yVal.toString(),
-                  //
-                  //         dataLabelSettings: DataLabelSettings(
-                  //             textStyle: TextStyle(color: GlooTheme.nearlyPurple),
-                  //             isVisible: false,
-                  //             labelPosition: ChartDataLabelPosition.inside)),
-                  //   ],
-                  // ),
-                  child: SfRadialGauge(axes: <RadialAxis>[
-                    RadialAxis(
-                        minimum: 0,
-                        maximum: 100,
-                        showLabels: false,
-                        showTicks: false,
-                        startAngle: 270,
-                        endAngle: 270,
-                        axisLineStyle: AxisLineStyle(
-                          thickness: 1,
-                          color: GlooTheme.nearlyPurple.withOpacity(0.8),
-                          thicknessUnit: GaugeSizeUnit.factor,
-                        ),
-                        pointers: <GaugePointer>[
-                          RangePointer(
-                            value: 69,
-                            width: 0.15,
-                            color: GlooTheme.purple.withOpacity(0.85),
-                            pointerOffset: 0.1,
-                            cornerStyle: CornerStyle.bothCurve,
-                            sizeUnit: GaugeSizeUnit.factor,
-                          )
-                        ],
-                        annotations: <GaugeAnnotation>[
-                          GaugeAnnotation(
-                              positionFactor: 0.48,
-                              angle: 90,
-                              widget: Text(
-                                69.toStringAsFixed(0) + '%',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                    fontSize: 22, color: GlooTheme.purple.withOpacity(0.85)),
-                              ))
-                        ]),
-                  ]),
-                )),
+            child: Container(
+              child: SfRadialGauge(axes: <RadialAxis>[
+                RadialAxis(
+                    minimum: 0,
+                    maximum: 100,
+                    showLabels: false,
+                    showTicks: false,
+                    startAngle: 270,
+                    endAngle: 270,
+                    axisLineStyle: AxisLineStyle(
+                      thickness: 1,
+                      color: GlooTheme.nearlyPurple.withOpacity(1),
+                      thicknessUnit: GaugeSizeUnit.factor,
+                    ),
+                    pointers: <GaugePointer>[
+                      RangePointer(
+                        value: fakeValue,
+                        width: 0.20,
+                        color: GlooTheme.purple.withOpacity(0.85),
+                        pointerOffset: 0.1,
+                        cornerStyle: CornerStyle.bothCurve,
+                        sizeUnit: GaugeSizeUnit.factor,
+                      )
+                    ],
+                    annotations: <GaugeAnnotation>[
+                      GaugeAnnotation(
+                          positionFactor: 0.48,
+                          angle: 90,
+                          widget: Text(
+                            fakeValue.toStringAsFixed(0) + '%',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                                fontSize: 22, color: GlooTheme.purple.withOpacity(0.85)),
+                          ))
+                    ]),
+              ]),
+            ),
           ),
         ],
       ),
