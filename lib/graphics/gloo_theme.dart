@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class GlooTheme {
   GlooTheme._();
 
-  static const Color purple = Color(0xFF5c53f8); //colore principale app
+  static const Color purple = Color(0xFF5751FF); //colore principale app
   static const Color nearlyPurple = Color(0xFFf1f1ff); //colore secondario app
   static const Color cardColor = Color(0xFFf1f1ff);
   static const Color grey = Color(0xFF6D72A6); //colore terziario app
   static const Color ice = Color(0xFFE9EFFF);
   static const Color nearlyWhite = Color(0xFFFFFFFF);
   static const Color nearlyBlack = Color(0xFF2F4F75);
+  static Color green = Color(0xFF68BAA5);
+  static Color red = Color(0xFFFF4F23);
 
   static const Color dark_grey = Color(0xFF313A44);
 
@@ -28,7 +30,12 @@ class GlooTheme {
         GlooTheme.purple,
         GlooTheme.purple.withOpacity(0.75),
         GlooTheme.purple.withOpacity(0.6),
-        //Color(0xFFAAAAAA),
+        // Color(0xFF0078FF),
+        // Color(0xFF008CFF),
+        // Color(0xFF0097EA),
+        // Color(0xFF009db1),
+        // Color(0xFF009f73),
+
       ]);
 
   //static const Color purple = Color(0xFFA1E7E5);

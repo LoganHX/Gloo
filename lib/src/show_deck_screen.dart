@@ -6,37 +6,38 @@ import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/views/card_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
 import 'package:provider/provider.dart';
-import '../graphics/gloo_theme.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ShowDeckScreen extends StatefulWidget {
   final Deck deck;
-
-  const ShowDeckScreen({Key key, this.deck}) : super(key: key);
+  ShowDeckScreen({this.deck});
 
   @override
-  _ShowDeckScreenState createState() => _ShowDeckScreenState();
+  _ShowDeckScreenState createState() => new _ShowDeckScreenState();
 }
 
 class _ShowDeckScreenState extends State<ShowDeckScreen>
     with TickerProviderStateMixin {
-  bool loading = false;
-  AnimationController animationController;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   Animation<double> animation;
+  AnimationController animationController;
+  PageController _pageController;
+  bool loading = false;
+  Color left = GlooTheme.grey;
+  Color right = GlooTheme.nearlyPurple;
+
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
-  String count = "";
 
-  @override
-  void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
-    setData();
-    super.initState();
+  Stream<List<Flashcard>> _getFlashcards() {
+    final user = Provider.of<User>(context);
+    return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
   }
 
   Future<void> setData() async {
@@ -55,227 +56,268 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     });
   }
 
-  Stream<List<Flashcard>> _getFlashcards() {
-    final user = Provider.of<User>(context);
-    return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Flashcard>>(
-      stream: _getFlashcards(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || loading) {
-          return Loading();
-        } else {
-          return Container(
-            color: GlooTheme.nearlyPurple.withOpacity(0.95),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(gradient: GlooTheme.bgGradient),
-                child: Stack(
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+        stream: _getFlashcards(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || loading) {
+            return Loading();
+          } else {
+            return Scaffold(
+              key: _scaffoldKey,
+              body: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: GlooTheme.bgGradient,
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height >= 450.0
+                        ? MediaQuery.of(context).size.height
+                        : 450.0,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top * 0.5 +
+                              AppBar().preferredSize.height,
+                        ),
                         Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: SingleChildScrollView(
-                            child: Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 24.0,
-                                        left: 42,
-                                        right: 16,
-                                        bottom: 0.0),
-                                    child: Text(
-                                      widget.deck.course,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 22,
-                                        letterSpacing: 0.27,
-                                        color: GlooTheme.nearlyPurple,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 16,
-                                      right: 16,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          snapshot.data.length.toString() +
-                                              ' cards',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w200,
-                                            fontSize: 18,
-                                            letterSpacing: 0.27,
-                                            color: GlooTheme.nearlyPurple,
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '4.3 ',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w200,
-                                                  fontSize: 18,
-                                                  letterSpacing: 0.27,
-                                                  color: GlooTheme.nearlyPurple,
-                                                ),
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: GlooTheme.nearlyPurple,
-                                                size: 18,
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: getCardsUI(
-                                        flashcards: snapshot.data.toList()),
-                                  ),
-                                ],
-                              ),
+                          padding: const EdgeInsets.only(
+                              top: 0.0, left: 0, right: 0, bottom: 0.0),
+                          child: Text(
+                            //"Enterprise Mobile Application Development",
+                            widget.deck.course,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 27,
+                              letterSpacing: 0.27,
+                              color: GlooTheme.nearlyPurple,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 8,
+
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                          child: _buildMenuBar(context),
+                        ),
+
+                        Expanded(
+                          flex: 2,
+                          child: PageView(
+                            controller: _pageController,
+                            onPageChanged: (i) {
+                              if (i == 0) {
+                                setState(() {
+                                  right = GlooTheme.nearlyPurple;
+                                  left = GlooTheme.grey;
+                                });
+                              } else if (i == 1) {
+                                setState(() {
+                                  right = GlooTheme.grey;
+                                  left = GlooTheme.nearlyPurple;
+                                });
+                              }
+                            },
+                            children: <Widget>[
+                               ConstrainedBox(
+                                constraints: const BoxConstraints.expand(),
+                                child: _buildStats(context),
+                              ),
+                               ConstrainedBox(
+                                constraints: const BoxConstraints.expand(),
+                                child: _buildShowDeckScreen(
+                                    context, snapshot.data.toList()),
+                              ),
+                            ],
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ScaleTransition(
-                              alignment: Alignment.center,
-                              scale: CurvedAnimation(
-                                  parent: animationController,
-                                  curve: Curves.fastOutSlowIn),
-                              child: Card(
-                                color: GlooTheme.nearlyPurple,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0)),
-                                elevation: 10.0,
-                                child: Center(
-                                  child: FlatButton.icon(
-                                    onPressed: () async {
-                                      setState(() {
-                                        loading = true;
-                                      });
-                                      print("Tap bottone studio flashcards");
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  StudyDeckScreen(
-                                                      flashcards:
-                                                          snapshot.data)));
-                                      setState(() {
-                                        loading = false;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.refresh, //icona ripeti deck
-                                      color: GlooTheme.purple,
-                                      size: 35,
-                                    ),
-                                    label: Text(
-                                      "Studia Deck",
-                                      style: TextStyle(
-                                          color: GlooTheme.purple,
-                                          fontSize: 18),
-                                    ),
+
+                            Card(
+                              color: GlooTheme.nearlyPurple,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0)),
+                              elevation: 10.0,
+                              child: Center(
+                                child: FlatButton.icon(
+                                  onPressed: () async {
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    print("Tap bottone studio flashcards");
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                StudyDeckScreen(
+                                                    flashcards:
+                                                        snapshot.data)));
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.refresh, //icona ripeti deck
+                                    color: GlooTheme.purple,
+                                    size: 35,
+                                  ),
+                                  label: Text(
+                                    "Studia Deck",
+                                    style: TextStyle(
+                                        color: GlooTheme.purple,
+                                        fontSize: 18),
                                   ),
                                 ),
                               ),
                             ),
-                            ScaleTransition(
-                              alignment: Alignment.center,
-                              scale: CurvedAnimation(
-                                  parent: animationController,
-                                  curve: Curves.fastOutSlowIn),
-                              child: Card(
-                                color: GlooTheme.purple,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0)),
-                                elevation: 10.0,
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.add, //icona aggiungi carta
-                                      color: GlooTheme.nearlyPurple,
-                                      size: 25,
-                                    ),
+                            Card(
+                              color: GlooTheme.purple.withOpacity(0.7),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0)),
+                              elevation: 10.0,
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.add, //icona aggiungi carta
+                                    color: GlooTheme.nearlyPurple,
+                                    size: 25,
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 16,
+                        )
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top),
-                      child: SizedBox(
-                        width: AppBar().preferredSize.height,
-                        height: AppBar().preferredSize.height,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(
-                                AppBar().preferredSize.height),
-                            child: Icon(
-                              Icons.arrow_back_ios, //ios
-                              color: GlooTheme.nearlyWhite,
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
+                  ),
+                  Padding(
+                    //App bar da mettere anche nella pagina seguente
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top),
+                    child: SizedBox(
+                      width: AppBar().preferredSize.height,
+                      height: AppBar().preferredSize.height,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(
+                              AppBar().preferredSize.height),
+                          child: Icon(
+                            Icons.arrow_back_ios, //ios
+                            color: GlooTheme.nearlyPurple,
                           ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                    )
-                  ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+        });
+  }
+
+  @override
+  void dispose() {
+    _pageController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: animationController,
+        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+    setData();
+    super.initState();
+    _pageController = PageController();
+  }
+
+  // void showInSnackBar(String value) {
+  //   FocusScope.of(context).requestFocus(new FocusNode());
+  //   _scaffoldKey.currentState?.removeCurrentSnackBar();
+  //   _scaffoldKey.currentState.showSnackBar(new SnackBar(
+  //     content: new Text(
+  //       value,
+  //       textAlign: TextAlign.center,
+  //       style: TextStyle(
+  //         color: Colors.white,
+  //         fontSize: 16.0,
+  //       ),
+  //     ),
+  //     backgroundColor: Colors.blue,
+  //     duration: Duration(seconds: 3),
+  //   ));
+  // }
+
+  Widget _buildMenuBar(BuildContext context) {
+    return Container(
+      width: 300.0,
+      height: 50.0,
+      decoration: BoxDecoration(
+        color: Color(0x552B2B2B),
+        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      ),
+      child: CustomPaint(
+        painter: TabIndicationPainter(pageController: _pageController),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Expanded(
+              child: FlatButton(
+                // splashColor: Colors.transparent,
+                // highlightColor: Colors.transparent,
+                onPressed: _onShowStatsButtonPress,
+                child: Text(
+                  "Progressi",
+                  style: TextStyle(
+                    color: left,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
             ),
-          );
-        }
-      },
+            //Container(height: 33.0, width: 1.0, color: Colors.white),
+            Expanded(
+              child: FlatButton(
+                // splashColor: Colors.transparent,
+                // highlightColor: Colors.transparent,
+                onPressed: _onShowFlashcardsButtonPress,
+                child: Text(
+                  "Flashcards",
+                  style: TextStyle(
+                    color: right,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget getCardsUI({List<Flashcard> flashcards}) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CardListView(
@@ -289,12 +331,128 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     );
   }
 
-  void moveTo() {
-    Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => ShowDeckScreen(),
+  Widget _buildShowDeckScreen(
+      BuildContext context, List<Flashcard> flashcards) {
+    return getCardsUI(flashcards: flashcards);
+  }
+
+  Widget _buildStats(BuildContext context) {
+    return Container(
+      color: Colors.transparent,
+      padding: EdgeInsets.only(top: 23.0),
+      child: Stack(
+        alignment: Alignment.topCenter,
+        overflow: Overflow.clip,
+        children: <Widget>[
+          Container(
+            // decoration: BoxDecoration(
+            //   color: GlooTheme.nearlyPurple.withOpacity(0.8),
+            //   borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            // ),
+            width: 280.0,
+            height: 310.0,
+            child: Padding(
+                padding: EdgeInsets.all(0.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      //color: GlooTheme.nearlyPurple.withOpacity(0.1),
+
+                      // borderRadius: BorderRadius.all(Radius.circular(360.0)),
+                      // boxShadow: [
+                      //   BoxShadow(blurRadius: 0.0, color: GlooTheme.nearlyPurple.withOpacity(0.7))
+                      // ]
+                      ),
+                  // child: SfCircularChart(
+                  //   onPointTapped: (args){
+                  //     print(args.pointIndex.toString());
+                  //   },
+                  //   legend: Legend(isVisible: false),
+                  //   palette: [
+                  //     GlooTheme.nearlyPurple,
+                  //
+                  //     GlooTheme.grey,
+                  //   ],
+                  //   series: <DoughnutSeries<ChartData, String>>[
+                  //     DoughnutSeries<ChartData, String>(
+                  //
+                  //         innerRadius: '50%',
+                  //         dataSource: <ChartData>[
+                  //           ChartData('Ok', 3),
+                  //           ChartData('No', 2),
+                  //
+                  //         ],
+                  //         startAngle: 0,
+                  //         endAngle: 0,
+                  //         enableSmartLabels: true,
+                  //         enableTooltip: false,
+                  //         radius: "100%",
+                  //         xValueMapper: (ChartData data, _) => data.xVal,
+                  //         yValueMapper: (ChartData data, _) => data.yVal,
+                  //         dataLabelMapper: (ChartData data, _) => data.yVal.toString(),
+                  //
+                  //         dataLabelSettings: DataLabelSettings(
+                  //             textStyle: TextStyle(color: GlooTheme.nearlyPurple),
+                  //             isVisible: false,
+                  //             labelPosition: ChartDataLabelPosition.inside)),
+                  //   ],
+                  // ),
+                  child: SfRadialGauge(axes: <RadialAxis>[
+                    RadialAxis(
+                        minimum: 0,
+                        maximum: 100,
+                        showLabels: false,
+                        showTicks: false,
+                        startAngle: 270,
+                        endAngle: 270,
+                        axisLineStyle: AxisLineStyle(
+                          thickness: 1,
+                          color: GlooTheme.nearlyPurple.withOpacity(0.8),
+                          thicknessUnit: GaugeSizeUnit.factor,
+                        ),
+                        pointers: <GaugePointer>[
+                          RangePointer(
+                            value: 69,
+                            width: 0.15,
+                            color: GlooTheme.purple.withOpacity(0.85),
+                            pointerOffset: 0.1,
+                            cornerStyle: CornerStyle.bothCurve,
+                            sizeUnit: GaugeSizeUnit.factor,
+                          )
+                        ],
+                        annotations: <GaugeAnnotation>[
+                          GaugeAnnotation(
+                              positionFactor: 0.48,
+                              angle: 90,
+                              widget: Text(
+                                69.toStringAsFixed(0) + '%',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                    fontSize: 22, color: GlooTheme.purple.withOpacity(0.85)),
+                              ))
+                        ]),
+                  ]),
+                )),
+          ),
+        ],
       ),
     );
   }
+
+  void _onShowStatsButtonPress() {
+    _pageController.animateToPage(0,
+        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+  }
+
+  void _onShowFlashcardsButtonPress() {
+    _pageController?.animateToPage(1,
+        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+  }
+
+}
+
+class ChartData {
+  ChartData(this.xVal, this.yVal, [this.radius]);
+  final String xVal;
+  final int yVal;
+  final String radius;
 }

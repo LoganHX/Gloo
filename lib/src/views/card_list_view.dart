@@ -3,6 +3,7 @@ import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
@@ -11,7 +12,6 @@ import 'package:provider/provider.dart';
 class CardListView extends StatefulWidget {
   const CardListView({Key key, this.callBack, this.deck, this.flashcards})
       : super(key: key);
-  final isQuestion = true;
   final Function(Flashcard) callBack;
   final Deck deck;
   final List<Flashcard> flashcards;
@@ -47,8 +47,7 @@ class _CardListViewState extends State<CardListView>
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 0),
       child: Container(
-        height: MediaQuery.of(context).size.height *
-            0.5, // todo l'altezza non deve essere fissa, ma proporzionata allo schermo usando context size
+        height: MediaQuery.of(context).size.height * 0.55,
         width: double.infinity,
 
         child: ListView.builder(
@@ -100,7 +99,7 @@ class CardView extends StatefulWidget {
 }
 
 class _CardViewState extends State<CardView> {
-  var isQuestion = true;
+  // var isQuestion = true;
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -116,86 +115,9 @@ class _CardViewState extends State<CardView> {
               onTap: () {
                 widget.callback(widget.flashcard);
               },
-              child: SizedBox(
-                width: 270,
-                child: Stack(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(left: 22),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: GlooTheme.nearlyPurple,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(16.0)),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 0,
-                                                  left: 12,
-                                                  right: 12,
-                                                  bottom:
-                                                      0), //bottom per il pulsante modifica
-                                              child: Center(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      isQuestion = !isQuestion;
-                                                    });
-                                                  },
-                                                  child: Html(
-                                                    data: isQuestion
-                                                        ? widget
-                                                            .flashcard.question
-                                                        : widget
-                                                            .flashcard.answer,
-                                                    style: {
-                                                      "html": Style(
-                                                        fontSize: FontSize(16),
-                                                        textAlign: isQuestion? TextAlign.center : TextAlign.left,
-                                                      ),
-                                                    },
-
-
-                                                    // textAlign: TextAlign.center,
-                                                    // maxLines: 5,
-                                                    // overflow:
-                                                    //     TextOverflow.ellipsis,
-                                                    // style: TextStyle(
-                                                    //   fontWeight: FontWeight.w600,
-                                                    //   fontSize: 16,
-                                                    //   letterSpacing: 0.27,
-                                                    //   color: GlooTheme.purple,
-                                                    // ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              child: FlipCard(
+                front: _getCardWidget(widget.flashcard.question),
+                back: _getCardWidget(widget.flashcard.answer),
               ),
             ),
           ),
@@ -203,4 +125,123 @@ class _CardViewState extends State<CardView> {
       },
     );
   }
+
+  Widget _getCardWidget(String text) {
+    return Container(
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: 8.0, bottom: 8.0),
+            child: Container(
+              height: 0.53*MediaQuery.of(context).size.height,
+              width: 0.75*MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: GlooTheme.nearlyPurple,
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              ),
+              padding: EdgeInsets.all(4),
+              child: Center(
+                child: Padding(
+                  padding:
+                  const EdgeInsets.only(top: 2.0, left: 2.0, bottom: 2.0),
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 3.0),
+                        child: Html(
+                          style: {
+                            "html": Style(
+                              fontSize:
+                              text.length < 70 ? FontSize(20) : FontSize(16),
+                              //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
+                              textAlign: text.length < 70
+                                  ? TextAlign.center
+                                  : TextAlign.left,
+                              //todo qui assumo che il testo delle domande sia sostanzialmente plain text e non html
+                            ),
+                          },
+                          onLinkTap: (url) {},
+                          data: '$text',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+
+        ],
+      ),
+    );
+  }
+
+
+
+/*
+  Widget _getCardTemplate(String data) {
+    return SizedBox(
+      width: 270,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(left: 22),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: GlooTheme.nearlyPurple,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16.0)),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0,
+                                        left: 12,
+                                        right: 12,
+                                        bottom:
+                                            0), //bottom per il pulsante modifica
+                                    child: Center(
+                                      child: Html(
+                                        data: data,
+                                        style: {
+                                          "html": Style(
+                                            fontSize: FontSize(16),
+                                            textAlign: data.length > 100
+                                                ? TextAlign.center
+                                                : TextAlign.left,
+                                          ),
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }*/
 }

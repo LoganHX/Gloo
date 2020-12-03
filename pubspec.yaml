@@ -44,6 +44,9 @@ dependencies:
   flip_card: ^0.4.4
   smooth_star_rating: ^1.1.1
   intl: ^0.16.0
+  syncfusion_flutter_charts: ^18.3.52
+  syncfusion_flutter_gauges: ^18.3.52
+
 
 dev_dependencies:
   flutter_test:

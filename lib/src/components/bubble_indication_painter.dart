@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:flutter/material.dart';
 
 class TabIndicationPainter extends CustomPainter {
@@ -17,7 +18,7 @@ class TabIndicationPainter extends CustomPainter {
         this.radius = 21.0,
         this.dy = 25.0, this.pageController}) : super(repaint: pageController) {
     painter = new Paint()
-      ..color = Color(0xFFFFFFFF)
+      ..color = GlooTheme.nearlyPurple
       ..style = PaintingStyle.fill;
   }
 
@@ -42,7 +43,7 @@ class TabIndicationPainter extends CustomPainter {
         new Rect.fromCircle(center: target, radius: radius), 1.5 * pi, 1 * pi);
 
     canvas.translate(size.width * pageOffset, 0.0);
-    canvas.drawShadow(path, Color(0xFFfbab66), 3.0, true);
+    canvas.drawShadow(path, GlooTheme.purple, 3.0, true);
     canvas.drawPath(path, painter);
   }
 

@@ -15,12 +15,14 @@ class StudyDeckScreen extends StatefulWidget {
   _StudyDeckScreenState createState() => _StudyDeckScreenState();
 }
 
+
+
 class _StudyDeckScreenState extends State<StudyDeckScreen> {
   String htmlData;
-  int counter = 0;
+  List _value = [];
   bool isQuestion = true;
 
-  Widget cardWidget(String text, bool isQuestion) {
+  Widget _getCardWidget(String text, bool isQuestion, int item) {
     return Container(
       height: MediaQuery.of(context).size.height -
           MediaQuery.of(context).padding.top -
@@ -29,10 +31,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 0.075 *
-                (MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).padding.top -
-                    AppBar().preferredSize.height),
+
             child: FittedBox(
               child: Text(
                 isQuestion ? labels['question'] : labels['answer'],
@@ -47,12 +46,12 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
             ),
           ),
           SizedBox(
-              height: 0.018 *
+              height: 0.015 *
                   (MediaQuery.of(context).size.height -
                       MediaQuery.of(context).padding.top -
                       AppBar().preferredSize.height)),
           Container(
-            height: 0.755 *
+            height: 0.80 *
                 (MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top -
                     AppBar().preferredSize.height),
@@ -60,7 +59,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
               color: GlooTheme.nearlyPurple,
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
             ),
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(4),
             child: Center(
               child: Padding(
                 padding:
@@ -74,7 +73,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                         style: {
                           "html": Style(
                             fontSize:
-                                text.length < 70 ? FontSize(21) : FontSize(17),
+                                text.length < 70 ? FontSize(20) : FontSize(16),
                             //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
                             textAlign: text.length < 70
                                 ? TextAlign.center
@@ -92,32 +91,25 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
             ),
           ),
           SizedBox(
-            height: 0.05 *
-                (MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).padding.top -
-                    AppBar().preferredSize.height),
-          ),
+              height: 0.015 *
+                  (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height)),
           Container(
             height: 0.1 *
                 (MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top -
                     AppBar().preferredSize.height),
-            width: MediaQuery.of(context).size.width * 0.75,
-            // top: MediaQuery.of(context).size.height * 0.88,
-            // right: (MediaQuery.of(context).size.width * 0.2) / 2 +(-25), //todo il valore tra parentesi andrebbe calcolato
+            width: MediaQuery.of(context).size.width * 0.73,
             child: AnimatedOpacity(
               opacity: isQuestion ? 0.0 : 1.0,
               duration: Duration(milliseconds: 400),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: SliderWidget(
-                  onSelectedValue: (value) {
-                    print(value);
-                    setState(() {
-                      nextFlashcard();
-                    });
-                  },
-                ),
+              child: SliderWidget(
+                onSelectedValue: (value) {
+                  _value.insert(item, value);
+                  print(_value[item]);
+                  //todo a questo punto dovrebbe passare alla card successiva automaticamente
+                },
               ),
             ),
           ),
@@ -146,40 +138,40 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   //   }
   // }
 
-  void nextFlashcard() {
-    if (widget.flashcards.length == counter + 1) {
-      Navigator.pop(
-          context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
-      return;
-    }
-    counter += 1;
-    isQuestion = true;
-    htmlData = widget.flashcards[counter].question;
-    //label = labels['question'];
-  }
+  // void nextFlashcard() {
+  //   if (widget.flashcards.length == counter + 1) {
+  //     Navigator.pop(
+  //         context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
+  //     return;
+  //   }
+  //   counter += 1;
+  //   isQuestion = true;
+  //   htmlData = widget.flashcards[counter].question;
+  //   //label = labels['question'];
+  // }
 
-  void previousFlashcard() {
-    //print(counter);
-    if (counter == 0) {
-      Navigator.pop(context);
-      return;
-    }
-//todo non il massimo dell'eleganza
-    counter -= 1;
-    isQuestion = true;
-    htmlData = widget.flashcards[counter].question;
-    //label = labels['question'];
-  }
+//   void previousFlashcard() {
+//     //print(counter);
+//     if (counter == 0) {
+//       Navigator.pop(context);
+//       return;
+//     }
+// //todo non il massimo dell'eleganza
+//     counter -= 1;
+//     isQuestion = true;
+//     htmlData = widget.flashcards[counter].question;
+//     //label = labels['question'];
+//   }
 
   Future<void> setData() async {
-    startStudyProcedure();
+    //startStudyProcedure();
   }
 
-  void startStudyProcedure() {
-    htmlData = widget.flashcards.first.question;
-    //label = labels['question'];
-    isQuestion = true;
-  }
+  // void startStudyProcedure() {
+  //   htmlData = widget.flashcards.first.question;
+  //   //label = labels['question'];
+  //   isQuestion = true;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +190,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: MediaQuery.of(context).padding.top +
+                    height: MediaQuery.of(context).padding.top*0.5 +
                         AppBar().preferredSize.height,
                   ),
                   //Expanded(child: Padding(padding: EdgeInsets.zero,)),
@@ -207,21 +199,21 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                       itemCount: widget.flashcards.length,
                       itemBuilder: (BuildContext context, int itemIndex) {
                         return FlipCard(
-                          front: cardWidget(
-                              widget.flashcards[itemIndex].question, true),
-                          back: cardWidget(
-                              widget.flashcards[itemIndex].answer, false),
+                          front: _getCardWidget(
+                              widget.flashcards[itemIndex].question, true, itemIndex),
+                          back: _getCardWidget(
+                              widget.flashcards[itemIndex].answer, false, itemIndex),
                         );
                       },
                       options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height -
-                            MediaQuery.of(context).padding.top -
-                            AppBar().preferredSize.height,
+                        height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - AppBar().preferredSize.height,
                         scrollDirection: Axis.horizontal,
                         enableInfiniteScroll: false,
                         disableCenter: true,
                         enlargeCenterPage: true,
-                      )),
+                        pageSnapping: true,
+                      )
+                  ),
                 ],
               ),
             ),
