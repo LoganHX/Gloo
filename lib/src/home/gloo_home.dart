@@ -33,7 +33,7 @@ class _GlooHomeState extends State<GlooHome> {
               },
               child: Icon(
                 Icons.add,
-                color: GlooTheme.nearlyPurple,
+                color: GlooTheme.nearlyWhite,
               ),
             ),
           ),
@@ -50,9 +50,9 @@ class _GlooHomeState extends State<GlooHome> {
                   },
                   child: CircleAvatar(
                     radius: 20,
-                    backgroundColor: GlooTheme.nearlyPurple.withOpacity(0.65),
+                    backgroundColor: GlooTheme.nearlyWhite.withOpacity(0.65),
                     child: CircleAvatar(
-                      backgroundColor: GlooTheme.nearlyPurple.withOpacity(0.65),
+                      backgroundColor: GlooTheme.nearlyWhite.withOpacity(0.65),
                       backgroundImage: AssetImage('assets/images/carra.jpg'),
                       radius: 18,
                     ),
@@ -64,7 +64,7 @@ class _GlooHomeState extends State<GlooHome> {
         ],
       ),
       body: Container(
-        //color: GlooTheme.nearlyPurple,
+        //color: GlooTheme.nearlyWhite,
         decoration: BoxDecoration(
           gradient: GlooTheme.bgGradient,
         ),
@@ -178,22 +178,22 @@ class _GlooHomeState extends State<GlooHome> {
                   children: <Widget>[
                     Icon(
                       Icons.add,
-                      color: GlooTheme.nearlyPurple,
+                      color: GlooTheme.nearlyWhite,
                       //size: 36.0,
                     ),
                     Icon(
                       Icons.search,
-                      color: GlooTheme.nearlyPurple,
+                      color: GlooTheme.nearlyWhite,
                       //size: 36.0,
                     ),
                     Icon(
                       Icons.explore,
-                      color: GlooTheme.nearlyPurple,
+                      color: GlooTheme.nearlyWhite,
                       //size: 36.0,
                     ),
                     Icon(
                       Icons.person,
-                      color: GlooTheme.nearlyPurple,
+                      color: GlooTheme.nearlyWhite,
                       //size: 36.0,
                     ),
                   ],

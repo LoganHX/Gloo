@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primaryColor: GlooTheme.purple,
-            secondaryHeaderColor: GlooTheme.nearlyPurple,
-            accentColor: GlooTheme.nearlyPurple,
+            secondaryHeaderColor: GlooTheme.nearlyWhite,
+            accentColor: GlooTheme.nearlyWhite,
           ),
           home: Wrapper(),
           routes: {

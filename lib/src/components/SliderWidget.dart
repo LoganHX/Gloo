@@ -39,7 +39,7 @@ class _SliderWidgetState extends State<SliderWidget> {
         borderRadius: new BorderRadius.all(
           Radius.circular((this.widget.sliderHeight * 0.7)),
         ),
-        color: GlooTheme.nearlyPurple,
+        color: GlooTheme.nearlyWhite,
       ),
       child: Padding(
         padding: EdgeInsets.fromLTRB(this.widget.sliderHeight * paddingFactor,
@@ -71,9 +71,9 @@ class _SliderWidgetState extends State<SliderWidget> {
                       min: this.widget.min,
                       max: this.widget.max,
                     ),
-                    overlayColor: GlooTheme.nearlyPurple.withOpacity(.4),
+                    overlayColor: GlooTheme.nearlyWhite.withOpacity(.4),
                     //valueIndicatorColor: Colors.white,
-                    activeTickMarkColor: GlooTheme.nearlyPurple,
+                    activeTickMarkColor: GlooTheme.nearlyWhite,
                     inactiveTickMarkColor: GlooTheme.purple.withOpacity(.7),
                   ),
                   child: Slider(

@@ -4,11 +4,12 @@ class GlooTheme {
   GlooTheme._();
 
   static const Color purple = Color(0xFF5751FF); //colore principale app
-  static const Color nearlyPurple = Color(0xFFf1f1ff); //colore secondario app
+  static const Color nearlyPurple = Color(0xFFB8BCFF);
+  static const Color nearlyWhite = Color(0xFFf1f1ff);//colore secondario app
   static const Color cardColor = Color(0xFFf1f1ff);
   static const Color grey = Color(0xFF6D72A6); //colore terziario app
   static const Color ice = Color(0xFFE9EFFF);
-  static const Color nearlyWhite = Color(0xFFFFFFFF);
+
   static const Color nearlyBlack = Color(0xFF2F4F75);
   static Color green = Color(0xFF68BAA5);
   static Color red = Color(0xFFFF4F23);

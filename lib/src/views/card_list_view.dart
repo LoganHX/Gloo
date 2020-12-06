@@ -137,7 +137,7 @@ class _CardViewState extends State<CardView> {
               height: 0.53*MediaQuery.of(context).size.height,
               width: 0.75*MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: GlooTheme.nearlyPurple,
+                color: GlooTheme.nearlyWhite,
                 borderRadius: const BorderRadius.all(Radius.circular(32.0)),
               ),
               padding: EdgeInsets.all(4),
@@ -194,7 +194,7 @@ class _CardViewState extends State<CardView> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: GlooTheme.nearlyPurple,
+                      color: GlooTheme.nearlyWhite,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(16.0)),
                     ),

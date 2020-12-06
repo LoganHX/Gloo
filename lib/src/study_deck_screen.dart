@@ -56,7 +56,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                     MediaQuery.of(context).padding.top -
                     AppBar().preferredSize.height),
             decoration: BoxDecoration(
-              color: GlooTheme.nearlyPurple,
+              color: GlooTheme.nearlyWhite,
               borderRadius: const BorderRadius.all(Radius.circular(32.0)),
             ),
             padding: EdgeInsets.all(4),
@@ -121,52 +121,9 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
     super.initState();
   }
 
-  // void toggleFlashcard() {
-  //   if (isQuestion) {
-  //     isQuestion = !isQuestion;
-  //     htmlData = widget.flashcards[counter].answer;
-  //     label = labels['answer'];
-  //   } else {
-  //     isQuestion = !isQuestion;
-  //     htmlData = widget.flashcards[counter].question;
-  //     label = labels['question'];
-  //   }
-  // }
-
-  // void nextFlashcard() {
-  //   if (widget.flashcards.length == counter + 1) {
-  //     Navigator.pop(
-  //         context); //todo qua ci sarà il replace della route attuale con il push di una nuova route
-  //     return;
-  //   }
-  //   counter += 1;
-  //   isQuestion = true;
-  //   htmlData = widget.flashcards[counter].question;
-  //   //label = labels['question'];
-  // }
-
-//   void previousFlashcard() {
-//     //print(counter);
-//     if (counter == 0) {
-//       Navigator.pop(context);
-//       return;
-//     }
-// //todo non il massimo dell'eleganza
-//     counter -= 1;
-//     isQuestion = true;
-//     htmlData = widget.flashcards[counter].question;
-//     //label = labels['question'];
-//   }
-
   Future<void> setData() async {
     //startStudyProcedure();
   }
-
-  // void startStudyProcedure() {
-  //   htmlData = widget.flashcards.first.question;
-  //   //label = labels['question'];
-  //   isQuestion = true;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +192,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                             AppBar().preferredSize.height),
                         child: Icon(
                           Icons.arrow_back_ios, //ios
-                          color: GlooTheme.nearlyPurple,
+                          color: GlooTheme.nearlyWhite,
                         ),
                         onTap: () {
                           // isQuestion = false;

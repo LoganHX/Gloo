@@ -7,7 +7,7 @@
 // contentPadding: EdgeInsets.all(
 // 12.0,
 // ),
-// fillColor: GlooTheme.nearlyPurple,
+// fillColor: GlooTheme.nearlyWhite,
 // filled: true,
 // focusedBorder: OutlineInputBorder(
 // borderRadius: BorderRadius.circular(8),
@@ -17,6 +17,6 @@
 // labelText: "Password",
 // border: OutlineInputBorder(
 // borderRadius: BorderRadius.circular(8),
-// borderSide: BorderSide(color: GlooTheme.nearlyPurple),
+// borderSide: BorderSide(color: GlooTheme.nearlyWhite),
 // )
 // ),

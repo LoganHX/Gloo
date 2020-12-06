@@ -55,7 +55,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 20.0),
-                Text("Crea Nuovo Deck", style: TextStyle(color: GlooTheme.nearlyPurple, fontSize: 32),),
+                Text("Crea Nuovo Deck", style: TextStyle(color: GlooTheme.nearlyWhite, fontSize: 32),),
 
                 SizedBox(height: 20.0),
                 TextFormField(
@@ -65,7 +65,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                          12.0,
                       ),
                       isCollapsed: true,
-                      fillColor: GlooTheme.nearlyPurple,
+                      fillColor: GlooTheme.nearlyWhite,
                       filled: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: "Nome Corso",
@@ -75,7 +75,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyPurple ),
+                        borderSide: BorderSide(color: GlooTheme.nearlyWhite ),
                       )
                   ),
                   validator: (val) => val.isEmpty ? "Inserisci un corso" : null,
@@ -91,7 +91,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                         12.0,
                       ),
                       isCollapsed: true,
-                      fillColor: GlooTheme.nearlyPurple,
+                      fillColor: GlooTheme.nearlyWhite,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -101,7 +101,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                       labelText: "Nome Prof",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyPurple),
+                        borderSide: BorderSide(color: GlooTheme.nearlyWhite),
                       )
                   ),
                   validator: (val) => val.isEmpty ? "Inserisci un prof" : null,
@@ -118,7 +118,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                         12.0,
                       ),
                       isCollapsed: true,
-                      fillColor: GlooTheme.nearlyPurple,
+                      fillColor: GlooTheme.nearlyWhite,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -128,7 +128,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                       labelText: "Nome Università",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyPurple),
+                        borderSide: BorderSide(color: GlooTheme.nearlyWhite),
                       )
                   ),
                   validator: (val) => val.isEmpty ? "Inserisci l'università" : null,
@@ -145,7 +145,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                         12.0,
                       ),
                       isCollapsed: true,
-                      fillColor: GlooTheme.nearlyPurple,
+                      fillColor: GlooTheme.nearlyWhite,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -155,7 +155,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                       labelText: "Anno",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyPurple),
+                        borderSide: BorderSide(color: GlooTheme.nearlyWhite),
                       )
                   ),
                   validator: (val) => val.isEmpty ? "Inserisci un anno" : null,
@@ -171,7 +171,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Text(
                       "Crea Deck",
-                      style: TextStyle(color: GlooTheme.nearlyPurple),
+                      style: TextStyle(color: GlooTheme.nearlyWhite),
                     ),
                   ),
                   onPressed: () async {

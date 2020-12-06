@@ -28,7 +28,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   AnimationController animationController;
   PageController _pageController;
   bool loading = false;
-  Color left = GlooTheme.nearlyPurple;
+  Color left = GlooTheme.nearlyWhite;
   Color right = GlooTheme.purple;
 
   double opacity1 = 0.0;
@@ -93,7 +93,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             fontWeight: FontWeight.w600,
                             fontSize: 27,
                             letterSpacing: 0.27,
-                            color: GlooTheme.nearlyPurple,
+                            color: GlooTheme.nearlyWhite,
                           ),
                         ),
 
@@ -110,11 +110,11 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                               if (i == 0) {
                                 setState(() {
                                   right = GlooTheme.purple;
-                                  left = GlooTheme.nearlyPurple;
+                                  left = GlooTheme.nearlyWhite;
                                 });
                               } else if (i == 1) {
                                 setState(() {
-                                  right = GlooTheme.nearlyPurple;
+                                  right = GlooTheme.nearlyWhite;
                                   left = GlooTheme.purple;
                                 });
                               }
@@ -137,7 +137,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           children: [
 
                             Card(
-                              color: GlooTheme.nearlyPurple,
+                              color: GlooTheme.nearlyWhite,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.0)),
                               elevation: 10.0,
@@ -184,7 +184,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                                 child: Center(
                                   child: Icon(
                                     Icons.add, //icona aggiungi carta
-                                    color: GlooTheme.nearlyPurple,
+                                    color: GlooTheme.nearlyWhite,
                                     size: 25,
                                   ),
                                 ),
@@ -212,7 +212,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                               AppBar().preferredSize.height),
                           child: Icon(
                             Icons.arrow_back_ios, //ios
-                            color: GlooTheme.nearlyPurple,
+                            color: GlooTheme.nearlyWhite,
                           ),
                           onTap: () {
                             Navigator.pop(context);
@@ -251,7 +251,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
       width: 300.0,
       height: 50.0,
       decoration: BoxDecoration(
-        color: GlooTheme.nearlyPurple,
+        color: GlooTheme.nearlyWhite,
         borderRadius: BorderRadius.all(Radius.circular(25.0)),
       ),
       child: CustomPaint(
@@ -325,7 +325,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         children: <Widget>[
           Container(
             // decoration: BoxDecoration(
-            //   color: GlooTheme.nearlyPurple.withOpacity(0.8),
+            //   color: GlooTheme.nearlyWhite.withOpacity(0.8),
             //   borderRadius: const BorderRadius.all(Radius.circular(16.0)),
             // ),
             width: 280.0,
@@ -341,7 +341,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     endAngle: 270,
                     axisLineStyle: AxisLineStyle(
                       thickness: 1,
-                      color: GlooTheme.nearlyPurple.withOpacity(1),
+                      color: GlooTheme.nearlyWhite.withOpacity(1),
                       thicknessUnit: GaugeSizeUnit.factor,
                     ),
                     pointers: <GaugePointer>[

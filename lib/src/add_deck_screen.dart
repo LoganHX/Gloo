@@ -71,7 +71,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 16,
-                                                color: GlooTheme.nearlyPurple,
+                                                color: GlooTheme.nearlyWhite,
                                               ),
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
@@ -82,7 +82,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                                   fontWeight: FontWeight.w100,
                                                   fontSize: 14,
                                                   letterSpacing: 0.2,
-                                                  color: GlooTheme.nearlyPurple,
+                                                  color: GlooTheme.nearlyWhite,
                                                 ),
                                               ),
                                               onEditingComplete: () {},
@@ -93,7 +93,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                           width: 60,
                                           height: 60,
                                           child: Icon(Icons.search,
-                                              color: GlooTheme.nearlyPurple),
+                                              color: GlooTheme.nearlyWhite),
                                         )
                                       ],
                                     ),
@@ -107,7 +107,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                         Text(
                           "Aggiungi un deck pubblico",
                           style: TextStyle(
-                              color: GlooTheme.nearlyPurple, fontSize: 32),
+                              color: GlooTheme.nearlyWhite, fontSize: 32),
                         ),
                         SizedBox(height: 20.0),
                         Container(
@@ -117,7 +117,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                   left: 12.0,
                                 ),
                                 isCollapsed: true,
-                                fillColor: GlooTheme.nearlyPurple,
+                                fillColor: GlooTheme.nearlyWhite,
                                 filled: true,
                                 //labelText: "Nome Corso",
                                 focusedBorder: OutlineInputBorder(
@@ -128,11 +128,11 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide:
-                                      BorderSide(color: GlooTheme.nearlyPurple),
+                                      BorderSide(color: GlooTheme.nearlyWhite),
                                 )),
                             mode: Mode.BOTTOM_SHEET,
                             showSearchBox: true,
-                            popupBackgroundColor: GlooTheme.nearlyPurple,
+                            popupBackgroundColor: GlooTheme.nearlyWhite,
                             showSelectedItem: false,
                             items: [
                               "Università degli studi di Salerno",
@@ -151,7 +151,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                               contentPadding: EdgeInsets.only(
                                 left: 12.0,
                               ),
-                              fillColor: GlooTheme.nearlyPurple,
+                              fillColor: GlooTheme.nearlyWhite,
                               filled: true,
                               isCollapsed: true,
                               focusedBorder: OutlineInputBorder(
@@ -161,11 +161,11 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide:
-                                    BorderSide(color: GlooTheme.nearlyPurple),
+                                    BorderSide(color: GlooTheme.nearlyWhite),
                               )),
                           mode: Mode.BOTTOM_SHEET,
                           showSearchBox: true,
-                          popupBackgroundColor: GlooTheme.nearlyPurple,
+                          popupBackgroundColor: GlooTheme.nearlyWhite,
                           showSelectedItem: false,
                           items: [
                             "DI - Dipartimento di Informatica",
@@ -184,7 +184,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                 left: 12.0,
                               ),
                               isCollapsed: true,
-                              fillColor: GlooTheme.nearlyPurple,
+                              fillColor: GlooTheme.nearlyWhite,
                               filled: true,
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -193,11 +193,11 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide:
-                                    BorderSide(color: GlooTheme.nearlyPurple),
+                                    BorderSide(color: GlooTheme.nearlyWhite),
                               )),
                           mode: Mode.BOTTOM_SHEET,
                           showSearchBox: true,
-                          popupBackgroundColor: GlooTheme.nearlyPurple,
+                          popupBackgroundColor: GlooTheme.nearlyWhite,
                           showSelectedItem: false,
                           items: [
                             "DI - Dipartimento di Informatica",
@@ -218,7 +218,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                 horizontal: 16, vertical: 10),
                             child: Text(
                               "Cerca Deck",
-                              style: TextStyle(color: GlooTheme.nearlyPurple),
+                              style: TextStyle(color: GlooTheme.nearlyWhite),
                             ),
                           ),
                           onPressed: () {},
@@ -245,7 +245,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                             AppBar().preferredSize.height),
                         child: Icon(
                           Icons.arrow_back_ios, //ios
-                          color: GlooTheme.nearlyPurple,
+                          color: GlooTheme.nearlyWhite,
                         ),
                         onTap: () {
                           Navigator.pop(context);

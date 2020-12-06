@@ -24,7 +24,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
           children: <Widget>[
             ClipPath(
-              child: Container(color: GlooTheme.nearlyPurple),
+              child: Container(color: GlooTheme.nearlyWhite),
               clipper: getClipper(),
             ),
             Positioned(
@@ -36,19 +36,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         width: 150.0,
                         height: 150.0,
                         decoration: BoxDecoration(
-                            color: GlooTheme.nearlyPurple,
+                            color: GlooTheme.nearlyWhite,
                             image: DecorationImage(
                                 image: AssetImage('assets/images/carra.jpg'),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
                             boxShadow: [
-                              BoxShadow(blurRadius: 7.0, color: GlooTheme.nearlyPurple)
+                              BoxShadow(blurRadius: 7.0, color: GlooTheme.nearlyWhite)
                             ])),
                     SizedBox(height: 45.0),
                     Text(
                       'Raffaella Carrà',
                       style: TextStyle(
-                        color: GlooTheme.nearlyPurple,
+                        color: GlooTheme.nearlyWhite,
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -59,7 +59,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       child: Text(
                         "Com'è bello far l'amore da Trieste in Gloo",
                         style: TextStyle(
-                          color: GlooTheme.nearlyPurple,
+                          color: GlooTheme.nearlyWhite,
                           fontSize: 17.0,
                         ),
                         textAlign: TextAlign.center,
@@ -69,7 +69,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     MaterialButton(
                       onPressed: () {},
                       color: GlooTheme.grey,
-                      textColor: GlooTheme.nearlyPurple,
+                      textColor: GlooTheme.nearlyWhite,
                       child: Icon(
                         Icons.edit_outlined,
                         size: 24,
@@ -86,7 +86,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             '/'); //todo da fare meglio, dubito si faccia così
                       },
                       color: GlooTheme.purple,
-                      textColor: GlooTheme.nearlyPurple,
+                      textColor: GlooTheme.nearlyWhite,
                       child: Icon(
                         Icons.logout,
                         size: 24,
@@ -110,7 +110,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
-                      color: GlooTheme.nearlyPurple,
+                      color: GlooTheme.nearlyWhite,
                     ),
                     onTap: () {
                       Navigator.pop(context);
