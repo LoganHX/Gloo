@@ -80,12 +80,13 @@ class _SliderWidgetState extends State<SliderWidget> {
                     min: widget.min.toDouble(),
                     max: widget.max.toDouble(),
                     value: _value,
+                    onChangeStart: (value){
+                      _value = 0;
+                    },
                     onChanged: (value) {
-                      if (_value != value) {
                         setState(() {
                           _value = value;
                         });
-                      }
                     },
                     onChangeEnd: (value) {
                       widget.onSelectedValue((value).round());

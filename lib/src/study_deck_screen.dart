@@ -22,7 +22,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   CarouselController carouselController = CarouselController();
   var labels = {'answer': "Risposta", 'question': "Domanda"};
 
-
   Widget _getCardWidget(String text, bool isQuestion, int item) {
     return Container(
       height: MediaQuery.of(context).size.height -
@@ -112,8 +111,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
       ),
     );
   }
-
-
 
   @override
   void initState() {
@@ -208,40 +205,17 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        borderRadius: BorderRadius.circular(
-                            AppBar().preferredSize.height),
-                        child: PopupMenuButton<IconButton>(
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<IconButton>>[
-                            PopupMenuItem<IconButton>(
-                              child: Row(children: [
-                                Icon(
-                                  Icons.delete,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text("Elimina flashcard"),
-                              ]),
-                            ),
-                            PopupMenuItem<IconButton>(
-                              child: Row(children: [
-                                Icon(
-                                  Icons.edit,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text("Modifica"),
-                              ]),
-                            ),
-                          ],
-                          child:
-                              Icon(Icons.check, color: GlooTheme.nearlyWhite),
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(
+                              AppBar().preferredSize.height),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon:
+                                Icon(Icons.check, color: GlooTheme.nearlyWhite),
+                          )),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
