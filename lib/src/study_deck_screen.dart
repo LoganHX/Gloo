@@ -1,4 +1,8 @@
+import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
@@ -6,11 +10,14 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_html/style.dart';
+import 'package:provider/provider.dart';
 import '../graphics/gloo_theme.dart';
 
 class StudyDeckScreen extends StatefulWidget {
-  final List<Flashcard> flashcards;
-  const StudyDeckScreen({Key key, this.flashcards}) : super(key: key);
+  //final List<Flashcard> flashcards;
+  final Deck deck;
+
+  const StudyDeckScreen({Key key, this.deck}) : super(key: key);
   @override
   _StudyDeckScreenState createState() => _StudyDeckScreenState();
 }
@@ -21,6 +28,11 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   bool isQuestion = true;
   CarouselController carouselController = CarouselController();
   var labels = {'answer': "Risposta", 'question': "Domanda"};
+
+  Stream<List<Flashcard>> _getFlashcards() {
+    final user = Provider.of<User>(context);
+    return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
+  }
 
   Widget _getCardWidget(String text, bool isQuestion, int item) {
     return Container(
@@ -124,104 +136,111 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          gradient: GlooTheme.bgGradient,
-        ),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).padding.top * 0.5 +
-                        AppBar().preferredSize.height,
-                  ),
-                  //Expanded(child: Padding(padding: EdgeInsets.zero,)),
-                  //Text("////"),
-                  CarouselSlider.builder(
-                      carouselController: carouselController,
-                      itemCount: widget.flashcards.length,
-                      itemBuilder: (BuildContext context, int itemIndex) {
-                        return FlipCard(
-                          front: _getCardWidget(
-                              widget.flashcards[itemIndex].question,
-                              true,
-                              itemIndex),
-                          back: _getCardWidget(
-                              widget.flashcards[itemIndex].answer,
-                              false,
-                              itemIndex),
-                        );
-                      },
-                      options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height -
-                            MediaQuery.of(context).padding.top -
-                            AppBar().preferredSize.height,
-                        scrollDirection: Axis.horizontal,
-                        enableInfiniteScroll: false,
-                        disableCenter: true,
-                        enlargeCenterPage: true,
-                        pageSnapping: true,
-                      )),
-                ],
-              ),
+
+    return StreamBuilder<List<Flashcard>>(
+      stream: _getFlashcards(),
+      builder: (context, snapshot) {
+        if(!snapshot.hasData) return Loading();
+        return Scaffold(
+          body: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              gradient: GlooTheme.bgGradient,
             ),
-            Padding(
-              //App bar da mettere anche nella pagina seguente
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top, left: 3),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: AppBar().preferredSize.height,
-                    height: AppBar().preferredSize.height,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(
-                            AppBar().preferredSize.height),
-                        child: Icon(
-                          Icons.arrow_back_ios, //ios
-                          color: GlooTheme.nearlyWhite,
-                        ),
-                        onTap: () {
-                          // isQuestion = false;
-                          // counter = 0;
-                          Navigator.pop(context);
-                        },
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).padding.top * 0.5 +
+                            AppBar().preferredSize.height,
                       ),
-                    ),
+                      //Expanded(child: Padding(padding: EdgeInsets.zero,)),
+                      //Text("////"),
+                      CarouselSlider.builder(
+                          carouselController: carouselController,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int itemIndex) {
+                            return FlipCard(
+                              front: _getCardWidget(
+                                  snapshot.data[itemIndex].question,
+                                  true,
+                                  itemIndex),
+                              back: _getCardWidget(
+                                  snapshot.data[itemIndex].answer,
+                                  false,
+                                  itemIndex),
+                            );
+                          },
+                          options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height -
+                                MediaQuery.of(context).padding.top -
+                                AppBar().preferredSize.height,
+                            scrollDirection: Axis.horizontal,
+                            enableInfiniteScroll: false,
+                            disableCenter: true,
+                            enlargeCenterPage: true,
+                            pageSnapping: true,
+                          )),
+                    ],
                   ),
-                  SizedBox(
-                    width: AppBar().preferredSize.height,
-                    height: AppBar().preferredSize.height,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                          borderRadius: BorderRadius.circular(
-                              AppBar().preferredSize.height),
-                          child: IconButton(
-                            onPressed: () {
+                ),
+                Padding(
+                  //App bar da mettere anche nella pagina seguente
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top, left: 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: AppBar().preferredSize.height,
+                        height: AppBar().preferredSize.height,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(
+                                AppBar().preferredSize.height),
+                            child: Icon(
+                              Icons.arrow_back_ios, //ios
+                              color: GlooTheme.nearlyWhite,
+                            ),
+                            onTap: () {
+                              // isQuestion = false;
+                              // counter = 0;
                               Navigator.pop(context);
                             },
-                            icon:
-                                Icon(Icons.check, color: GlooTheme.nearlyWhite),
-                          )),
-                    ),
-                  )
-                ],
-              ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: AppBar().preferredSize.height,
+                        height: AppBar().preferredSize.height,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                              borderRadius: BorderRadius.circular(
+                                  AppBar().preferredSize.height),
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon:
+                                    Icon(Icons.check, color: GlooTheme.nearlyWhite),
+                              )),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

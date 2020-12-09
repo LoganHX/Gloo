@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
 import 'package:provider/provider.dart';
-// import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ShowDeckScreen extends StatefulWidget {
@@ -36,8 +35,8 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   double opacity3 = 0.0;
 
   Stream<List<Flashcard>> _getFlashcards() {
-    final user = Provider.of<User>(context);
-    return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
+    // final user = Provider.of<User>(context);
+    // return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
   }
 
   Future<void> setData() async {
@@ -58,174 +57,158 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Flashcard>>(
-        stream: _getFlashcards(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData || loading) {
-            return Loading();
-          } else {
-            return Scaffold(
-              key: _scaffoldKey,
-              body: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: GlooTheme.bgGradient,
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height >= 450.0
-                        ? MediaQuery.of(context).size.height
-                        : 450.0,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).padding.top * 0.5 +
-                              AppBar().preferredSize.height,
-                        ),
-                        Text(
-                          //"Enterprise Mobile Application Development",
-                          widget.deck.course,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 27,
-                            letterSpacing: 0.27,
-                            color: GlooTheme.nearlyWhite,
-                          ),
-                        ),
-
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.0, bottom: 0.0),
-                          child: _buildMenuBar(context),
-                        ),
-
-                        Expanded(
-                          flex: 2,
-                          child: PageView(
-                            controller: _pageController,
-                            onPageChanged: (i) {
-                              if (i == 0) {
-                                setState(() {
-                                  right = GlooTheme.purple;
-                                  left = GlooTheme.nearlyWhite;
-                                });
-                              } else if (i == 1) {
-                                setState(() {
-                                  right = GlooTheme.nearlyWhite;
-                                  left = GlooTheme.purple;
-                                });
-                              }
-                            },
-                            children: <Widget>[
-                               ConstrainedBox(
-                                constraints: const BoxConstraints.expand(),
-                                child: _buildStats(context),
-                              ),
-                               ConstrainedBox(
-                                constraints: const BoxConstraints.expand(),
-                                child: _buildShowDeckScreen(
-                                    context, snapshot.data.toList()),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-
-                            Card(
-                              color: GlooTheme.nearlyWhite,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0)),
-                              elevation: 10.0,
-                              child: Center(
-                                child: FlatButton.icon(
-                                  onPressed: () async {
-                                    setState(() {
-                                      loading = true;
-                                    });
-                                    print("Tap bottone studio flashcards");
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                StudyDeckScreen(
-                                                    flashcards:
-                                                        snapshot.data)));
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                  },
-                                  icon: Icon(
-                                    Icons.refresh, //icona ripeti deck
-                                    color: GlooTheme.purple,
-                                    size: 35,
-                                  ),
-                                  label: Text(
-                                    "Studia Deck",
-                                    style: TextStyle(
-                                        color: GlooTheme.purple,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Card(
-                              color: GlooTheme.purple.withOpacity(0.7),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0)),
-                              elevation: 10.0,
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add, //icona aggiungi carta
-                                    color: GlooTheme.nearlyWhite,
-                                    size: 25,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 16,
-                        )
-                      ],
-                    ),
+    return Scaffold(
+      key: _scaffoldKey,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: GlooTheme.bgGradient,
+            ),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height >= 450.0
+                ? MediaQuery.of(context).size.height
+                : 450.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                SizedBox(
+                  height: MediaQuery.of(context).padding.top * 0.5 +
+                      AppBar().preferredSize.height,
+                ),
+                Text(
+                  //"Enterprise Mobile Application Development",
+                  widget.deck.course,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 27,
+                    letterSpacing: 0.27,
+                    color: GlooTheme.nearlyWhite,
                   ),
-                  Padding(
-                    //App bar da mettere anche nella pagina seguente
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
-                    child: SizedBox(
-                      width: AppBar().preferredSize.height,
-                      height: AppBar().preferredSize.height,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(
-                              AppBar().preferredSize.height),
-                          child: Icon(
-                            Icons.arrow_back_ios, //ios
-                            color: GlooTheme.nearlyWhite,
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0, bottom: 0.0),
+                  child: _buildMenuBar(context),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (i) {
+                      if (i == 0) {
+                        setState(() {
+                          right = GlooTheme.purple;
+                          left = GlooTheme.nearlyWhite;
+                        });
+                      } else if (i == 1) {
+                        setState(() {
+                          right = GlooTheme.nearlyWhite;
+                          left = GlooTheme.purple;
+                        });
+                      }
+                    },
+                    children: <Widget>[
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: _buildStats(context),
+                      ),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: _buildShowDeckScreen(context),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Card(
+                      color: GlooTheme.nearlyWhite,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0)),
+                      elevation: 10.0,
+                      child: Center(
+                        child: FlatButton.icon(
+                          onPressed: () async {
+                            setState(() {
+                              loading = true;
+                            });
+                            print("Tap bottone studio flashcards");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        StudyDeckScreen(deck: widget.deck)));
+                            setState(() {
+                              loading = false;
+                            });
                           },
+                          icon: Icon(
+                            Icons.refresh, //icona ripeti deck
+                            color: GlooTheme.purple,
+                            size: 35,
+                          ),
+                          label: Text(
+                            "Studia Deck",
+                            style: TextStyle(
+                                color: GlooTheme.purple, fontSize: 18),
+                          ),
                         ),
                       ),
                     ),
-                  )
-                ],
+                    Card(
+                      color: GlooTheme.purple.withOpacity(0.7),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0)),
+                      elevation: 10.0,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                          child: Icon(
+                            Icons.add, //icona aggiungi carta
+                            color: GlooTheme.nearlyWhite,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                )
+              ],
+            ),
+          ),
+          Padding(
+            //App bar da mettere anche nella pagina seguente
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: SizedBox(
+              width: AppBar().preferredSize.height,
+              height: AppBar().preferredSize.height,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius:
+                      BorderRadius.circular(AppBar().preferredSize.height),
+                  child: Icon(
+                    Icons.arrow_back_ios, //ios
+                    color: GlooTheme.nearlyWhite,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-            );
-          }
-        });
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -280,7 +263,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 // highlightColor: Colors.transparent,
                 onPressed: _onShowFlashcardsButtonPress,
                 child: Text(
-                  "Flashcards",
+                  "Dettagli",
                   style: TextStyle(
                     color: right,
                     fontSize: 16.0,
@@ -294,29 +277,74 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     );
   }
 
-  Widget getCardsUI({List<Flashcard> flashcards}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        CardListView(
-          deck: widget.deck,
-          flashcards: flashcards,
-          callBack: (Flashcard flashcard) {
-            Navigator.pushNamed(context, '/answer', arguments: flashcard);
-          },
-        ),
-      ],
+  // Widget getCardsUI({List<Flashcard> flashcards}) {
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: <Widget>[
+  //       CardListView(
+  //         deck: widget.deck,
+  //         flashcards: flashcards,
+  //         callBack: (Flashcard flashcard) {
+  //           Navigator.pushNamed(context, '/answer', arguments: flashcard);
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  Widget _buildShowDeckScreen(BuildContext context) {
+    //return getCardsUI(flashcards: flashcards);
+    return Container(
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          Container(
+            height: MediaQuery.of(context).size.height*0.6,
+            width: MediaQuery.of(context).size.width*0.8,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+              color: GlooTheme.nearlyWhite,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Nome corso", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                ),
+                Text(widget.deck.course, style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Professore", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                ),
+                Text(widget.deck.prof, style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Anno Accademico", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                ),
+                Text("20/21", style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Università", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                ),
+                Text(widget.deck.university, style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+
+
+                SizedBox(height: 25,)
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildShowDeckScreen(
-      BuildContext context, List<Flashcard> flashcards) {
-    return getCardsUI(flashcards: flashcards);
-  }
-
   Widget _buildStats(BuildContext context) {
-    final fakeValue = 69.0;
+    final fakeValue = 71.0;
     return Container(
       color: Colors.transparent,
       //padding: EdgeInsets.only(top: 23.0),
@@ -361,8 +389,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           widget: Text(
                             fakeValue.toStringAsFixed(0) + '%',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                                fontSize: 22, color: GlooTheme.purple.withOpacity(0.85)),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: GlooTheme.purple.withOpacity(0.85)),
                           ))
                     ]),
               ]),
@@ -382,7 +411,6 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
     _pageController?.animateToPage(1,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
-
 }
 
 class ChartData {
