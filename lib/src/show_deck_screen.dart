@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ShowDeckScreen extends StatefulWidget {
+
   final Deck deck;
   ShowDeckScreen({this.deck});
 
@@ -125,6 +126,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(width: 50,), //todo si dovrebbe calcolare
                     Card(
                       color: GlooTheme.nearlyWhite,
                       shape: RoundedRectangleBorder(

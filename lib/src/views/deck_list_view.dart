@@ -150,7 +150,7 @@ class DeckView extends StatelessWidget {
                                           child: Row(
                                             children: <Widget>[
                                               Icon(
-                                                deck.course.length >= 5
+                                                deck.course.length < 25
                                                     ? Icons.person
                                                     : Icons
                                                         .supervisor_account, //calendar
@@ -168,6 +168,7 @@ class DeckView extends StatelessWidget {
                                               //     color: GlooTheme.purple,
                                               //   ),
                                               // ),
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -176,17 +177,18 @@ class DeckView extends StatelessWidget {
                                             children: <Widget>[
                                               Text(
                                                 //'${deck.year} ',
-                                                '4.8 ',
+                                                '20/21',
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w200,
                                                   fontSize: 12,
-                                                  letterSpacing: 0.0,
+                                                  letterSpacing: 1.0,
                                                   color: GlooTheme.purple,
                                                 ),
                                               ),
+                                              SizedBox(width: 2,),
                                               Icon(
-                                                Icons.star,
+                                                Icons.calendar_today,
                                                 color: GlooTheme.purple,
                                                 size: 12,
                                               ),

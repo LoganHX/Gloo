@@ -23,6 +23,8 @@ class StudyDeckScreen extends StatefulWidget {
 }
 
 class _StudyDeckScreenState extends State<StudyDeckScreen> {
+  double slVal = 0;
+  bool canEnd = false;
   String htmlData;
   List _value = [];
   bool isQuestion = true;
@@ -85,11 +87,10 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                           "html": Style(
                             fontSize:
                                 text.length < 70 ? FontSize(20) : FontSize(16),
-                            //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
                             textAlign: text.length < 70
                                 ? TextAlign.center
                                 : TextAlign.left,
-                            //todo qui assumo che il testo delle domande sia sostanzialmente plain text e non html
+                            // qui assumo che il testo delle domande sia sostanzialmente plain text e non html
                           ),
                         },
                         onLinkTap: (url) {},
@@ -108,16 +109,72 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                       AppBar().preferredSize.height)),
           Container(
             child: AnimatedOpacity(
-              opacity: isQuestion ? 0.0 : 1.0,
-              duration: Duration(milliseconds: 400),
-              child: SliderWidget(
-                onSelectedValue: (value) {
-                  //_value.insert(item, value);
-                  //print(_value[item]);
-                  carouselController.nextPage();
-                },
-              ),
-            ),
+                opacity: isQuestion ? 0.0 : 1.0,
+                duration: Duration(milliseconds: 400),
+                //todo controllare se è stato aggiustato il bug https://github.com/flutter/flutter/issues/28115
+                //child: SliderWidget(
+                // onSelectedValue: (value) {
+                //   //_value.insert(item, value);
+                //   //print(_value[item]);
+                //   carouselController.nextPage();
+                // },
+                // )
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Card(
+                      color: GlooTheme.nearlyWhite,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0)),
+                      elevation: 10.0,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                          child: Icon(
+                            Icons.sentiment_very_dissatisfied, //icona aggiungi carta
+                            color: GlooTheme.purple,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Card(
+                      color: GlooTheme.nearlyWhite,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0)),
+                      elevation: 10.0,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                          child: Icon(
+                            Icons.sentiment_satisfied, //icona aggiungi carta
+                            color: GlooTheme.purple,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Card(
+                      color: GlooTheme.nearlyWhite,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0)),
+                      elevation: 10.0,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                          child: Icon(
+                            Icons.sentiment_very_satisfied, //icona aggiungi carta
+                            color: GlooTheme.purple,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
           ),
         ],
       ),
@@ -136,111 +193,109 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<List<Flashcard>>(
-      stream: _getFlashcards(),
-      builder: (context, snapshot) {
-        if(!snapshot.hasData) return Loading();
-        return Scaffold(
-          body: Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              gradient: GlooTheme.bgGradient,
-            ),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top * 0.5 +
-                            AppBar().preferredSize.height,
-                      ),
-                      //Expanded(child: Padding(padding: EdgeInsets.zero,)),
-                      //Text("////"),
-                      CarouselSlider.builder(
-                          carouselController: carouselController,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, int itemIndex) {
-                            return FlipCard(
-                              front: _getCardWidget(
-                                  snapshot.data[itemIndex].question,
-                                  true,
-                                  itemIndex),
-                              back: _getCardWidget(
-                                  snapshot.data[itemIndex].answer,
-                                  false,
-                                  itemIndex),
-                            );
-                          },
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height -
-                                MediaQuery.of(context).padding.top -
-                                AppBar().preferredSize.height,
-                            scrollDirection: Axis.horizontal,
-                            enableInfiniteScroll: false,
-                            disableCenter: true,
-                            enlargeCenterPage: true,
-                            pageSnapping: true,
-                          )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  //App bar da mettere anche nella pagina seguente
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).padding.top, left: 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: AppBar().preferredSize.height,
-                        height: AppBar().preferredSize.height,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(
-                                AppBar().preferredSize.height),
-                            child: Icon(
-                              Icons.arrow_back_ios, //ios
-                              color: GlooTheme.nearlyWhite,
-                            ),
-                            onTap: () {
-                              // isQuestion = false;
-                              // counter = 0;
-                              Navigator.pop(context);
-                            },
-                          ),
+        stream: _getFlashcards(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Loading();
+          return Scaffold(
+            body: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: GlooTheme.bgGradient,
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top * 0.5 +
+                              AppBar().preferredSize.height,
                         ),
-                      ),
-                      SizedBox(
-                        width: AppBar().preferredSize.height,
-                        height: AppBar().preferredSize.height,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
+                        //Expanded(child: Padding(padding: EdgeInsets.zero,)),
+                        //Text("////"),
+                        CarouselSlider.builder(
+                            carouselController: carouselController,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int itemIndex) {
+                              return FlipCard(
+                                front: _getCardWidget(
+                                    snapshot.data[itemIndex].question,
+                                    true,
+                                    itemIndex),
+                                back: _getCardWidget(
+                                    snapshot.data[itemIndex].answer,
+                                    false,
+                                    itemIndex),
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height -
+                                  MediaQuery.of(context).padding.top -
+                                  AppBar().preferredSize.height,
+                              scrollDirection: Axis.horizontal,
+                              enableInfiniteScroll: false,
+                              disableCenter: true,
+                              enlargeCenterPage: true,
+                              pageSnapping: true,
+                            )),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    //App bar da mettere anche nella pagina seguente
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top, left: 3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: AppBar().preferredSize.height,
+                          height: AppBar().preferredSize.height,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
                               borderRadius: BorderRadius.circular(
                                   AppBar().preferredSize.height),
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon:
-                                    Icon(Icons.check, color: GlooTheme.nearlyWhite),
-                              )),
+                              child: Icon(
+                                Icons.arrow_back_ios, //ios
+                                color: GlooTheme.nearlyWhite,
+                              ),
+                              onTap: () {
+                                // isQuestion = false;
+                                // counter = 0;
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          width: AppBar().preferredSize.height,
+                          height: AppBar().preferredSize.height,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    AppBar().preferredSize.height),
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(Icons.check,
+                                      color: GlooTheme.nearlyWhite),
+                                )),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 }
