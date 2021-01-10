@@ -1,12 +1,13 @@
 import 'package:alpha_gloo/models/flashcard.dart';
 
 class Deck{
+  final String id;
   final String university;
   final String course;
   final String prof;
   final String year;
 
-  Deck({this.university, this.course, this.prof, this.year});
+  Deck({this.id, this.university, this.course, this.prof, this.year});
 
 
 }

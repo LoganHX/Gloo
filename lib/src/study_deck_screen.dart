@@ -26,7 +26,6 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   double slVal = 0;
   bool canEnd = false;
   String htmlData;
-  List _value = [];
   bool isQuestion = true;
   CarouselController carouselController = CarouselController();
   var labels = {'answer': "Risposta", 'question': "Domanda"};
@@ -36,7 +35,12 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
     return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
   }
 
-  Widget _getCardWidget(String text, bool isQuestion, int item) {
+  void _updateFlashcards(Flashcard flashcard, int rating ) async {
+    return DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardData(flashcard.id, widget.deck.course, flashcard.question, flashcard.answer, rating);
+  }
+
+  Widget _getCardWidget(Flashcard flashcard, bool isQuestion, int item) {
+    String text = isQuestion ? flashcard.question : flashcard.answer;
     return Container(
       height: MediaQuery.of(context).size.height -
           MediaQuery.of(context).padding.top -
@@ -72,7 +76,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
               color: GlooTheme.nearlyWhite,
               borderRadius: const BorderRadius.all(Radius.circular(32.0)),
             ),
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(12),
             child: Center(
               child: Padding(
                 padding:
@@ -111,70 +115,89 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
             child: AnimatedOpacity(
                 opacity: isQuestion ? 0.0 : 1.0,
                 duration: Duration(milliseconds: 400),
-                //todo controllare se è stato aggiustato il bug https://github.com/flutter/flutter/issues/28115
-                //child: SliderWidget(
-                // onSelectedValue: (value) {
-                //   //_value.insert(item, value);
-                //   //print(_value[item]);
-                //   carouselController.nextPage();
-                // },
+
+                child: SliderWidget( //todo controllare se è stato aggiustato il bug https://github.com/flutter/flutter/issues/28115
+                onSelectedValue: (value) {
+                  _updateFlashcards(flashcard, value);
+                  carouselController.nextPage(duration: Duration(milliseconds: 512));
+                },
+                ),
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: (){
+                //         print(item.toString());
+                //         carouselController.nextPage();
+                //       },
+                //       child: Card(
+                //         color: GlooTheme.nearlyWhite,
+                //         shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(50.0)),
+                //         elevation: 10.0,
+                //         child: Container(
+                //           width: 50,
+                //           height: 50,
+                //           child: Center(
+                //             child: Icon(
+                //               Icons.thumb_down, //icona aggiungi carta
+                //               color: GlooTheme.purple,
+                //               size: 25,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     // GestureDetector(
+                //     //   onTap: (){
+                //     //     print(item.toString());
+                //     //     carouselController.nextPage();
+                //     //   },
+                //     //   child: Card(
+                //     //     color: GlooTheme.nearlyWhite,
+                //     //     shape: RoundedRectangleBorder(
+                //     //         borderRadius: BorderRadius.circular(50.0)),
+                //     //     elevation: 10.0,
+                //     //     child: Container(
+                //     //       width: 50,
+                //     //       height: 50,
+                //     //       child: Center(
+                //     //         child: Icon(
+                //     //           Icons.sentiment_satisfied, //icona aggiungi carta
+                //     //           color: GlooTheme.purple,
+                //     //           size: 25,
+                //     //         ),
+                //     //       ),
+                //     //     ),
+                //     //   ),
+                //     // ),
+                //     SizedBox( width: MediaQuery.of(context).size.width*0.6-100,),
+                //     GestureDetector(
+                //       onTap: (){
+                //         print(item.toString());
+                //         carouselController.nextPage();
+                //       },
+                //       child: Card(
+                //         color: GlooTheme.nearlyWhite,
+                //         shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(50.0)),
+                //         elevation: 10.0,
+                //         child: Container(
+                //           width: 50,
+                //           height: 50,
+                //           child: Center(
+                //             child: Icon(
+                //               Icons.thumb_up, //icona aggiungi carta
+                //               color: GlooTheme.purple,
+                //               size: 25,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
                 // )
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Card(
-                      color: GlooTheme.nearlyWhite,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      elevation: 10.0,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Center(
-                          child: Icon(
-                            Icons.sentiment_very_dissatisfied, //icona aggiungi carta
-                            color: GlooTheme.purple,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: GlooTheme.nearlyWhite,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      elevation: 10.0,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Center(
-                          child: Icon(
-                            Icons.sentiment_satisfied, //icona aggiungi carta
-                            color: GlooTheme.purple,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: GlooTheme.nearlyWhite,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      elevation: 10.0,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Center(
-                          child: Icon(
-                            Icons.sentiment_very_satisfied, //icona aggiungi carta
-                            color: GlooTheme.purple,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
+             ),
           ),
         ],
       ),
@@ -223,11 +246,11 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                             itemBuilder: (BuildContext context, int itemIndex) {
                               return FlipCard(
                                 front: _getCardWidget(
-                                    snapshot.data[itemIndex].question,
+                                    snapshot.data[itemIndex],
                                     true,
                                     itemIndex),
                                 back: _getCardWidget(
-                                    snapshot.data[itemIndex].answer,
+                                    snapshot.data[itemIndex],
                                     false,
                                     itemIndex),
                               );

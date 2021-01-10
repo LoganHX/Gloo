@@ -53,7 +53,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: GlooTheme.grey.withOpacity(0.8),
+                                      color: GlooTheme.nearlyWhite,
                                       borderRadius: const BorderRadius.only(
                                         bottomRight: Radius.circular(13.0),
                                         bottomLeft: Radius.circular(13.0),
@@ -82,7 +82,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                                   fontWeight: FontWeight.w100,
                                                   fontSize: 14,
                                                   letterSpacing: 0.2,
-                                                  color: GlooTheme.nearlyWhite,
+                                                  color: GlooTheme.nearlyBlack,
                                                 ),
                                               ),
                                               onEditingComplete: () {},
@@ -93,7 +93,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                           width: 60,
                                           height: 60,
                                           child: Icon(Icons.search,
-                                              color: GlooTheme.nearlyWhite),
+                                              color: GlooTheme.purple),
                                         )
                                       ],
                                     ),
@@ -106,8 +106,9 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                         SizedBox(height: 20.0),
                         Text(
                           "Aggiungi un deck pubblico",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: GlooTheme.nearlyWhite, fontSize: 32),
+                              color: GlooTheme.nearlyWhite, fontSize: 23),
                         ),
                         SizedBox(height: 20.0),
                         Container(
@@ -141,7 +142,7 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                               'Canada'
                             ],
                             hint: "Università degli studi di Salerno",
-                            popupItemDisabled: (String s) => s.startsWith('I'),
+                            //popupItemDisabled: (String s) => s.startsWith('I'),
                             onChanged: print,
                           ),
                         ),
@@ -195,30 +196,34 @@ class _AddDeckScreenState extends State<AddDeckScreen> {
                                 borderSide:
                                     BorderSide(color: GlooTheme.nearlyWhite),
                               )),
-                          mode: Mode.BOTTOM_SHEET,
-                          showSearchBox: true,
+                          mode: Mode.MENU,
+                          showSearchBox: false,
                           popupBackgroundColor: GlooTheme.nearlyWhite,
                           showSelectedItem: false,
                           items: [
-                            "DI - Dipartimento di Informatica",
-                            "DIEM - Dipartimento di Ingegneria Elettronica e Matematica applicata",
-                            "Tunisia",
-                            'Canada'
+                            "Affidabilità di sistemi",
+                            "Enterprise Mobile Application Development",
+                            "Gestione Progetti Software",
+                            "Information Visualization",
+
                           ],
                           //label: "Scegli Corso",
-                          hint: "---",
+                          hint: "Gestione Progetti Software",
                           popupItemDisabled: (String s) => s.startsWith('I'),
                           onChanged: print,
                         ),
-                        SizedBox(height: 20.0),
+                        SizedBox(height: 45.0),
                         RaisedButton(
-                          color: GlooTheme.purple,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(60),
+                          ),
+                          color: GlooTheme.nearlyWhite,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 10),
                             child: Text(
                               "Cerca Deck",
-                              style: TextStyle(color: GlooTheme.nearlyWhite),
+                              style: TextStyle(color: GlooTheme.purple, fontSize: 23),
                             ),
                           ),
                           onPressed: () {},

@@ -1,18 +1,12 @@
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
-import 'package:alpha_gloo/models/user.dart';
-import 'package:alpha_gloo/services/database.dart';
-import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
-import 'package:alpha_gloo/src/views/card_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ShowDeckScreen extends StatefulWidget {
-
   final Deck deck;
   ShowDeckScreen({this.deck});
 
@@ -23,6 +17,8 @@ class ShowDeckScreen extends StatefulWidget {
 class _ShowDeckScreenState extends State<ShowDeckScreen>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  List<double> ratings;
 
   Animation<double> animation;
   AnimationController animationController;
@@ -86,7 +82,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 27,
-                    letterSpacing: 0.27,
+                    //letterSpacing: 0.27,
                     color: GlooTheme.nearlyWhite,
                   ),
                 ),
@@ -126,7 +122,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(width: 50,), //todo si dovrebbe calcolare
+                    SizedBox(
+                      width: 50,
+                    ), //todo si dovrebbe calcolare
                     Card(
                       color: GlooTheme.nearlyWhite,
                       shape: RoundedRectangleBorder(
@@ -303,10 +301,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Container(
-            height: MediaQuery.of(context).size.height*0.6,
-            width: MediaQuery.of(context).size.width*0.8,
+            height: MediaQuery.of(context).size.height * 0.6,
+            width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
               color: GlooTheme.nearlyWhite,
@@ -316,27 +313,67 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Nome corso", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                  child: Text(
+                    "Nome corso",
+                    style:
+                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+                  ),
                 ),
-                Text(widget.deck.course, style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+                Text(
+                  widget.deck.course,
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: GlooTheme.purple),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Professore", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                  child: Text(
+                    "Professore",
+                    style:
+                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+                  ),
                 ),
-                Text(widget.deck.prof, style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+                Text(
+                  widget.deck.prof,
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: GlooTheme.purple),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Anno Accademico", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                  child: Text(
+                    "Anno Accademico",
+                    style:
+                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+                  ),
                 ),
-                Text("20/21", style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
+                Text(
+                  "20/21",
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: GlooTheme.purple),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Università", style: TextStyle(fontSize: 24, color: GlooTheme.purple),),
+                  child: Text(
+                    "Università",
+                    style:
+                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+                  ),
                 ),
-                Text(widget.deck.university, style: TextStyle(fontSize: 20, color: GlooTheme.nearlyBlack),),
-
-
-                SizedBox(height: 25,)
+                Text(
+                  widget.deck.university,
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: GlooTheme.purple),
+                ),
+                SizedBox(
+                  height: 25,
+                )
               ],
             ),
           ),

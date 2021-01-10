@@ -43,10 +43,14 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     });
   }
 
-  Future updateFlashcardData(String course, String question, String answer) async {
-    return await userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(question).setData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
-      "question": question,
-      "answer": answer,
+  Future updateFlashcardData(String documentID, String course, String question, String answer, int rating) async {
+    DateTime now =  DateTime.now();
+    //print(userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(documentID).toString());
+    return await userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(documentID).updateData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
+      // "question": question,
+      // "answer": answer,
+      "rating": rating,
+      "date": DateTime(now.year, now.month, now.day),
     });
   }
 
@@ -76,7 +80,9 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     );
   }
   Flashcard _flashcardFromSnapshot(DocumentSnapshot snapshot){
+    snapshot.documentID;
     return Flashcard(
+        id: snapshot.documentID,
         question: snapshot.data['question'],
         answer: snapshot.data['answer']
     );
@@ -86,6 +92,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return snapshot.documents.map((doc){
       //print(doc.data);
       return Flashcard(
+          id: doc.documentID,
           question: doc.data['question'] ?? '',
           answer: doc.data['answer'] ?? '',
       );
@@ -95,6 +102,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
   List<Deck> _deckListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
       return Deck(
+          id: doc.documentID,
           university: doc.data['university'] ?? '',
           course: doc.data['course'] ?? '',
           prof: doc.data['prof'] ?? '',
