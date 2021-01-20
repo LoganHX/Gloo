@@ -4,6 +4,7 @@ import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/src/add_deck_screen.dart';
 import 'package:alpha_gloo/services/wrapper.dart';
 import 'package:alpha_gloo/services/auth.dart';
+import 'package:alpha_gloo/src/new_deck_screen.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
             '/study_deck': (context) => StudyDeckScreen(),
             '/editor': (context) => EditorPage(),
             '/profile': (context) => UserProfileScreen(),
-            '/newDeck': (context) => AddDeckScreen(),
+            '/newDeck': (context) => NewDeckScreen(),
           }),
     );
   }

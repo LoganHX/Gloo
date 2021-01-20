@@ -1,10 +1,15 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:alpha_gloo/models/deck.dart';
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor/html_editor.dart';
 
 class EditorPage extends StatefulWidget {
-  EditorPage({Key key, this.title}) : super(key: key);
+  Deck deck;
+  final Flashcard flashcard;
+  EditorPage({Key key, this.title, this.deck, this.flashcard}) : super(key: key);
   final String title;
+
 
   @override
   _EditorPageState createState() => _EditorPageState();
@@ -14,8 +19,13 @@ class _EditorPageState extends State<EditorPage> {
   GlobalKey<HtmlEditorState> keyEditor = GlobalKey();
   String result = "";
 
+
+
   @override
   Widget build(BuildContext context) {
+    //print(widget.deck.course);
+    Flashcard fl = widget.flashcard;
+    //if(flashcard == null) flashcard = Flashcard(answer: widget.flashcard!=null? widget.flashcard.answer: "", question: widget.flashcard!=null? widget.flashcard.question: "");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: GlooTheme.purple,
@@ -36,6 +46,8 @@ class _EditorPageState extends State<EditorPage> {
             tooltip: 'Salva flashcard',
             onPressed: () async {
               final txt = await keyEditor.currentState.getText();
+              //fl.question = txt;
+
               setState(() {
                 // result = txt;
                 print(txt);

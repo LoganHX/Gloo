@@ -1,5 +1,6 @@
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
+import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
@@ -30,11 +31,6 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
-
-  Stream<List<Flashcard>> _getFlashcards() {
-    // final user = Provider.of<User>(context);
-    // return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
-  }
 
   Future<void> setData() async {
     animationController.forward();
@@ -131,12 +127,21 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           borderRadius: BorderRadius.circular(50.0)),
                       elevation: 10.0,
                       child: Center(
-                        child: FlatButton.icon(
+                        child: FlatButton(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Text(
+                              "Studia Deck",
+                              style: TextStyle(
+                                  color: GlooTheme.purple, fontSize: 18),
+                            ),
+                          ),
                           onPressed: () async {
                             setState(() {
                               loading = true;
                             });
-                            print("Tap bottone studio flashcards");
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -146,32 +151,31 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                               loading = false;
                             });
                           },
-                          icon: Icon(
-                            Icons.refresh, //icona ripeti deck
-                            color: GlooTheme.purple,
-                            size: 35,
-                          ),
-                          label: Text(
-                            "Studia Deck",
-                            style: TextStyle(
-                                color: GlooTheme.purple, fontSize: 18),
-                          ),
                         ),
                       ),
                     ),
-                    Card(
-                      color: GlooTheme.purple.withOpacity(0.7),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      elevation: 10.0,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Center(
-                          child: Icon(
-                            Icons.add, //icona aggiungi carta
-                            color: GlooTheme.nearlyWhite,
-                            size: 25,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    EditorPage(deck: widget.deck)));
+                      },
+                      child: Card(
+                        color: GlooTheme.purple.withOpacity(0.7),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)),
+                        elevation: 10.0,
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                            child: Icon(
+                              Icons.add, //icona aggiungi carta
+                              color: GlooTheme.nearlyWhite,
+                              size: 25,
+                            ),
                           ),
                         ),
                       ),
@@ -302,7 +306,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.54,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -321,6 +325,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 ),
                 Text(
                   widget.deck.course,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,

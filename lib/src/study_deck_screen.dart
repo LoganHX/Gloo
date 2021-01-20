@@ -32,11 +32,11 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
 
   Stream<List<Flashcard>> _getFlashcards() {
     final user = Provider.of<User>(context);
-    return DatabaseService(uid: user.uid).flashcards(widget.deck.course);
+    return DatabaseService(uid: user.uid).flashcards(widget.deck.id);
   }
 
   void _updateFlashcards(Flashcard flashcard, int rating ) async {
-    return DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardData(flashcard.id, widget.deck.course, flashcard.question, flashcard.answer, rating);
+    return DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardRatingData(flashcard.id, widget.deck.id, flashcard.question, flashcard.answer, rating);
   }
 
   Widget _getCardWidget(Flashcard flashcard, bool isQuestion, int item) {

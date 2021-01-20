@@ -34,8 +34,8 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     });
   }
 
-  Future updateDeckData(String university, String course, String prof, String year) async {
-    return await userCollection.document(uid).collection("decks").document(course).setData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
+  Future createDeck(String university, String course, String prof, String year) async {
+    return await userCollection.document(uid).collection("decks").document().setData({
       "university": university,
       "course": course,
       "prof": prof,
@@ -43,14 +43,31 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     });
   }
 
-  Future updateFlashcardData(String documentID, String course, String question, String answer, int rating) async {
+  Future updateDeckData(String deckID, String course, String prof, String university, String year) async {
     DateTime now =  DateTime.now();
     //print(userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(documentID).toString());
-    return await userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(documentID).updateData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
+    return await userCollection.document(uid).collection("decks").document(deckID).updateData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
       // "question": question,
       // "answer": answer,
+      "course": course,
+      "prof": prof,
+      "university": course,
+      "year": prof,
+    });
+  }
+
+  Future updateFlashcardRatingData(String flashcardID, String deckID, String question, String answer, int rating) async {
+    DateTime now =  DateTime.now();
+    return await userCollection.document(uid).collection("decks").document(deckID).collection("flashcards").document(flashcardID).updateData({
       "rating": rating,
       "date": DateTime(now.year, now.month, now.day),
+    });
+  }
+
+  Future createFlashcard(String deckID, String question, String answer) async {
+    return await userCollection.document(uid).collection("decks").document(deckID).collection("flashcards").document().updateData({
+      "question": question,
+      "answer": answer,
     });
   }
 
