@@ -118,9 +118,27 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: 50,
-                    ), //todo si dovrebbe calcolare
+                    GestureDetector(
+                      onTap: (){},
+                      child: Card(
+                        color: GlooTheme.purple.withOpacity(0.7),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)),
+                        elevation: 10.0,
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                            child: Icon(
+                              Icons.upload_outlined, //icona aggiungi carta
+                              color: GlooTheme.nearlyWhite,
+                              size: 25,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8,),
                     Card(
                       color: GlooTheme.nearlyWhite,
                       shape: RoundedRectangleBorder(
@@ -154,6 +172,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                         ),
                       ),
                     ),
+                    SizedBox(width: 8,),
                     GestureDetector(
                       onTap: (){
                         Navigator.push(

@@ -4,6 +4,7 @@ import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/src/components/SliderWidget.dart';
+import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -36,7 +37,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   }
 
   void _updateFlashcards(Flashcard flashcard, int rating ) async {
-    return DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardRatingData(flashcard.id, widget.deck.id, flashcard.question, flashcard.answer, rating);
+    return DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardRatingData(flashcard.id, widget.deck.id, rating);
   }
 
   Widget _getCardWidget(Flashcard flashcard, bool isQuestion, int item) {
@@ -67,38 +68,48 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                   (MediaQuery.of(context).size.height -
                       MediaQuery.of(context).padding.top -
                       AppBar().preferredSize.height)),
-          Container(
-            height: 0.77 *
-                (MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).padding.top -
-                    AppBar().preferredSize.height),
-            decoration: BoxDecoration(
-              color: GlooTheme.nearlyWhite,
-              borderRadius: const BorderRadius.all(Radius.circular(32.0)),
-            ),
-            padding: EdgeInsets.all(12),
-            child: Center(
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 2.0, left: 2.0, bottom: 2.0),
-                child: Scrollbar(
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 3.0),
-                      child: Html(
-                        style: {
-                          "html": Style(
-                            fontSize:
-                                text.length < 70 ? FontSize(20) : FontSize(16),
-                            textAlign: text.length < 70
-                                ? TextAlign.center
-                                : TextAlign.left,
-                            // qui assumo che il testo delle domande sia sostanzialmente plain text e non html
-                          ),
-                        },
-                        onLinkTap: (url) {},
-                        data: '$text',
+          GestureDetector(
+            onLongPress: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          EditorPage(deck: widget.deck, flashcard: flashcard)));
+
+            },
+            child: Container(
+              height: 0.77 *
+                  (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height),
+              decoration: BoxDecoration(
+                color: GlooTheme.nearlyWhite,
+                borderRadius: const BorderRadius.all(Radius.circular(32.0)),
+              ),
+              padding: EdgeInsets.all(12),
+              child: Center(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 2.0, left: 2.0, bottom: 2.0),
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 3.0),
+                        child: Html(
+                          style: {
+                            "html": Style(
+                              fontSize:
+                                  text.length < 70 ? FontSize(20) : FontSize(16),
+                              textAlign: text.length < 70
+                                  ? TextAlign.center
+                                  : TextAlign.left,
+                              // qui assumo che il testo delle domande sia sostanzialmente plain text e non html
+                            ),
+                          },
+                          onLinkTap: (url) {},
+                          data: '$text',
+                        ),
                       ),
                     ),
                   ),

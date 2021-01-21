@@ -1,6 +1,6 @@
 class Flashcard{
-  final String question;
-  final String answer;
+  String question;
+  String answer;
   final String id;
 
 

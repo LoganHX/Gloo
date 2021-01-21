@@ -45,10 +45,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
 
   Future updateDeckData(String deckID, String course, String prof, String university, String year) async {
     DateTime now =  DateTime.now();
-    //print(userCollection.document(uid).collection("decks").document(course).collection("flashcards").document(documentID).toString());
-    return await userCollection.document(uid).collection("decks").document(deckID).updateData({ //todo non va bene mettere come nome del documento il campo course perché potrebbe essere modificato
-      // "question": question,
-      // "answer": answer,
+    return await userCollection.document(uid).collection("decks").document(deckID).updateData({
       "course": course,
       "prof": prof,
       "university": course,
@@ -56,16 +53,23 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     });
   }
 
-  Future updateFlashcardRatingData(String flashcardID, String deckID, String question, String answer, int rating) async {
+  Future updateFlashcardRatingData(String flashcardID, String deckID, int rating) async {
     DateTime now =  DateTime.now();
     return await userCollection.document(uid).collection("decks").document(deckID).collection("flashcards").document(flashcardID).updateData({
       "rating": rating,
       "date": DateTime(now.year, now.month, now.day),
     });
   }
+  Future updateFlashcardData(String flashcardID, String deckID, String question, String answer) async {
+    DateTime now =  DateTime.now();
+    return await userCollection.document(uid).collection("decks").document(deckID).collection("flashcards").document(flashcardID).updateData({
+      "question": question,
+      "answer": answer,
+    });
+  }
 
   Future createFlashcard(String deckID, String question, String answer) async {
-    return await userCollection.document(uid).collection("decks").document(deckID).collection("flashcards").document().updateData({
+    return await userCollection.document(uid).collection("decks").document(deckID).collection("flashcards").document().setData({
       "question": question,
       "answer": answer,
     });

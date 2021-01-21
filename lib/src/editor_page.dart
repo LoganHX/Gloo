@@ -1,8 +1,12 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/src/components/flutter_summernote.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor/html_editor.dart';
+import 'package:provider/provider.dart';
 
 class EditorPage extends StatefulWidget {
   Deck deck;
@@ -11,21 +15,25 @@ class EditorPage extends StatefulWidget {
   final String title;
 
 
+
   @override
   _EditorPageState createState() => _EditorPageState();
 }
 
 class _EditorPageState extends State<EditorPage> {
-  GlobalKey<HtmlEditorState> keyEditor = GlobalKey();
+  GlobalKey<FlutterSummernoteState> keyEditor = GlobalKey();
   String result = "";
-
-
+  Flashcard flashcard;
 
   @override
+  void initState() {
+    super.initState();
+    if(widget.flashcard != null) flashcard = widget.flashcard;
+    else flashcard = Flashcard(answer: "", question: "", id:"");
+  }
+  @override
   Widget build(BuildContext context) {
-    //print(widget.deck.course);
-    Flashcard fl = widget.flashcard;
-    //if(flashcard == null) flashcard = Flashcard(answer: widget.flashcard!=null? widget.flashcard.answer: "", question: widget.flashcard!=null? widget.flashcard.question: "");
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: GlooTheme.purple,
@@ -45,13 +53,11 @@ class _EditorPageState extends State<EditorPage> {
             icon: const Icon(Icons.save),
             tooltip: 'Salva flashcard',
             onPressed: () async {
-              final txt = await keyEditor.currentState.getText();
-              //fl.question = txt;
+              flashcard = await keyEditor.currentState.getEditedFlashcard();
+              if(widget.flashcard != null) DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardData(flashcard.id, widget.deck.id, flashcard.question, flashcard.answer);
+              else DatabaseService(uid: Provider.of<User>(context, listen: false).uid).createFlashcard(widget.deck.id, flashcard.question, flashcard.answer);
 
-              setState(() {
-                // result = txt;
-                print(txt);
-              });
+              //Navigator.pop(context);
             },
           ),
         ],
@@ -62,9 +68,10 @@ class _EditorPageState extends State<EditorPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              HtmlEditor(
+              FlutterSummernote(
                 hint: "Inserisci qui il tuo testo...",
                 //value: "text content initial, if any",
+                flashcard: flashcard,
                 key: keyEditor,
                 height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - kToolbarHeight, //Altezza pagina - altezza status bar - altezza appbar
               ),

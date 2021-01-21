@@ -1,8 +1,9 @@
-library flutter_summernote;
+library flutter_sume;
 
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -13,6 +14,7 @@ import 'package:path/path.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
+
 class FlutterSummernote extends StatefulWidget {
   final String value;
   final double height;
@@ -20,6 +22,7 @@ class FlutterSummernote extends StatefulWidget {
   final String widthImage;
   final String hint;
   final String customToolbar;
+  final Flashcard flashcard;
 
   FlutterSummernote({
     Key key,
@@ -28,7 +31,8 @@ class FlutterSummernote extends StatefulWidget {
     this.decoration,
     this.widthImage:"100%",
     this.hint,
-    this.customToolbar
+    this.customToolbar,
+    this.flashcard,
   }): super(key: key);
 
   @override
@@ -36,9 +40,12 @@ class FlutterSummernote extends StatefulWidget {
 }
 
 class FlutterSummernoteState extends State<FlutterSummernote> {
+  bool isQuestion = true;
+  Flashcard flashcard;
   WebViewController _controller;
   String text = "";
   String _page;
+  String _title;
   final Key _mapKey = UniqueKey();
   final _imagePicker = ImagePicker();
 
@@ -55,7 +62,7 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
   @override
   void initState() {
     super.initState();
-
+    flashcard = widget.flashcard;
     _page = _initPage(widget.customToolbar);
   }
 
@@ -99,15 +106,15 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
                 getTextJavascriptChannel(context)
               ].toSet(),
               onPageFinished: (String url) {
-                if (widget.hint != null) {
+                if (flashcard.question == "") {
                   setHint(widget.hint);
                 } else {
                   setHint("");
                 }
 
                 setFullContainer();
-                if (widget.value != null) {
-                  setText(widget.value);
+                if (flashcard.question != "") {
+                  setText(flashcard.question);
                 }
               },
             ),
@@ -117,10 +124,19 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
             child: Row(children: <Widget>[
               Expanded(
                 child: GestureDetector(
+                  onTap: () => _changeContext(),
+                  child: Row(children: <Widget>[
+                    Icon(isQuestion? Icons.help_outline : Icons.article_outlined),
+                    Text("")
+                  ], mainAxisAlignment: MainAxisAlignment.center),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
                   onTap: () => _attach(context),
                   child: Row(children: <Widget>[
-                    Icon(Icons.attach_file),
-                    Text("Attachments")
+                    Icon(Icons.photo_camera_outlined),
+                    Text("")
                   ], mainAxisAlignment: MainAxisAlignment.center),
                 ),
               ),
@@ -132,7 +148,7 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
                   },
                   child: Row(children: <Widget>[
                     Icon(Icons.content_copy),
-                    Text("Copy")
+                    Text("")
                   ], mainAxisAlignment: MainAxisAlignment.center),
                 ),
               ),
@@ -157,7 +173,7 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
                   },
                   child: Row(children: <Widget>[
                     Icon(Icons.content_paste),
-                    Text("Paste")
+                    Text("")
                   ], mainAxisAlignment: MainAxisAlignment.center),
                 ),
               )
@@ -189,6 +205,33 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
     await _controller.evaluateJavascript(
         "GetTextSummernote.postMessage(document.getElementsByClassName('note-editable')[0].innerHTML);");
     return text;
+  }
+
+  Future<Flashcard> getEditedFlashcard() async{
+    if(isQuestion) flashcard.question = await getText();
+    else flashcard.answer = await getText();
+
+    return flashcard;
+  }
+
+  void _changeContext() async {
+    if(isQuestion) {
+
+      flashcard.question = await getText();
+      setText(flashcard.answer);
+      setState(() {
+        _title = "Modifica Risposta";
+      });
+    }
+    else {
+      flashcard.answer = await getText();
+      setText(flashcard.question);
+      setState(() {
+        _title = "Modifica Domanda";
+      });
+    }
+
+    isQuestion = !isQuestion;
   }
 
   setText(String v) async {
@@ -226,7 +269,7 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
     _controller.evaluateJavascript(hint);
   }
 
-  Widget widgetIcon(IconData icon, String title, {Function onTap}) {
+  Widget widgetIcon(IconData icon, {Function onTap}) {
     return InkWell(
       onTap: onTap,
       child: Row(
@@ -239,7 +282,7 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
-              title,
+              _title,
               style: TextStyle(
                   color: Colors.black54,
                   fontSize: 16,
