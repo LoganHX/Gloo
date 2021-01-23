@@ -140,7 +140,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           //   onPressed: () async {
           //     await _auth.signOut();
           //     Navigator.pushNamed(
-          //         context, '/'); //todo da fare meglio, dubito si faccia così
+          //         context, '/');
           //   },
           //   color: GlooTheme.purple,
           //   textColor: GlooTheme.nearlyWhite,
@@ -192,7 +192,6 @@ class getClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }

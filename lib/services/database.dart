@@ -22,6 +22,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
 
   // collection reference
   final CollectionReference userCollection = Firestore.instance.collection("users");
+  final CollectionReference publickDecksCollection = Firestore.instance.collection("public_decks");
 
 
   Future updateUserData(String name, String surname, String university, String department, String nickname) async {
@@ -86,7 +87,13 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
   Stream<List<Deck>> get decks {
     return userCollection.document(uid).collection("decks").snapshots().map(_deckListFromSnapshot);
   }
+  Stream<List<Deck>> searchDecks({String university}) {
+    // print("###############");
+    // print(university);
+    // print("###############");//todo
 
+    return publickDecksCollection.where("university", isEqualTo: university).snapshots().map(_deckListFromSnapshot);
+  }
   // get flashcards stream
   Stream<List<Flashcard>> flashcards(String course) {
     return userCollection.document(uid).collection("decks").document(course).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
@@ -108,6 +115,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
         answer: snapshot.data['answer']
     );
   }
+
 
   List<Flashcard> _flashcardListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){

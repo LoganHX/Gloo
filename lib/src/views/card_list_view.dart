@@ -155,11 +155,11 @@ class _CardViewState extends State<CardView> {
                             "html": Style(
                               fontSize:
                               text.length < 70 ? FontSize(20) : FontSize(16),
-                              //todo si dovrebbe fare in modo che sotto una certa lunghezza del testo esso venga centrato e/o ridimensionato (posso usare htmlData.lenght)
+
                               textAlign: text.length < 70
                                   ? TextAlign.center
                                   : TextAlign.left,
-                              //todo qui assumo che il testo delle domande sia sostanzialmente plain text e non html
+
                             ),
                           },
                           onLinkTap: (url) {},

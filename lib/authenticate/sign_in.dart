@@ -1,5 +1,3 @@
-//todo wewe
-
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/shared/constants.dart';
 import 'package:alpha_gloo/shared/loading.dart';

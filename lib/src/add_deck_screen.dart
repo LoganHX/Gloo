@@ -1,266 +1,277 @@
-import 'package:alpha_gloo/graphics/gloo_theme.dart';
-import 'package:alpha_gloo/shared/loading.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:provider/provider.dart';
+import 'package:alpha_gloo/models/deck.dart';
+import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/shared/loading.dart';
+import 'package:alpha_gloo/src/editor_page.dart';
+import 'package:alpha_gloo/src/search_results_screen.dart';
+import 'package:alpha_gloo/src/study_deck_screen.dart';
+import 'package:alpha_gloo/src/views/select_course_view.dart';
+
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/material.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class AddDeckScreen extends StatefulWidget {
+  final Deck deck;
+  AddDeckScreen({this.deck});
+
   @override
-  _AddDeckScreenState createState() => _AddDeckScreenState();
+  _AddDeckScreenState createState() => new _AddDeckScreenState();
 }
 
-class _AddDeckScreenState extends State<AddDeckScreen> {
-  final _formKey = GlobalKey<FormState>();
-  bool loading = false;
+class _AddDeckScreenState extends State<AddDeckScreen>
+    with TickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  final _formKey = GlobalKey<FormState>();
+  final _openDropDownProgKey = GlobalKey<DropdownSearchState<String>>();
+
+  bool _enabledDepartmentBtn = false;
+  bool _enabledCourseBtn = false;
+
+  Animation<double> animation;
+  AnimationController animationController;
+  PageController _pageController;
+  bool loading = false;
+  Color left = GlooTheme.nearlyWhite;
+  Color right = GlooTheme.purple;
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    return loading
-        ? Loading()
-        : Scaffold(
-            body: Stack(
+    return Scaffold(
+      key: _scaffoldKey,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: GlooTheme.bgGradient,
+            ),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height >= 450.0
+                ? MediaQuery.of(context).size.height
+                : 450.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    gradient: GlooTheme.bgGradient,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(child: Padding(padding: EdgeInsets.zero,)),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8.0, right: 8.0, top: 40),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                height: 60,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: GlooTheme.nearlyWhite,
-                                      borderRadius: const BorderRadius.only(
-                                        bottomRight: Radius.circular(13.0),
-                                        bottomLeft: Radius.circular(13.0),
-                                        topLeft: Radius.circular(13.0),
-                                        topRight: Radius.circular(13.0),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                                left: 16, right: 16),
-                                            child: TextFormField(
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16,
-                                                color: GlooTheme.nearlyWhite,
-                                              ),
-                                              keyboardType: TextInputType.text,
-                                              decoration: InputDecoration(
-                                                labelText:
-                                                    'Cerca deck pubblico...',
-                                                border: InputBorder.none,
-                                                labelStyle: TextStyle(
-                                                  fontWeight: FontWeight.w100,
-                                                  fontSize: 14,
-                                                  letterSpacing: 0.2,
-                                                  color: GlooTheme.nearlyBlack,
-                                                ),
-                                              ),
-                                              onEditingComplete: () {},
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 60,
-                                          height: 60,
-                                          child: Icon(Icons.search,
-                                              color: GlooTheme.purple),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        Text(
-                          "Aggiungi un deck pubblico",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: GlooTheme.nearlyWhite, fontSize: 23),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: DropdownSearch<String>(
-                            dropdownSearchDecoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(
-                                  left: 12.0,
-                                ),
-                                isCollapsed: true,
-                                fillColor: GlooTheme.nearlyWhite,
-                                filled: true,
-                                //labelText: "Nome Corso",
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide:
-                                      BorderSide(color: GlooTheme.purple),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide:
-                                      BorderSide(color: GlooTheme.nearlyWhite),
-                                )),
-                            mode: Mode.BOTTOM_SHEET,
-                            showSearchBox: true,
-                            popupBackgroundColor: GlooTheme.nearlyWhite,
-                            showSelectedItem: false,
-                            items: [
-                              "Università degli studi di Salerno",
-                              "Italia (Disabled)",
-                              "Tunisia",
-                              'Canada'
-                            ],
-                            hint: "Università degli studi di Salerno",
-                            //popupItemDisabled: (String s) => s.startsWith('I'),
-                            onChanged: print,
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        DropdownSearch<String>(
-                          dropdownSearchDecoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 12.0,
-                              ),
-                              fillColor: GlooTheme.nearlyWhite,
-                              filled: true,
-                              isCollapsed: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(color: GlooTheme.purple),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide:
-                                    BorderSide(color: GlooTheme.nearlyWhite),
-                              )),
-                          mode: Mode.BOTTOM_SHEET,
-                          showSearchBox: true,
-                          popupBackgroundColor: GlooTheme.nearlyWhite,
-                          showSelectedItem: false,
-                          items: [
-                            "DI - Dipartimento di Informatica",
-                            "DIEM - Dipartimento di Ingegneria Elettronica e Matematica applicata",
-                            "Tunisia",
-                            'Canada'
-                          ],
-                          //label: "Scegli Dipartimento",
-                          hint: "DI - Dipartimento di Informatica",
-                          onChanged: print,
-                        ),
-                        SizedBox(height: 20.0),
-                        DropdownSearch<String>(
-                          dropdownSearchDecoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                left: 12.0,
-                              ),
-                              isCollapsed: true,
-                              fillColor: GlooTheme.nearlyWhite,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(color: GlooTheme.purple),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide:
-                                    BorderSide(color: GlooTheme.nearlyWhite),
-                              )),
-                          mode: Mode.MENU,
-                          showSearchBox: false,
-                          popupBackgroundColor: GlooTheme.nearlyWhite,
-                          showSelectedItem: false,
-                          items: [
-                            "Affidabilità di sistemi",
-                            "Enterprise Mobile Application Development",
-                            "Gestione Progetti Software",
-                            "Information Visualization",
-
-                          ],
-                          //label: "Scegli Corso",
-                          hint: "Gestione Progetti Software",
-                          popupItemDisabled: (String s) => s.startsWith('I'),
-                          onChanged: print,
-                        ),
-                        SizedBox(height: 45.0),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(60),
-                          ),
-                          color: GlooTheme.nearlyWhite,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 10),
-                            child: Text(
-                              "Cerca Deck",
-                              style: TextStyle(color: GlooTheme.purple, fontSize: 23),
-                            ),
-                          ),
-                          onPressed: () {},
-                        ),
-                        SizedBox(
-                          height: 12.0,
-                        ),
-                        Expanded(child: Padding(padding: EdgeInsets.zero,)),
-                      ],
-                    ),
+                SizedBox(
+                  height: MediaQuery.of(context).padding.top * 0.5 +
+                      AppBar().preferredSize.height,
+                ),
+                Text(
+                  //"Enterprise Mobile Application Development",
+                  "Crea o adotta un deck",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 27,
+                    //letterSpacing: 0.27,
+                    color: GlooTheme.nearlyWhite,
                   ),
                 ),
-                Padding(
-                  //App bar da mettere anche nella pagina seguente
-                  padding:
-                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                  child: SizedBox(
-                    width: AppBar().preferredSize.height,
-                    height: AppBar().preferredSize.height,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(
-                            AppBar().preferredSize.height),
-                        child: Icon(
-                          Icons.arrow_back_ios, //ios
-                          color: GlooTheme.nearlyWhite,
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                Divider(),
+                _buildMenuBar(context),
+                Expanded(
+                  flex: 2,
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (i) {
+                      if (i == 0) {
+                        setState(() {
+                          right = GlooTheme.purple;
+                          left = GlooTheme.nearlyWhite;
+                        });
+                      } else if (i == 1) {
+                        setState(() {
+                          right = GlooTheme.nearlyWhite;
+                          left = GlooTheme.purple;
+                        });
+                      }
+                    },
+                    children: <Widget>[
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: SelectCourseView(),
                       ),
-                    ),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: SelectCourseView(),
+                      ),
+                    ],
                   ),
+                ),
+                SizedBox(
+                  height: 16,
                 )
               ],
             ),
-          );
+          ),
+          Padding(
+            //App bar da mettere anche nella pagina seguente
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: SizedBox(
+              width: AppBar().preferredSize.height,
+              height: AppBar().preferredSize.height,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius:
+                      BorderRadius.circular(AppBar().preferredSize.height),
+                  child: Icon(
+                    Icons.arrow_back_ios, //ios
+                    color: GlooTheme.nearlyWhite,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
+
+  @override
+  void dispose() {
+    _pageController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  Widget _buildMenuBar(BuildContext context) {
+    return Container(
+      width: 300.0,
+      height: 50.0,
+      decoration: BoxDecoration(
+        color: GlooTheme.nearlyWhite,
+        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      ),
+      child: CustomPaint(
+        painter: TabIndicationPainter(pageController: _pageController),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Expanded(
+              child: FlatButton(
+                // splashColor: Colors.transparent,
+                // highlightColor: Colors.transparent,
+                onPressed: _onShowSearchDeckButtonPress,
+                child: Text(
+                  "Cerca Deck",
+                  style: TextStyle(
+                    color: left,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ),
+            //Container(height: 33.0, width: 1.0, color: Colors.white),
+            Expanded(
+              child: FlatButton(
+                // splashColor: Colors.transparent,
+                // highlightColor: Colors.transparent,
+                onPressed: _onShowNewDeckButtonPress,
+                child: Text(
+                  "Nuovo Deck",
+                  style: TextStyle(
+                    color: right,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget _buildSearchDeck(BuildContext context) {
+  //   final user = Provider.of<User>(context);
+  //   String university;
+  //   String course;
+  //
+  //   return Padding(
+  //     padding: const EdgeInsets.all(25),
+  //     child: Form(
+  //       key: _formKey,
+  //       autovalidateMode: AutovalidateMode.onUserInteraction,
+  //       child: ListView(
+  //         padding: EdgeInsets.all(4),
+  //         children: <Widget>[
+  //           ///Menu Mode with no searchBox
+  //           Text(
+  //             'Università',
+  //             textAlign: TextAlign.center,
+  //             style: TextStyle(
+  //               fontSize: 24,
+  //               color: GlooTheme.nearlyWhite,
+  //             ),
+  //           ),
+  //           Divider(),
+  //
+  //           ///BottomSheet Mode with no searchBox
+  //           _glooDropdownButton(title: 'Università',),
+  //           Divider(),
+  //           Text(
+  //             'Dipartimento',
+  //             textAlign: TextAlign.center,
+  //             style: TextStyle(
+  //               fontSize: 24,
+  //               color: GlooTheme.nearlyWhite,
+  //             ),
+  //           ),
+  //           Divider(),
+  //           _glooDropdownButton(
+  //               title: 'Dipartimento',),
+  //
+  //           Divider(),
+  //           Text(
+  //             'Corso',
+  //             textAlign: TextAlign.center,
+  //             style: TextStyle(
+  //               fontSize: 24,
+  //               color: GlooTheme.nearlyWhite,
+  //             ),
+  //           ),
+  //           Divider(),
+  //           _glooDropdownButton(title: 'Corso',),
+  //           Padding(padding: EdgeInsets.all(4)),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+
+
+
+  void _onShowSearchDeckButtonPress() {
+    _pageController.animateToPage(0,
+        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+  }
+
+  void _onShowNewDeckButtonPress() {
+    _pageController?.animateToPage(1,
+        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+  }
+}
+
+class ChartData {
+  ChartData(this.xVal, this.yVal, [this.radius]);
+  final String xVal;
+  final int yVal;
+  final String radius;
 }

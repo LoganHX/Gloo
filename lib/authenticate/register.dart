@@ -93,8 +93,10 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-
                   decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      color: GlooTheme.nearlyPurple,
+                    ),
                       isCollapsed: true,
                       contentPadding: EdgeInsets.all(
                         12.0,

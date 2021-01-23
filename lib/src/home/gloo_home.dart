@@ -1,9 +1,12 @@
 import 'package:alpha_gloo/models/deck.dart';
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/src/search_results_screen.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../graphics/gloo_theme.dart';
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 
 class GlooHome extends StatefulWidget {
   @override
@@ -29,7 +32,12 @@ class _GlooHomeState extends State<GlooHome> {
             child: FloatingActionButton(
               backgroundColor: GlooTheme.purple.withOpacity(0.7),
               onPressed: () {
-                Navigator.pushNamed(context, '/newDeck');
+                //Navigator.pushNamed(context, '/newDeck');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SearchResultsScreen(university: "Università degli studi di Salerno",)));
               },
               child: Icon(
                 Icons.add,
@@ -108,11 +116,11 @@ class _GlooHomeState extends State<GlooHome> {
                   ),
                 ),
               ),
-              Container(
-                child: Center(
-                  child: getBarUI(barHeight),
-                ),
-              ),
+              // Container(
+              //   child: Center(
+              //     //child: getBarUI(barHeight),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -130,6 +138,10 @@ class _GlooHomeState extends State<GlooHome> {
         children: <Widget>[
           Flexible(
             child: DeckListView(
+              getData: (){
+                final user = Provider.of<User>(context);
+                return DatabaseService(uid: user.uid).decks;
+              },
               callBack: (Deck deck) {
                 moveTo(deck);
               },
@@ -151,62 +163,62 @@ class _GlooHomeState extends State<GlooHome> {
     //Navigator.pushNamed(context, '/deck');
   }
 
-  Widget getBarUI(double barHeight) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: barHeight,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: GlooTheme.grey.withOpacity(0.8),
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(13.0),
-                    bottomLeft: Radius.circular(13.0),
-                    topLeft: Radius.circular(13.0),
-                    topRight: Radius.circular(13.0),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Icon(
-                      Icons.add,
-                      color: GlooTheme.nearlyWhite,
-                      //size: 36.0,
-                    ),
-                    Icon(
-                      Icons.search,
-                      color: GlooTheme.nearlyWhite,
-                      //size: 36.0,
-                    ),
-                    Icon(
-                      Icons.explore,
-                      color: GlooTheme.nearlyWhite,
-                      //size: 36.0,
-                    ),
-                    Icon(
-                      Icons.person,
-                      color: GlooTheme.nearlyWhite,
-                      //size: 36.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          // const Expanded(
-          //   child: SizedBox(),
-          // )
-
-        ],
-      ),
-    );
-  }
+  // Widget getBarUI(double barHeight) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: <Widget>[
+  //         Container(
+  //           width: MediaQuery.of(context).size.width * 0.95,
+  //           height: barHeight,
+  //           child: Padding(
+  //             padding: const EdgeInsets.only(bottom: 8),
+  //             child: Container(
+  //               decoration: BoxDecoration(
+  //                 color: GlooTheme.grey.withOpacity(0.8),
+  //                 borderRadius: const BorderRadius.only(
+  //                   bottomRight: Radius.circular(13.0),
+  //                   bottomLeft: Radius.circular(13.0),
+  //                   topLeft: Radius.circular(13.0),
+  //                   topRight: Radius.circular(13.0),
+  //                 ),
+  //               ),
+  //               child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                 children: <Widget>[
+  //                   Icon(
+  //                     Icons.add,
+  //                     color: GlooTheme.nearlyWhite,
+  //                     //size: 36.0,
+  //                   ),
+  //                   Icon(
+  //                     Icons.search,
+  //                     color: GlooTheme.nearlyWhite,
+  //                     //size: 36.0,
+  //                   ),
+  //                   Icon(
+  //                     Icons.explore,
+  //                     color: GlooTheme.nearlyWhite,
+  //                     //size: 36.0,
+  //                   ),
+  //                   Icon(
+  //                     Icons.person,
+  //                     color: GlooTheme.nearlyWhite,
+  //                     //size: 36.0,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         // const Expanded(
+  //         //   child: SizedBox(),
+  //         // )
+  //
+  //       ],
+  //     ),
+  //   );
+  // }
 }

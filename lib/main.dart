@@ -39,15 +39,18 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<User>(
-          create: (_) =>  AuthService().user,
+          create: (_) => AuthService().user,
         ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primaryColor: GlooTheme.purple,
-            secondaryHeaderColor: GlooTheme.nearlyWhite,
+            secondaryHeaderColor: GlooTheme.nearlyPurple,
             accentColor: GlooTheme.nearlyWhite,
+            textTheme: TextTheme(
+              subhead: TextStyle(color: GlooTheme.purple),
+            ),
           ),
           home: Wrapper(),
           routes: {
@@ -57,7 +60,7 @@ class MyApp extends StatelessWidget {
             '/study_deck': (context) => StudyDeckScreen(),
             '/editor': (context) => EditorPage(),
             '/profile': (context) => UserProfileScreen(),
-            '/newDeck': (context) => NewDeckScreen(),
+            '/newDeck': (context) => AddDeckScreen(),
           }),
     );
   }

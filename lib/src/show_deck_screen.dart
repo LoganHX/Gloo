@@ -82,10 +82,8 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     color: GlooTheme.nearlyWhite,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0, bottom: 0.0),
-                  child: _buildMenuBar(context),
-                ),
+                Divider(),
+                _buildMenuBar(context),
                 Expanded(
                   flex: 2,
                   child: PageView(
@@ -173,30 +171,19 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                       ),
                     ),
                     SizedBox(width: 8,),
-                    GestureDetector(
-                      onTap: (){
+                    IconButton(
+                      color: GlooTheme.purple,
+                      onPressed: (){
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     EditorPage(deck: widget.deck)));
                       },
-                      child: Card(
-                        color: GlooTheme.purple.withOpacity(0.7),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
-                        elevation: 10.0,
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Icon(
-                              Icons.add, //icona aggiungi carta
-                              color: GlooTheme.nearlyWhite,
-                              size: 25,
-                            ),
-                          ),
-                        ),
+                      icon: Icon(
+                        Icons.add, //icona aggiungi carta
+                        color: GlooTheme.nearlyWhite,
+                        size: 25,
                       ),
                     ),
                   ],
@@ -284,7 +271,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
               child: FlatButton(
                 // splashColor: Colors.transparent,
                 // highlightColor: Colors.transparent,
-                onPressed: _onShowFlashcardsButtonPress,
+                onPressed: _onShowDetailsButtonPress,
                 child: Text(
                   "Dettagli",
                   style: TextStyle(
@@ -470,7 +457,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
 
-  void _onShowFlashcardsButtonPress() {
+  void _onShowDetailsButtonPress() {
     _pageController?.animateToPage(1,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }

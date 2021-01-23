@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:alpha_gloo/services/database.dart';
 
 class DeckListView extends StatefulWidget {
-  const DeckListView({Key key, this.callBack}) : super(key: key);
-
+  const DeckListView({Key key, this.callBack, this.getData}) : super(key: key);
+  final Function getData; //funzione con cui prendo i dati dal db (tramite db Service) simile alla funzione getData() commentata in questo file
   final Function(Deck deck) callBack;
   @override
   _DeckListViewState createState() => _DeckListViewState();
@@ -25,15 +25,15 @@ class _DeckListViewState extends State<DeckListView>
     super.initState();
   }
 
-  Stream<List<Deck>> getData() {
-    final user = Provider.of<User>(context);
-    return DatabaseService(uid: user.uid).decks;
-  }
+  // Stream<List<Deck>> getData() {
+  //   return DatabaseService(uid: Provider.of<User>(context).uid).decks;
+  // }
+
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Deck>>(
-      stream: getData(),
+      stream: widget.getData(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return TransparentLoading();
