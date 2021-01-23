@@ -20,6 +20,8 @@ class SearchResultsScreen extends StatefulWidget {
 class _SearchResultsScreenState extends State<SearchResultsScreen> {
   bool _optionsVisibility = false;
   String _choice = "";
+  String _query = "";
+
   final _textController = TextEditingController();
 
   Widget build(BuildContext context) {
@@ -44,10 +46,8 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Container(
-                    height: imageHeight -
-                        20, //todo metterla quando la situa è vuota e magari mettere a sistema con GlooHome
-                    child: Image.asset('./assets/images/search-cuate.png'),
+                  SizedBox(
+                    height: AppBar().preferredSize.height + 25,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.9,
@@ -68,7 +68,8 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                             controller: _textController,
                             decoration: InputDecoration(
                               labelStyle: TextStyle(
-                                color: Colors.black54, //todo cambiare sto colore
+                                color: Color(
+                                    0xff606066), //todo cambiare sto colore
                               ),
                               enabledBorder: InputBorder.none,
                               // fillColor: Colors.transparent,
@@ -89,7 +90,10 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                           width: 4,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            _query = _textController.text;
+                            print(_query);
+                          },
                           child: Container(
                             child: Icon(
                               Icons.search,
@@ -114,13 +118,10 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                               this._optionsVisibility =
                                   !this._optionsVisibility;
                             });
-                            print(_choice);
                           },
                           child: Container(
                             child: Icon(
-                              _optionsVisibility
-                                  ? Icons.close
-                                  : Icons.settings_input_component,
+                              _optionsVisibility ? Icons.close : Icons.tune,
                               color: GlooTheme.purple,
                             ),
                           ),
@@ -148,11 +149,18 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.7,
                                   child: GlooDropdownButton(
-                                    items: ["Università degli studi di Salerno", "Università Federico II di Napoli", "Politecnico di Torino", "Politecnico di Milano", "Università di Modena e Reggio Emilia"],
+                                    items: [
+                                      "Università degli studi di Salerno",
+                                      "Università Federico II di Napoli",
+                                      "Politecnico di Torino",
+                                      "Politecnico di Milano",
+                                      "Università di Modena e Reggio Emilia"
+                                    ],
                                     title: 'Scegli Università',
                                     onChanged: (String s) {
-                                      _choice = s;
-                                      //print(_choice);
+                                      setState(() {
+                                        _choice = s;
+                                      });
                                     },
                                   )),
                               SizedBox(
@@ -166,7 +174,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                                     title: 'Stelle',
                                     onChanged: (String s) {
                                       _choice = s;
-                                      //print(_choice);
                                     },
                                   )),
                             ],
@@ -176,36 +183,65 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: titleHeight,
-                    //width: 0.8 * MediaQuery.of(context).size.width,
-                    child: Text(
-                      'Risultati Ricerca',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 24,
-                        letterSpacing: 0.27,
-                        color: GlooTheme.nearlyWhite,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height *
-                            0.77, //dimensione area scrolling
-                        child: Column(
-                          children: <Widget>[
-                            Flexible(
-                              child: getDecksUI(),
-                            ),
-                            // SizedBox(height: 16,)
-                          ],
+                  _query != "" || _choice != ""
+                      ? Flexible(
+                          flex: 2,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: titleHeight,
+                                //width: 0.8 * MediaQuery.of(context).size.width,
+                                child: Text(
+                                  'Risultati Ricerca',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 24,
+                                    letterSpacing: 0.27,
+                                    color: GlooTheme.nearlyWhite,
+                                  ),
+                                ),
+                              ),
+                              SingleChildScrollView(
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.50, //dimensione area scrolling
+                                  child: Column(
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: getDecksUI(),
+                                      ),
+                                      // SizedBox(height: 16,)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 320,
+                                child: Text(
+                                  'Trova il deck più adatto a te',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 22,
+                                    letterSpacing: 0.27,
+                                    color: GlooTheme.nearlyWhite,
+                                  ),
+                                ),
+                              ),
+                              Image.asset('./assets/images/search-cuate.png'),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -248,8 +284,8 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           Flexible(
             child: DeckListView(
               getData: () {
-                return DatabaseService()
-                    .searchDecks(university: widget.university);
+                print("scelta" + _choice);
+                return DatabaseService().searchDecks(university: this._choice);
               },
               callBack: (Deck deck) {
                 moveTo(deck);

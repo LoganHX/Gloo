@@ -23,10 +23,15 @@ class GlooDropdownButton extends StatelessWidget {
         //enabled: isCourse ? _courseVisibility : _departmentVisibility,
         onChanged: onChanged,
         mode: Mode.DIALOG,
-
+        showSelectedItem: true,
         maxHeight: 450,
         hint: title,
         dropdownSearchDecoration: InputDecoration(
+          helperStyle: TextStyle(
+            color: GlooTheme.nearlyPurple
+          ),
+
+
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),
             borderSide:

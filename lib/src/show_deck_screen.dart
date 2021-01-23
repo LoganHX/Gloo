@@ -2,6 +2,7 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
+import 'package:alpha_gloo/src/upload_deck_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
@@ -116,27 +117,26 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: (){},
-                      child: Card(
-                        color: GlooTheme.purple.withOpacity(0.7),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
-                        elevation: 10.0,
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Icon(
-                              Icons.upload_outlined, //icona aggiungi carta
-                              color: GlooTheme.nearlyWhite,
-                              size: 25,
-                            ),
-                          ),
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: GlooTheme.purple,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.cloud_upload,
+                          color: GlooTheme.nearlyWhite,
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UploadDeckScreen(deck: widget.deck)));
+                        },
                       ),
                     ),
-                    SizedBox(width: 8,),
+                    SizedBox(
+                      width: 8,
+                    ),
                     Card(
                       color: GlooTheme.nearlyWhite,
                       shape: RoundedRectangleBorder(
@@ -170,20 +170,24 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                         ),
                       ),
                     ),
-                    SizedBox(width: 8,),
-                    IconButton(
-                      color: GlooTheme.purple,
-                      onPressed: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditorPage(deck: widget.deck)));
-                      },
-                      icon: Icon(
-                        Icons.add, //icona aggiungi carta
-                        color: GlooTheme.nearlyWhite,
-                        size: 25,
+                    SizedBox(
+                      width: 8,
+                    ),
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: GlooTheme.purple,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: GlooTheme.nearlyWhite,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditorPage(deck: widget.deck)));
+                        },
                       ),
                     ),
                   ],
@@ -286,22 +290,6 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
       ),
     );
   }
-
-  // Widget getCardsUI({List<Flashcard> flashcards}) {
-  //   return Column(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       CardListView(
-  //         deck: widget.deck,
-  //         flashcards: flashcards,
-  //         callBack: (Flashcard flashcard) {
-  //           Navigator.pushNamed(context, '/answer', arguments: flashcard);
-  //         },
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Widget _buildShowDeckScreen(BuildContext context) {
     //return getCardsUI(flashcards: flashcards);

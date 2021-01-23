@@ -22,7 +22,7 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
 
   // collection reference
   final CollectionReference userCollection = Firestore.instance.collection("users");
-  final CollectionReference publickDecksCollection = Firestore.instance.collection("public_decks");
+  final CollectionReference publicDecksCollection = Firestore.instance.collection("public_decks");
 
 
   Future updateUserData(String name, String surname, String university, String department, String nickname) async {
@@ -41,6 +41,25 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
       "course": course,
       "prof": prof,
       "year": year,
+    });
+  }
+  Future<String> createPublicDeck(String university, String course, String prof, String year) async {
+    String id = publicDecksCollection.document().documentID;
+
+    publicDecksCollection.document(id).setData({
+      "university": university,
+      "course": course,
+      "prof": prof,
+      "year": year,
+    });
+
+    return id;
+  }
+
+  Future addPublicFlashcard({String answer, String question, String deckID}) async {
+    return await publicDecksCollection.document(deckID).collection("flashcards").document().setData({
+      "question": question,
+      "answer": answer,
     });
   }
 
@@ -88,15 +107,27 @@ firestore.collection("users").doc("name@xxx.com").get().then(function (doc) {
     return userCollection.document(uid).collection("decks").snapshots().map(_deckListFromSnapshot);
   }
   Stream<List<Deck>> searchDecks({String university}) {
-    // print("###############");
-    // print(university);
-    // print("###############");//todo
-
-    return publickDecksCollection.where("university", isEqualTo: university).snapshots().map(_deckListFromSnapshot);
+    return publicDecksCollection.where("university", isEqualTo: university).snapshots().map(_deckListFromSnapshot);
   }
   // get flashcards stream
-  Stream<List<Flashcard>> flashcards(String course) {
-    return userCollection.document(uid).collection("decks").document(course).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
+  Stream<List<Flashcard>> flashcards(String id) {
+    // print("##########");
+    // print(id);
+    // print("##########");
+
+    return userCollection.document(uid).collection("decks").document(id).collection("flashcards").snapshots().map(_flashcardListFromSnapshot);
+  }
+  Future<List<Flashcard>> getFutureFlashcards(String id) async {
+
+    QuerySnapshot snapshot =
+    await userCollection.document(uid).collection("decks").document(id).collection("flashcards").getDocuments();
+
+    return snapshot.documents.map(
+            (doc) => Flashcard(
+            answer: doc.data['answer'],
+            question: doc.data['question'],
+            )
+    ).toList();
   }
 
   Deck _deckFromSnapshot(DocumentSnapshot snapshot){
