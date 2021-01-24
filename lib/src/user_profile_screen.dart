@@ -35,14 +35,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     'Raffaella Carrà',
                     style: TextStyle(
                       color: GlooTheme.nearlyWhite,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 27.0,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 35.0),
+                  SizedBox(height: 15.0),
                   Container(
-                      width: 150.0,
-                      height: 150.0,
+                      width: 120.0,
+                      height: 120.0,
                       decoration: BoxDecoration(
                           color: GlooTheme.nearlyWhite,
                           image: DecorationImage(
@@ -53,9 +53,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             BoxShadow(
                                 blurRadius: 7.0, color: GlooTheme.nearlyWhite)
                           ])),
-                  SizedBox(height: 35.0),
-                  //todo
-                  DetailsView(entries: {"key1": "value1", "key2": "value2","key3": "value1", "key4": "value2", "key5": "value1", "key6": "value2", "key55": "value1", "key77": "value2"}),
+                  SizedBox(height: 15.0),
+
+                  DetailsView(entries: {
+                    "Bio":"Com'è bello far l'amore da Trieste in Gloo",
+                    "E-mail":"raffaella@carra.it",
+                    "Università":"Università degli studi di Salerno",
+                  }),
+                  SizedBox(height: 15.0),
 
                   MaterialButton(
                     onPressed: () async {

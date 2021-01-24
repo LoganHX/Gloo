@@ -56,24 +56,21 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width / 1.8,
-                    child: Card(
-                      color: GlooTheme.nearlyWhite,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      elevation: 10.0,
-                      child: Center(
-                        child: FlatButton(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Text(
-                              label + " Deck",
-                              style: TextStyle(
-                                  color: GlooTheme.purple, fontSize: 18),
-                            ),
+                    child: Center(
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32)),
+                        color: GlooTheme.nearlyWhite,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 13),
+                          child: Text(
+                            label + " Deck",
+                            style: TextStyle(
+                                color: GlooTheme.purple, fontSize: 18),
                           ),
-                          onPressed: callback,
                         ),
+                        onPressed: callback,
                       ),
                     ),
                   ),

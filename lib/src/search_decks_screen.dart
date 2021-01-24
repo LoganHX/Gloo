@@ -191,7 +191,7 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                                 ),
                                 Container(
                                     width: MediaQuery.of(context).size.width *
-                                        0.25,
+                                        0.367,
                                     child: GlooDropdownButton(
                                       items: [
                                         "★",
@@ -216,50 +216,8 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                     ),
                   ),
                   _query != "" || _choice != ""
-                      ? Column(
-                          children: [
-                            SingleChildScrollView(
-                              child: Container(
-                                height:
-                                    scrollableHeight, //dimensione area scrolling
-                                child: Column(
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: getDecksUI(),
-                                    ),
-                                    // SizedBox(height: 16,)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Container(
-                          height: scrollableHeight,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset('./assets/images/search-cuate.png'),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 1.1,
-                                child: Text(
-                                  'Studia in maniera efficiente utilizzando deck prodotti da migliaia di altri studenti',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20,
-                                    letterSpacing: 0.27,
-                                    color: GlooTheme.nearlyWhite,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 80,
-                              )
-                            ],
-                          ),
-                        ),
+                      ? _getDeckListView(scrollableHeight)
+                      : _getImage(scrollableHeight)
                 ],
               ),
             ),
@@ -290,7 +248,56 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
       ),
     );
   }
+  
+  Widget _getDeckListView(height){
+    return Column(
+      children: [
+        SingleChildScrollView(
+          child: Container(
+            height: height,
+            child: Column(
+              children: <Widget>[
+                Flexible(
+                  child: getDecksUI(),
+                ),
+                // SizedBox(height: 16,)
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+    
+  }
+  Widget _getImage(height){
+    return Container(
+      height: height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset('./assets/images/search-cuate.png'),
+          Container(
+            width: MediaQuery.of(context).size.width / 1.1,
+            child: Text(
+              'Studia in maniera efficiente utilizzando deck prodotti da migliaia di altri studenti',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 20,
+                letterSpacing: 0.27,
+                color: GlooTheme.nearlyWhite,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 80,
+          )
+        ],
+      ),
+    );
 
+  }
   Widget getDecksUI() {
     return Padding(
       padding: const EdgeInsets.only(

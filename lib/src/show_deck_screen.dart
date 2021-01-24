@@ -118,80 +118,69 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundColor: GlooTheme.purple.withOpacity(0.9),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.cloud_upload,
-                          color: GlooTheme.nearlyWhite,
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CloudDeckScreen(
-                                        deck: widget.deck,
-                                        isDownload: false,
-                                      )));
-                        },
+                    MaterialButton(
+                      color: GlooTheme.purple.withOpacity(0.9),
+                      child: Icon(
+                        Icons.cloud_upload,
+                        color: GlooTheme.nearlyWhite,
                       ),
+                      padding: EdgeInsets.all(13),
+                      shape: CircleBorder(),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CloudDeckScreen(
+                                      deck: widget.deck,
+                                      isDownload: false,
+                                    )));
+                      },
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Card(
-                      color: GlooTheme.nearlyWhite,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0)),
-                      elevation: 10.0,
-                      child: Center(
-                        child: FlatButton(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Text(
-                              "Studia Deck",
-                              style: TextStyle(
-                                  color: GlooTheme.purple, fontSize: 18),
-                            ),
+                    Center(
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32)),
+                        color: GlooTheme.nearlyWhite,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 13),
+                          child: Text(
+                            "Studia Deck",
+                            style: TextStyle(
+                                color: GlooTheme.purple, fontSize: 18),
                           ),
-                          onPressed: () async {
-                            setState(() {
-                              loading = true;
-                            });
+                        ),
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        StudyDeckScreen(deck: widget.deck)));
-                            setState(() {
-                              loading = false;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundColor: GlooTheme.purple.withOpacity(0.9),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.add,
-                          color: GlooTheme.nearlyWhite,
-                        ),
-                        onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      EditorPage(deck: widget.deck)));
+                                      StudyDeckScreen(deck: widget.deck)));
+                          setState(() {
+                            loading = false;
+                          });
                         },
                       ),
+                    ),
+                    MaterialButton(
+                      color: GlooTheme.purple.withOpacity(0.9),
+                      child: Icon(
+                        Icons.add,
+                        color: GlooTheme.nearlyWhite,
+                      ),
+                      padding: EdgeInsets.all(13),
+                      shape: CircleBorder(),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    EditorPage(deck: widget.deck)));
+                      },
                     ),
                   ],
                 ),

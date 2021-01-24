@@ -15,8 +15,8 @@ class DetailsView extends StatelessWidget {
     var values = entries.values.toList();
 
     return Container(
-      padding: EdgeInsets.all(12),
-      height: MediaQuery.of(context).size.height * 0.58,
+      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
+      height: MediaQuery.of(context).size.height * 0.53, //TODO ha senso usare una misura basata sugli items, però ci sta il fatto delle righe
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
