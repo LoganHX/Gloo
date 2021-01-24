@@ -30,7 +30,7 @@ class _GlooHomeState extends State<GlooHome> {
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
-              backgroundColor: GlooTheme.purple.withOpacity(0.7),
+              backgroundColor: GlooTheme.purple.withOpacity(1),
               onPressed: () {
                 //Navigator.pushNamed(context, '/newDeck');
                 Navigator.push(

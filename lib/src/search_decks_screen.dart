@@ -47,93 +47,94 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
               backgroundColor: Colors.transparent,
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
                     height: barHeight,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: GlooTheme.nearlyWhite,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.69,
-                          child: TextField(
-                            style: TextStyle(
-                              color: GlooTheme.purple,
-                            ),
-                            controller: _textController,
-                            decoration: InputDecoration(
-                              labelStyle: TextStyle(
-                                color: Color(
-                                    0xff606066), //todo cambiare sto colore
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        decoration: BoxDecoration(
+                          color: GlooTheme.nearlyWhite,
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: TextField(
+                                style: TextStyle(
+                                  color: GlooTheme.purple,
+                                ),
+                                controller: _textController,
+                                decoration: InputDecoration(
+                                  labelStyle: TextStyle(
+                                    color: Color(
+                                        0xff606066), //todo cambiare sto colore
+                                  ),
+                                  enabledBorder: InputBorder.none,
+                                  // fillColor: Colors.transparent,
+                                  // filled: true,
+                                  isCollapsed: true,
+                                  contentPadding: EdgeInsets.only(
+                                    left: 24.0,
+                                    top: 12,
+                                    bottom: 12,
+                                  ),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  labelText: "Cerca deck pubblico",
+                                ),
                               ),
-                              enabledBorder: InputBorder.none,
-                              // fillColor: Colors.transparent,
-                              // filled: true,
-                              isCollapsed: true,
-                              contentPadding: EdgeInsets.only(
-                                left: 24.0,
-                                top: 12,
-                                bottom: 12,
+                            ),
+                            MaterialButton(
+                              minWidth: 0,
+                              shape: CircleBorder(),
+
+                              splashColor: GlooTheme.nearlyWhite,
+                              color: GlooTheme.purple,
+                              onPressed: () {
+                                _query = _textController.text;
+                                print(_query);
+                              },
+                              child: Icon(
+                                Icons.search,
+                                color: GlooTheme.nearlyWhite,
+                                size: 24,
                               ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.never,
-                              labelText: "Cerca deck pubblico",
                             ),
-                          ),
+
+                          ],
                         ),
-                        SizedBox(
-                          width: 4,
+                      ),
+                      MaterialButton(
+                        elevation: 0,
+                        minWidth: 0,
+                        shape: CircleBorder(),
+                        splashColor: GlooTheme.nearlyWhite,
+                        color: Colors.transparent,
+                        onPressed: () {
+                          setState(() {
+                            this._optionsVisibility =
+                            !this._optionsVisibility;
+                          });
+                        },
+                        child: Icon(
+                          _optionsVisibility ? Icons.close : Icons.tune,
+                          color: GlooTheme.nearlyWhite,
+                          size: 24,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            _query = _textController.text;
-                            print(_query);
-                          },
-                          child: Container(
-                            child: Icon(
-                              Icons.search,
-                              color: GlooTheme.purple,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          height: 24,
-                          width: 1,
-                          color: GlooTheme.purple,
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              this._optionsVisibility =
-                                  !this._optionsVisibility;
-                            });
-                          },
-                          child: Container(
-                            child: Icon(
-                              _optionsVisibility ? Icons.close : Icons.tune,
-                              color: GlooTheme.purple,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: dividerHeight,
@@ -159,11 +160,12 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                     child: Container(
                       height: 60,
                       child: Column(
+
                         children: [
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
                                   width: 21,
@@ -248,8 +250,8 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
       ),
     );
   }
-  
-  Widget _getDeckListView(height){
+
+  Widget _getDeckListView(height) {
     return Column(
       children: [
         SingleChildScrollView(
@@ -267,9 +269,9 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
         ),
       ],
     );
-    
   }
-  Widget _getImage(height){
+
+  Widget _getImage(height) {
     return Container(
       height: height,
       child: Column(
@@ -296,8 +298,8 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
         ],
       ),
     );
-
   }
+
   Widget getDecksUI() {
     return Padding(
       padding: const EdgeInsets.only(
