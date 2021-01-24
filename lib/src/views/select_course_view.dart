@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/gloo_dropdown_button.dart';
-import 'package:alpha_gloo/src/search_results_screen.dart';
+import 'package:alpha_gloo/src/search_decks_screen.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +45,7 @@ class _SelectCourseViewState extends State<SelectCourseView> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            SearchResultsScreen(university: "Università degli studi di Salerno",)));
+                            SearchDecksScreen(university: "Università degli studi di Salerno",)));
               },
 
             ),

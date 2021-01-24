@@ -4,7 +4,7 @@ import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
-import 'package:alpha_gloo/src/search_results_screen.dart';
+import 'package:alpha_gloo/src/search_decks_screen.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/views/select_course_view.dart';
 

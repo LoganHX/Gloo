@@ -1,7 +1,7 @@
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
-import 'package:alpha_gloo/src/search_results_screen.dart';
+import 'package:alpha_gloo/src/search_decks_screen.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _GlooHomeState extends State<GlooHome> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            SearchResultsScreen(university: "Università degli studi di Salerno",)));
+                            SearchDecksScreen(university: "Università degli studi di Salerno",)));
               },
               child: Icon(
                 Icons.add,

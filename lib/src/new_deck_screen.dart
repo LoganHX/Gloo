@@ -177,7 +177,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
                       setState(() => loading = true);
-                      await DatabaseService(uid: user.uid).createDeck(university, course, prof, year);
+                      await DatabaseService(uid: user.uid).createDeck(university: university, course: course, prof: prof, year: year);
                       loading = false;
                       Navigator.pop(context);
                     }

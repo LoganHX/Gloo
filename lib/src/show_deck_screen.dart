@@ -3,6 +3,7 @@ import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/upload_deck_screen.dart';
+import 'package:alpha_gloo/src/views/details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
@@ -119,7 +120,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundColor: GlooTheme.purple,
+                      backgroundColor: GlooTheme.purple.withOpacity(0.9),
                       child: IconButton(
                         icon: Icon(
                           Icons.cloud_upload,
@@ -175,7 +176,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     ),
                     CircleAvatar(
                       radius: 25,
-                      backgroundColor: GlooTheme.purple,
+                      backgroundColor: GlooTheme.purple.withOpacity(0.9),
                       child: IconButton(
                         icon: Icon(
                           Icons.add,
@@ -299,83 +300,91 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.54,
-            width: MediaQuery.of(context).size.width * 0.8,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(25)),
-              color: GlooTheme.nearlyWhite,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Nome corso",
-                    style:
-                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
-                  ),
-                ),
-                Text(
-                  widget.deck.course,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: GlooTheme.purple),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Professore",
-                    style:
-                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
-                  ),
-                ),
-                Text(
-                  widget.deck.prof,
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: GlooTheme.purple),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Anno Accademico",
-                    style:
-                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
-                  ),
-                ),
-                Text(
-                  "20/21",
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: GlooTheme.purple),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Università",
-                    style:
-                        TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
-                  ),
-                ),
-                Text(
-                  widget.deck.university,
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: GlooTheme.purple),
-                ),
-                SizedBox(
-                  height: 25,
-                )
-              ],
-            ),
-          ),
+          DetailsView(
+            entries: {
+              'Nome Corso' : widget.deck.course,
+              'Docente' : widget.deck.prof,
+              'Anna Accademico': '20/21', //todo,
+              'Università' : widget.deck.university,
+            },
+          )
+          // Container(
+          //   height: MediaQuery.of(context).size.height * 0.54,
+          //   width: MediaQuery.of(context).size.width * 0.8,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.all(Radius.circular(25)),
+          //     color: GlooTheme.nearlyWhite,
+          //   ),
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Text(
+          //           "Nome corso",
+          //           style:
+          //               TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+          //         ),
+          //       ),
+          //       Text(
+          //         widget.deck.course,
+          //         textAlign: TextAlign.center,
+          //         style: TextStyle(
+          //             fontSize: 24,
+          //             fontWeight: FontWeight.w600,
+          //             color: GlooTheme.purple),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Text(
+          //           "Professore",
+          //           style:
+          //               TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+          //         ),
+          //       ),
+          //       Text(
+          //         widget.deck.prof,
+          //         style: TextStyle(
+          //             fontSize: 24,
+          //             fontWeight: FontWeight.w600,
+          //             color: GlooTheme.purple),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Text(
+          //           "Anno Accademico",
+          //           style:
+          //               TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+          //         ),
+          //       ),
+          //       Text(
+          //         "20/21",
+          //         style: TextStyle(
+          //             fontSize: 24,
+          //             fontWeight: FontWeight.w600,
+          //             color: GlooTheme.purple),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Text(
+          //           "Università",
+          //           style:
+          //               TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+          //         ),
+          //       ),
+          //       Text(
+          //         widget.deck.university,
+          //         style: TextStyle(
+          //             fontSize: 24,
+          //             fontWeight: FontWeight.w600,
+          //             color: GlooTheme.purple),
+          //       ),
+          //       SizedBox(
+          //         height: 25,
+          //       )
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

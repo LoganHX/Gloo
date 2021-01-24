@@ -137,7 +137,9 @@ class _UploadDeckScreenState extends State<UploadDeckScreen> {
                           ),
 
                           onPressed: () async {
-                            String id = await DatabaseService().createPublicDeck('bbb', 'aaba', 'baaa', 'ab');
+                            //todo si dovrebbe controllare che l'utente non posta 15 copie pubbliche del proprio deck
+
+                            String id = await DatabaseService().createPublicDeck(university: widget.deck.university, course: widget.deck.course, prof: widget.deck.prof, year: widget.deck.year);
                             List<Flashcard> list =  await _getFlashcards();
                             list.forEach((element) {
                               DatabaseService().addPublicFlashcard(answer: element.answer , question: element.question, deckID: id);

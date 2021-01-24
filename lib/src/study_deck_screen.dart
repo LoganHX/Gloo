@@ -7,6 +7,7 @@ import 'package:alpha_gloo/src/components/SliderWidget.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -91,11 +92,11 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                 child: Padding(
                   padding:
                       const EdgeInsets.only(top: 2.0, left: 2.0, bottom: 2.0),
-                  child: Scrollbar(
+                  child: CupertinoScrollbar(
                     child: SingleChildScrollView(
                       controller: ScrollController(),
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 3.0),
+                        padding: const EdgeInsets.only(right: 12.0),
                         child: Html(
                           style: {
                             "html": Style(
@@ -280,9 +281,8 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                     ),
                   ),
                   Padding(
-                    //App bar da mettere anche nella pagina seguente
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top, left: 3),
+                        top: MediaQuery.of(context).padding.top, left: 3,),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

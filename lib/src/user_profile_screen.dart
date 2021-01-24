@@ -1,6 +1,7 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/services/auth.dart';
 import 'package:alpha_gloo/src/home/gloo_home.dart';
+import 'package:alpha_gloo/src/views/details_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +30,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                      height: MediaQuery.of(context).padding.top +
-                          AppBar().preferredSize.height),
+                  SizedBox(height: AppBar().preferredSize.height),
                   Text(
                     'Raffaella Carrà',
                     style: TextStyle(
@@ -40,7 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 45.0),
+                  SizedBox(height: 35.0),
                   Container(
                       width: 150.0,
                       height: 150.0,
@@ -54,64 +53,29 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             BoxShadow(
                                 blurRadius: 7.0, color: GlooTheme.nearlyWhite)
                           ])),
-                  SizedBox(height: 45.0),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Bio",
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: GlooTheme.nearlyWhite,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Text(
-                        "Com'è bello far l'amore da Trieste in Gloo",
-                        style: TextStyle(
-                            fontSize: 20, color: GlooTheme.nearlyWhite),
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Email",
-                          style: TextStyle(
-                              fontSize: 24, color: GlooTheme.nearlyWhite),
-                        ),
-                      ),
-                      Text(
-                        "raffaella@carra.it",
-                        style: TextStyle(
-                            fontSize: 20, color: GlooTheme.nearlyWhite),
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Università",
-                          style: TextStyle(
-                              fontSize: 24, color: GlooTheme.nearlyWhite),
-                        ),
-                      ),
-                      Text(
-                        "Università degli studi di Salerno",
-                        style: TextStyle(
-                            fontSize: 20, color: GlooTheme.nearlyWhite),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 25,
-                      )
-                    ],
+                  SizedBox(height: 35.0),
+                  //todo
+                  DetailsView(entries: {"key1": "value1", "key2": "value2","key3": "value1", "key4": "value2", "key5": "value1", "key6": "value2", "key55": "value1", "key77": "value2"}),
+
+                  MaterialButton(
+                    onPressed: () async {
+                      await _auth.signOut();
+                      Navigator.pushNamed(context, '/');
+                    },
+                    color: GlooTheme.purple,
+                    textColor: GlooTheme.nearlyWhite,
+                    child: Icon(
+                      Icons.logout,
+                      size: 24,
+                    ),
+                    padding: EdgeInsets.all(16),
+                    shape: CircleBorder(),
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 20.0),
+          SizedBox(height: 40.0),
           // Padding(
           //   padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
           //   child: Text(
@@ -139,8 +103,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           // MaterialButton(
           //   onPressed: () async {
           //     await _auth.signOut();
-          //     Navigator.pushNamed(
-          //         context, '/');
+          //     Navigator.pushNamed(context, '/');
           //   },
           //   color: GlooTheme.purple,
           //   textColor: GlooTheme.nearlyWhite,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
@@ -5,19 +7,20 @@ import 'package:alpha_gloo/src/components/gloo_dropdown_button.dart';
 import 'package:alpha_gloo/src/components/gloo_text_field.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 
-class SearchResultsScreen extends StatefulWidget {
+class SearchDecksScreen extends StatefulWidget {
   final university;
 
-  const SearchResultsScreen({Key key, this.university}) : super(key: key);
+  const SearchDecksScreen({Key key, this.university}) : super(key: key);
   @override
-  _SearchResultsScreenState createState() => _SearchResultsScreenState();
+  _SearchDecksScreenState createState() => _SearchDecksScreenState();
 }
 
-class _SearchResultsScreenState extends State<SearchResultsScreen> {
+class _SearchDecksScreenState extends State<SearchDecksScreen> {
   bool _optionsVisibility = false;
   String _choice = "";
   String _query = "";
@@ -28,11 +31,9 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     //todo if come con loading per la "404"
     //todo fa una query ogni volta che cambio valore a _optionVisibility? controllare se lo stesso accade anche altrove
     final totalHeight = MediaQuery.of(context).size.height;
-    final imageHeight = (totalHeight * 0.38).roundToDouble();
-    final titleHeight = (totalHeight * 0.08).roundToDouble();
-    final barHeight = titleHeight;
-    final scrollableHeight =
-        totalHeight - imageHeight - titleHeight - barHeight;
+    final barHeight = AppBar().preferredSize.height + 25;
+    final dividerHeight = 16.0;
+    final scrollableHeight = totalHeight - barHeight - 60 - 50 - dividerHeight;
     return Scaffold(
       body: Stack(
         children: [
@@ -47,7 +48,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: AppBar().preferredSize.height + 25,
+                    height: barHeight,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.9,
@@ -60,6 +61,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
+                          height: 50,
                           width: MediaQuery.of(context).size.width * 0.69,
                           child: TextField(
                             style: TextStyle(
@@ -132,113 +134,128 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       ],
                     ),
                   ),
-                  Divider(),
+                  SizedBox(
+                    height: dividerHeight,
+                  ),
+                  Visibility(
+                    visible: !_optionsVisibility,
+                    child: Container(
+                      height: 60,
+                      child: Text(
+                        'Trova il deck più adatto a te',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 24,
+                          letterSpacing: 0.27,
+                          color: GlooTheme.nearlyWhite,
+                        ),
+                      ),
+                    ),
+                  ),
                   Visibility(
                     visible: _optionsVisibility,
-                    child: Column(
-                      children: [
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 21,
-                              ),
-                              Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  child: GlooDropdownButton(
-                                    items: [
-                                      "Università degli studi di Salerno",
-                                      "Università Federico II di Napoli",
-                                      "Politecnico di Torino",
-                                      "Politecnico di Milano",
-                                      "Università di Modena e Reggio Emilia"
-                                    ],
-                                    title: 'Scegli Università',
-                                    onChanged: (String s) {
-                                      setState(() {
+                    child: Container(
+                      height: 60,
+                      child: Column(
+                        children: [
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 21,
+                                ),
+                                Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: GlooDropdownButton(
+                                      items: [
+                                        "Università degli studi di Salerno",
+                                        "Università Federico II di Napoli",
+                                        "Politecnico di Torino",
+                                        "Politecnico di Milano",
+                                        "Università di Modena e Reggio Emilia"
+                                      ],
+                                      title: 'Scegli Università',
+                                      onChanged: (String s) {
+                                        setState(() {
+                                          _choice = s;
+                                        });
+                                      },
+                                    )),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    child: GlooDropdownButton(
+                                      items: [
+                                        "★",
+                                        "★★",
+                                        "★★★",
+                                        "★★★★",
+                                        "★★★★★"
+                                      ],
+                                      title: 'Stelle',
+                                      onChanged: (String s) {
                                         _choice = s;
-                                      });
-                                    },
-                                  )),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child: GlooDropdownButton(
-                                    items: ["★", "★★", "★★★", "★★★★", "★★★★★"],
-                                    title: 'Stelle',
-                                    onChanged: (String s) {
-                                      _choice = s;
-                                    },
-                                  )),
-                            ],
+                                      },
+                                    )),
+                              ],
+                            ),
                           ),
-                        ),
-                        Divider(),
-                      ],
+                          SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   _query != "" || _choice != ""
-                      ? Flexible(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: titleHeight,
-                                //width: 0.8 * MediaQuery.of(context).size.width,
-                                child: Text(
-                                  'Risultati Ricerca',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 24,
-                                    letterSpacing: 0.27,
-                                    color: GlooTheme.nearlyWhite,
-                                  ),
+                      ? Column(
+                          children: [
+                            SingleChildScrollView(
+                              child: Container(
+                                height:
+                                    scrollableHeight, //dimensione area scrolling
+                                child: Column(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: getDecksUI(),
+                                    ),
+                                    // SizedBox(height: 16,)
+                                  ],
                                 ),
                               ),
-                              SingleChildScrollView(
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.50, //dimensione area scrolling
-                                  child: Column(
-                                    children: <Widget>[
-                                      Flexible(
-                                        child: getDecksUI(),
-                                      ),
-                                      // SizedBox(height: 16,)
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         )
-                      : Expanded(
-                          flex: 1,
+                      : Container(
+                          height: scrollableHeight,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Image.asset('./assets/images/search-cuate.png'),
                               Container(
-                                width: 320,
+                                width: MediaQuery.of(context).size.width/1.1,
                                 child: Text(
-                                  'Trova il deck più adatto a te',
+                                  'Costruisci i tuoi successi utilizzando i deck prodotti da migliaia di altri studenti',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 22,
+                                    fontSize: 20,
                                     letterSpacing: 0.27,
                                     color: GlooTheme.nearlyWhite,
                                   ),
                                 ),
                               ),
-                              Image.asset('./assets/images/search-cuate.png'),
+                              SizedBox(
+                                height: 80,
+                              )
                             ],
                           ),
                         ),
