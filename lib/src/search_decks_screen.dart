@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/src/cloud_deck_screen.dart';
 import 'package:alpha_gloo/src/components/gloo_dropdown_button.dart';
 import 'package:alpha_gloo/src/components/gloo_text_field.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
@@ -241,9 +242,9 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                             children: [
                               Image.asset('./assets/images/search-cuate.png'),
                               Container(
-                                width: MediaQuery.of(context).size.width/1.1,
+                                width: MediaQuery.of(context).size.width / 1.1,
                                 child: Text(
-                                  'Costruisci i tuoi successi utilizzando i deck prodotti da migliaia di altri studenti',
+                                  'Studia in maniera efficiente utilizzando deck prodotti da migliaia di altri studenti',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
@@ -305,23 +306,19 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                 return DatabaseService().searchDecks(university: this._choice);
               },
               callBack: (Deck deck) {
-                moveTo(deck);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CloudDeckScreen(
+                            deck: deck,
+                            isDownload: true,
+                          )),
+                );
               },
             ),
           )
         ],
       ),
     );
-  }
-
-  void moveTo(Deck deck) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ShowDeckScreen(
-                deck: deck,
-              )),
-    );
-    //Navigator.pushNamed(context, '/deck');
   }
 }

@@ -143,7 +143,13 @@ class _GlooHomeState extends State<GlooHome> {
                 return DatabaseService(uid: user.uid).decks;
               },
               callBack: (Deck deck) {
-                moveTo(deck);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ShowDeckScreen(
+                        deck: deck,
+                      )),
+                );
               },
             ),
           )
@@ -152,73 +158,4 @@ class _GlooHomeState extends State<GlooHome> {
     );
   }
 
-  void moveTo(Deck deck) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ShowDeckScreen(
-            deck: deck,
-          )),
-    );
-    //Navigator.pushNamed(context, '/deck');
-  }
-
-  // Widget getBarUI(double barHeight) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       children: <Widget>[
-  //         Container(
-  //           width: MediaQuery.of(context).size.width * 0.95,
-  //           height: barHeight,
-  //           child: Padding(
-  //             padding: const EdgeInsets.only(bottom: 8),
-  //             child: Container(
-  //               decoration: BoxDecoration(
-  //                 color: GlooTheme.grey.withOpacity(0.8),
-  //                 borderRadius: const BorderRadius.only(
-  //                   bottomRight: Radius.circular(13.0),
-  //                   bottomLeft: Radius.circular(13.0),
-  //                   topLeft: Radius.circular(13.0),
-  //                   topRight: Radius.circular(13.0),
-  //                 ),
-  //               ),
-  //               child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //                 children: <Widget>[
-  //                   Icon(
-  //                     Icons.add,
-  //                     color: GlooTheme.nearlyWhite,
-  //                     //size: 36.0,
-  //                   ),
-  //                   Icon(
-  //                     Icons.search,
-  //                     color: GlooTheme.nearlyWhite,
-  //                     //size: 36.0,
-  //                   ),
-  //                   Icon(
-  //                     Icons.explore,
-  //                     color: GlooTheme.nearlyWhite,
-  //                     //size: 36.0,
-  //                   ),
-  //                   Icon(
-  //                     Icons.person,
-  //                     color: GlooTheme.nearlyWhite,
-  //                     //size: 36.0,
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //         // const Expanded(
-  //         //   child: SizedBox(),
-  //         // )
-  //
-  //       ],
-  //     ),
-  //   );
-  // }
 }

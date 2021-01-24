@@ -2,7 +2,7 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
-import 'package:alpha_gloo/src/upload_deck_screen.dart';
+import 'package:alpha_gloo/src/cloud_deck_screen.dart';
 import 'package:alpha_gloo/src/views/details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
@@ -130,8 +130,10 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      UploadDeckScreen(deck: widget.deck)));
+                                  builder: (context) => CloudDeckScreen(
+                                        deck: widget.deck,
+                                        isDownload: false,
+                                      )));
                         },
                       ),
                     ),
@@ -302,10 +304,10 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         children: [
           DetailsView(
             entries: {
-              'Nome Corso' : widget.deck.course,
-              'Docente' : widget.deck.prof,
+              'Nome Corso': widget.deck.course,
+              'Docente': widget.deck.prof,
               'Anna Accademico': '20/21', //todo,
-              'Università' : widget.deck.university,
+              'Università': widget.deck.university,
             },
           )
           // Container(
