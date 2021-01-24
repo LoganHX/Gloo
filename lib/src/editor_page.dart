@@ -11,10 +11,9 @@ import 'package:provider/provider.dart';
 class EditorPage extends StatefulWidget {
   Deck deck;
   final Flashcard flashcard;
-  EditorPage({Key key, this.title, this.deck, this.flashcard}) : super(key: key);
+  EditorPage({Key key, this.title, this.deck, this.flashcard})
+      : super(key: key);
   final String title;
-
-
 
   @override
   _EditorPageState createState() => _EditorPageState();
@@ -28,12 +27,14 @@ class _EditorPageState extends State<EditorPage> {
   @override
   void initState() {
     super.initState();
-    if(widget.flashcard != null) flashcard = widget.flashcard;
-    else flashcard = Flashcard(answer: "", question: "", id:"");
+    if (widget.flashcard != null)
+      flashcard = widget.flashcard;
+    else
+      flashcard = Flashcard(answer: "", question: "", id: "");
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: GlooTheme.purple,
@@ -54,8 +55,18 @@ class _EditorPageState extends State<EditorPage> {
             tooltip: 'Salva flashcard',
             onPressed: () async {
               flashcard = await keyEditor.currentState.getEditedFlashcard();
-              if(widget.flashcard != null) DatabaseService(uid: Provider.of<User>(context, listen: false).uid).updateFlashcardData(flashcard.id, widget.deck.id, flashcard.question, flashcard.answer);
-              else DatabaseService(uid: Provider.of<User>(context, listen: false).uid).createFlashcard(widget.deck.id, flashcard.question, flashcard.answer);
+              if (widget.flashcard != null)
+                DatabaseService(
+                        uid: Provider.of<User>(context, listen: false).uid)
+                    .updateFlashcardData(flashcard.id, widget.deck.id,
+                        flashcard.question, flashcard.answer);
+              else
+                DatabaseService(
+                        uid: Provider.of<User>(context, listen: false).uid)
+                    .createFlashcard(
+                        deckID: widget.deck.id,
+                        question: flashcard.question,
+                        answer: flashcard.answer);
 
               //Navigator.pop(context);
             },
@@ -73,7 +84,9 @@ class _EditorPageState extends State<EditorPage> {
                 //value: "text content initial, if any",
                 flashcard: flashcard,
                 key: keyEditor,
-                height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - kToolbarHeight, //Altezza pagina - altezza status bar - altezza appbar
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top -
+                    kToolbarHeight, //Altezza pagina - altezza status bar - altezza appbar
               ),
               // Padding(
               //   padding: const EdgeInsets.only(top:8.0),

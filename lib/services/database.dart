@@ -99,7 +99,6 @@ class DatabaseService {
 
   Future updateFlashcardData(
       String flashcardID, String deckID, String question, String answer) async {
-    DateTime now = DateTime.now();
     return await userCollection
         .document(uid)
         .collection("decks")
@@ -112,7 +111,20 @@ class DatabaseService {
     });
   }
 
-  Future createFlashcard(String deckID, String question, String answer) async {
+  Future addFlashcard({String deckID, String question, String answer}) async {
+    return await userCollection
+        .document(uid)
+        .collection("decks")
+        .document(deckID)
+        .collection("flashcards")
+        .document()
+        .setData({
+      "question": question,
+      "answer": answer,
+    });
+  }
+
+  Future createFlashcard({String deckID, String question, String answer}) async {
     return await userCollection
         .document(uid)
         .collection("decks")

@@ -105,20 +105,6 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
     );
   }
 
-  void downloadDeck() async {
-    String id = await DatabaseService().createPublicDeck(
-        university: widget.deck.university,
-        course: widget.deck.course,
-        prof: widget.deck.prof,
-        year: widget.deck.year);
-    List<Flashcard> list = await _getFlashcards();
-    list.forEach((element) {
-      DatabaseService().addPublicFlashcard(
-          answer: element.answer, question: element.question, deckID: id);
-      print(element.answer);
-    });
-  }
-
   void uploadDeck() async {
     String id = await DatabaseService().createPublicDeck(
         university: widget.deck.university,
@@ -130,6 +116,24 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
       DatabaseService().addPublicFlashcard(
           answer: element.answer, question: element.question, deckID: id);
       print(element.answer);
+    });
+    //todo si può ottimizzare
+  }
+
+  void downloadDeck() async {
+    User user = Provider.of<User>(context, listen: false);
+    String id = await DatabaseService(uid:user.uid).createDeck(
+        university: widget.deck.university,
+        course: widget.deck.course,
+        prof: widget.deck.prof,
+        year: widget.deck.year);
+    List<Flashcard> list = await _getFlashcards();
+    list.forEach((element) {
+      DatabaseService(uid: user.uid).addFlashcard(
+          answer: element.answer, question: element.question, deckID: id);
+      print("#######");
+
+
     });
   }
 }
