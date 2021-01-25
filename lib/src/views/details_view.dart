@@ -15,8 +15,11 @@ class DetailsView extends StatelessWidget {
     var values = entries.values.toList();
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-      height: MediaQuery.of(context).size.height * 0.515, //TODO ha senso usare una misura basata sugli items, però ci sta il fatto delle righe
+      padding: EdgeInsets.only(bottom: 24, right: 7, left: 7),
+      height: (105 * labels.length+1) < MediaQuery.of(context).size.height * 0.525
+          ? (105 * labels.length+1).toDouble()
+          : MediaQuery.of(context).size.height *
+              0.525, //TODO ha senso usare una misura basata sugli items, però ci sta il fatto delle righe
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -28,26 +31,29 @@ class DetailsView extends StatelessWidget {
             itemCount: values.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-
+                height: 85,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       labels[index],
+                      maxLines: 2,
                       style:
-                          TextStyle(fontSize: 18, color: GlooTheme.nearlyBlack),
+                          TextStyle(fontSize: 16, color: GlooTheme.nearlyBlack),
                     ),
-                    SizedBox(height: 8,),
+
                     Text(
                       values[index],
+                      maxLines: 2,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: GlooTheme.purple),
                     ),
-                    SizedBox(height: 8,)
+
                   ],
                 ),
               );

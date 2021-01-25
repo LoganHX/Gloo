@@ -305,9 +305,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         children: [
           DetailsView(
             entries: {
-              'Nome Corso': widget.deck.course,
+              'Corso': widget.deck.course,
               'Docente': widget.deck.prof,
-              'Anna Accademico': '20/21', //todo,
+              'Anno Accademico': '20/21', //todo,
               'Università': widget.deck.university,
             },
           )

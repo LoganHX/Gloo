@@ -5,6 +5,7 @@ import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/src/views/details_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
@@ -90,12 +91,15 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
 
     List<Flashcard> list = await _getFlashcards();
 
-    list.forEach((element) {
+    list.forEach((element) async {
       var i = 1;
       setState(() {
         _progress = i / list.length + 1;
       });
       i++;
+
+      await Future.delayed(const Duration(seconds: 2), () {});
+
       db.addPublicFlashcard(
           answer: element.answer, question: element.question, deckID: id);
       print(element.answer);
@@ -117,7 +121,14 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
 
     List<Flashcard> list = await _getPublicFlashcards();
     print(list.first.question);
-    list.forEach((element) {
+    list.forEach((element) async {
+      var i = 1;
+      setState(() {
+        _progress = i / list.length + 1;
+      });
+      i++;
+
+      await Future.delayed(const Duration(seconds: 2), () {});
       db.addFlashcard(
           answer: element.answer, question: element.question, deckID: id);
     });
@@ -138,7 +149,7 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
             },
           ),
           SizedBox(
-            height: 12,
+            height: 32,
           ),
           Container(
             width: MediaQuery.of(context).size.width / 1.8,
@@ -168,28 +179,27 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Container(
+            height: MediaQuery.of(context).size.height * 0.45,
+            child: Image.asset('./assets/images/Launching-cuate.png')),
         Center(
           child: Container(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(GlooTheme.nearlyWhite),
-              backgroundColor: GlooTheme.purple,
-              strokeWidth: 10,
-              value: _progress,
+            padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+            child: SpinKitFadingGrid(
+              color: GlooTheme.nearlyPurple,
+              size: 50.0,
             ),
           ),
         ),
-        SizedBox(height: 16,),
+        SizedBox(
+          height: 16,
+        ),
         RaisedButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+          shape: CircleBorder(),
           color: GlooTheme.nearlyWhite,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 13),
-            child: Text(
-              "Ok",
-              style: TextStyle(color: GlooTheme.purple, fontSize: 18),
-            ),
+            child: Icon(Icons.done, size: 32, color: GlooTheme.purple),
           ),
           onPressed: () => Navigator.pop(context),
         ),

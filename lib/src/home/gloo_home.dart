@@ -1,6 +1,7 @@
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/src/components/gloo_custom_dialog.dart';
 import 'package:alpha_gloo/src/search_decks_screen.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
 import 'package:alpha_gloo/src/views/deck_list_view.dart';
@@ -34,11 +35,25 @@ class _GlooHomeState extends State<GlooHome> {
               backgroundColor: GlooTheme.purple.withOpacity(1),
               onPressed: () {
                 //Navigator.pushNamed(context, '/newDeck');
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SearchDecksScreen()));
+
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return GlooCustomDialog(
+                        image: './assets/images/social-cuate.png',
+                        entries: {
+                          "Cerca deck pubblico": Icon(Icons.explore),
+                          "Crea deck pubblico":
+                              Icon(Icons.create_new_folder_rounded),
+                        },
+                      );
+                    });
+
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) =>
+                //             SearchDecksScreen()));
               },
               child: Icon(
                 Icons.add,
@@ -139,7 +154,7 @@ class _GlooHomeState extends State<GlooHome> {
         children: <Widget>[
           Flexible(
             child: DeckListView(
-              getData: (){
+              getData: () {
                 final user = Provider.of<User>(context);
                 return DatabaseService(uid: user.uid).decks;
               },
@@ -148,8 +163,8 @@ class _GlooHomeState extends State<GlooHome> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ShowDeckScreen(
-                        deck: deck,
-                      )),
+                            deck: deck,
+                          )),
                 );
               },
             ),
@@ -158,5 +173,4 @@ class _GlooHomeState extends State<GlooHome> {
       ),
     );
   }
-
 }

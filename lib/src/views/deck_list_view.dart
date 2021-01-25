@@ -2,6 +2,7 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:alpha_gloo/src/components/gloo_custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:alpha_gloo/services/database.dart';
@@ -116,124 +117,140 @@ class DeckView extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: GlooTheme.cardColor,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(20.0)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: GlooTheme.cardColor.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 1,
-                                    offset: Offset(
-                                        -5, 3), // changes position of shadow
-                                  ),
-                                ],
-                                // border: new Border.all(
-                                //     color: GlooTheme.notWhite),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8, left: 16, right: 16, bottom: 8),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Icon(
-                                                deck.course.length < 25
-                                                    ? Icons.person
-                                                    : Icons
-                                                        .supervisor_account, //calendar
-                                                color: GlooTheme.purple,
-                                                size: 18,
-                                              ),
-                                              // Text(
-                                              //   //'${deck.year} ',
-                                              //   '20/21',
-                                              //   textAlign: TextAlign.right,
-                                              //   style: TextStyle(
-                                              //     fontWeight: FontWeight.w200,
-                                              //     fontSize: 12,
-                                              //     letterSpacing: 0.0,
-                                              //     color: GlooTheme.purple,
-                                              //   ),
-                                              // ),
-                                              // ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                //'${deck.year} ',
-                                                '20/21',
-                                                textAlign: TextAlign.right,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w200,
-                                                  fontSize: 12,
-                                                  letterSpacing: 1.0,
-                                                  color: GlooTheme.purple,
-                                                ),
-                                              ),
-                                              SizedBox(width: 2,),
-                                              Icon(
-                                                Icons.calendar_today,
-                                                color: GlooTheme.purple,
-                                                size: 12,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                            child: GestureDetector(
+                              onLongPress: (){
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return GlooCustomDialog(
+                                        image: './assets/images/warning-cuate.png',
+                                        entries: {
+                                          "Modifica deck": Icon(Icons.edit),
+                                          "Elimina Deck":
+                                          Icon(Icons.delete),
+                                        },
+                                      );
+                                    });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: GlooTheme.cardColor,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: GlooTheme.cardColor.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 1,
+                                      offset: Offset(
+                                          -5, 3), // changes position of shadow
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 16,
-                                                  right: 16,
-                                                  bottom: 32),
-                                              child: Center(
-                                                child: Text(
-                                                  deck.course,
-                                                  textAlign: TextAlign.center,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 3,
+                                  ],
+                                  // border: new Border.all(
+                                  //     color: GlooTheme.notWhite),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, left: 16, right: 16, bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  deck.course.length < 25
+                                                      ? Icons.person
+                                                      : Icons
+                                                          .supervisor_account, //calendar
+                                                  color: GlooTheme.purple,
+                                                  size: 18,
+                                                ),
+                                                // Text(
+                                                //   //'${deck.year} ',
+                                                //   '20/21',
+                                                //   textAlign: TextAlign.right,
+                                                //   style: TextStyle(
+                                                //     fontWeight: FontWeight.w200,
+                                                //     fontSize: 12,
+                                                //     letterSpacing: 0.0,
+                                                //     color: GlooTheme.purple,
+                                                //   ),
+                                                // ),
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Text(
+                                                  //'${deck.year} ',
+                                                  '20/21',
+                                                  textAlign: TextAlign.right,
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    letterSpacing: 0.27,
+                                                    fontWeight: FontWeight.w200,
+                                                    fontSize: 12,
+                                                    letterSpacing: 1.0,
                                                     color: GlooTheme.purple,
                                                   ),
                                                 ),
-                                              ),
+                                                SizedBox(width: 2,),
+                                                Icon(
+                                                  Icons.calendar_today,
+                                                  color: GlooTheme.purple,
+                                                  size: 12,
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 16,
+                                                    right: 16,
+                                                    bottom: 32),
+                                                child: Center(
+                                                  child: Text(
+                                                    deck.course,
+                                                    textAlign: TextAlign.center,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 3,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 16,
+                                                      letterSpacing: 0.27,
+                                                      color: GlooTheme.purple,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
