@@ -16,7 +16,7 @@ class DetailsView extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
-      height: MediaQuery.of(context).size.height * 0.53, //TODO ha senso usare una misura basata sugli items, però ci sta il fatto delle righe
+      height: MediaQuery.of(context).size.height * 0.515, //TODO ha senso usare una misura basata sugli items, però ci sta il fatto delle righe
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -43,7 +43,7 @@ class DetailsView extends StatelessWidget {
                       values[index],
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 22,
                           fontWeight: FontWeight.w600,
                           color: GlooTheme.purple),
                     ),

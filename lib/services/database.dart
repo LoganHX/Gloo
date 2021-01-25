@@ -23,18 +23,18 @@ class DatabaseService {
     });
   }
 
-  Future createDeck(
+  Future<String> createDeck(
       {String university, String course, String prof, String year}) async {
-    return await userCollection
-        .document(uid)
-        .collection("decks")
-        .document()
-        .setData({
+    String id =
+        userCollection.document(uid).collection("decks").document().documentID;
+    userCollection.document(uid).collection("decks").document(id).setData({
       "university": university,
       "course": course,
       "prof": prof,
       "year": year,
     });
+
+    return id;
   }
 
   Future<String> createPublicDeck(
@@ -112,6 +112,11 @@ class DatabaseService {
   }
 
   Future addFlashcard({String deckID, String question, String answer}) async {
+    print(deckID);
+    print(deckID);
+    print(deckID);
+    print(deckID);
+    print(deckID);
     return await userCollection
         .document(uid)
         .collection("decks")
@@ -124,7 +129,8 @@ class DatabaseService {
     });
   }
 
-  Future createFlashcard({String deckID, String question, String answer}) async {
+  Future createFlashcard(
+      {String deckID, String question, String answer}) async {
     return await userCollection
         .document(uid)
         .collection("decks")
@@ -177,6 +183,20 @@ class DatabaseService {
     QuerySnapshot snapshot = await userCollection
         .document(uid)
         .collection("decks")
+        .document(id)
+        .collection("flashcards")
+        .getDocuments();
+
+    return snapshot.documents
+        .map((doc) => Flashcard(
+              answer: doc.data['answer'],
+              question: doc.data['question'],
+            ))
+        .toList();
+  }
+
+  Future<List<Flashcard>> getFuturePublicFlashcards(String id) async {
+    QuerySnapshot snapshot = await publicDecksCollection
         .document(id)
         .collection("flashcards")
         .getDocuments();

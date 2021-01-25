@@ -52,168 +52,180 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: GlooTheme.bgGradient,
-            ),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height >= 450.0
-                ? MediaQuery.of(context).size.height
-                : 450.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).padding.top * 0.5 +
-                      AppBar().preferredSize.height,
+    return DecoratedBox(
+       decoration: BoxDecoration(
+      gradient: GlooTheme.bgGradient,
+    ),
+
+      child:
+        Scaffold(
+          key: _scaffoldKey,
+
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  gradient: GlooTheme.bgGradient,
                 ),
-                Text(
-                  //"Enterprise Mobile Application Development",
-                  widget.deck.course,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 27,
-                    //letterSpacing: 0.27,
-                    color: GlooTheme.nearlyWhite,
-                  ),
-                ),
-                Divider(),
-                _buildMenuBar(context),
-                Expanded(
-                  flex: 2,
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (i) {
-                      if (i == 0) {
-                        setState(() {
-                          right = GlooTheme.purple;
-                          left = GlooTheme.nearlyWhite;
-                        });
-                      } else if (i == 1) {
-                        setState(() {
-                          right = GlooTheme.nearlyWhite;
-                          left = GlooTheme.purple;
-                        });
-                      }
-                    },
-                    children: <Widget>[
-                      ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildStats(context),
-                      ),
-                      ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildShowDeckScreen(context),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MaterialButton(
-                      color: GlooTheme.purple.withOpacity(0.9),
-                      child: Icon(
-                        Icons.cloud_upload,
-                        color: GlooTheme.nearlyWhite,
-                      ),
-                      padding: EdgeInsets.all(13),
-                      shape: CircleBorder(),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CloudDeckScreen(
-                                      deck: widget.deck,
-                                      isDownload: false,
-                                    )));
-                      },
-                    ),
-                    Center(
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32)),
-                        color: GlooTheme.nearlyWhite,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 13),
-                          child: Text(
-                            "Studia Deck",
-                            style: TextStyle(
-                                color: GlooTheme.purple, fontSize: 18),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top*1.48), //todo trovare una misura esatta di questo per allineare il titolo alla freccia per tornare indietro
+                      child: Center(
+                        child: Text(
+                          //"Enterprise Mobile Application Development",
+                          widget.deck.course,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                            //letterSpacing: 0.27,
+                            color: GlooTheme.nearlyWhite,
                           ),
                         ),
-                        onPressed: () async {
-                          setState(() {
-                            loading = true;
-                          });
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      StudyDeckScreen(deck: widget.deck)));
-                          setState(() {
-                            loading = false;
-                          });
+                      ),
+                    ),
+                    Divider(),
+                    _buildMenuBar(context),
+                    Expanded(
+                      flex: 2,
+                      child: PageView(
+                        controller: _pageController,
+                        onPageChanged: (i) {
+                          if (i == 0) {
+                            setState(() {
+                              right = GlooTheme.purple;
+                              left = GlooTheme.nearlyWhite;
+                            });
+                          } else if (i == 1) {
+                            setState(() {
+                              right = GlooTheme.nearlyWhite;
+                              left = GlooTheme.purple;
+                            });
+                          }
                         },
+                        children: <Widget>[
+                          ConstrainedBox(
+                            constraints: const BoxConstraints.expand(),
+                            child: _buildStats(context),
+                          ),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints.expand(),
+                            child: _buildShowDeckScreen(context),
+                          ),
+                        ],
                       ),
                     ),
-                    MaterialButton(
-                      color: GlooTheme.purple.withOpacity(0.9),
-                      child: Icon(
-                        Icons.add,
-                        color: GlooTheme.nearlyWhite,
-                      ),
-                      padding: EdgeInsets.all(13),
-                      shape: CircleBorder(),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditorPage(deck: widget.deck)));
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MaterialButton(
+                          color: GlooTheme.purple.withOpacity(0.9),
+                          child: Icon(
+                            Icons.cloud_upload,
+                            color: GlooTheme.nearlyWhite,
+                          ),
+                          padding: EdgeInsets.all(13),
+                          shape: CircleBorder(),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CloudDeckScreen(
+                                          deck: widget.deck,
+                                          isDownload: false,
+                                        )));
+                          },
+                        ),
+                        Center(
+                          child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32)),
+                            color: GlooTheme.nearlyWhite,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 13),
+                              child: Text(
+                                "Studia Deck",
+                                style: TextStyle(
+                                    color: GlooTheme.purple, fontSize: 18),
+                              ),
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                loading = true;
+                              });
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          StudyDeckScreen(deck: widget.deck)));
+                              setState(() {
+                                loading = false;
+                              });
+                            },
+                          ),
+                        ),
+                        MaterialButton(
+                          color: GlooTheme.purple.withOpacity(0.9),
+                          child: Icon(
+                            Icons.add,
+                            color: GlooTheme.nearlyWhite,
+                          ),
+                          padding: EdgeInsets.all(13),
+                          shape: CircleBorder(),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditorPage(deck: widget.deck)));
+                          },
+                        ),
+                      ],
                     ),
+                    SizedBox(
+                      height: 16,
+                    )
                   ],
                 ),
-                SizedBox(
-                  height: 16,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            //App bar da mettere anche nella pagina seguente
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: SizedBox(
-              width: AppBar().preferredSize.height,
-              height: AppBar().preferredSize.height,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius:
-                      BorderRadius.circular(AppBar().preferredSize.height),
-                  child: Icon(
-                    Icons.arrow_back_ios, //ios
-                    color: GlooTheme.nearlyWhite,
+              ),
+              Padding(
+                //App bar da mettere anche nella pagina seguente
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top),
+                child: SizedBox(
+                  width: AppBar().preferredSize.height,
+                  height: AppBar().preferredSize.height,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(
+                          AppBar().preferredSize.height),
+                      child: Icon(
+                        Icons.arrow_back_ios, //ios
+                        color: GlooTheme.nearlyWhite,
+
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
                 ),
               ),
-            ),
-          )
-        ],
-      ),
+            ],
+          ),
+        ),
+
     );
   }
 
