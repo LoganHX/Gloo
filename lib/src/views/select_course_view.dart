@@ -45,7 +45,7 @@ class _SelectCourseViewState extends State<SelectCourseView> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            SearchDecksScreen(university: "Università degli studi di Salerno",)));
+                            SearchDecksScreen()));
               },
 
             ),

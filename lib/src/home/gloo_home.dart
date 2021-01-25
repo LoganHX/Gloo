@@ -30,6 +30,7 @@ class _GlooHomeState extends State<GlooHome> {
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
+              splashColor: GlooTheme.nearlyWhite,
               backgroundColor: GlooTheme.purple.withOpacity(1),
               onPressed: () {
                 //Navigator.pushNamed(context, '/newDeck');
@@ -37,7 +38,7 @@ class _GlooHomeState extends State<GlooHome> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            SearchDecksScreen(university: "Università degli studi di Salerno",)));
+                            SearchDecksScreen()));
               },
               child: Icon(
                 Icons.add,

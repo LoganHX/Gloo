@@ -31,6 +31,8 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
     return DatabaseService().getFuturePublicFlashcards(widget.deck.id);
   }
 
+  bool _visibility = false;
+  double _progress = 0;
   @override
   Widget build(BuildContext context) {
     Function callback = widget.isDownload ? downloadDeck : uploadDeck;
@@ -43,65 +45,9 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
         ),
         child: Stack(
           children: [
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DetailsView(
-                    entries: {
-                      'Nome Corso': widget.deck.course,
-                      'Docente': widget.deck.prof,
-                      'Anna Accademico': '20/21', //todo,
-                      'Università': widget.deck.university,
-                    },
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.8,
-                    child: Center(
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32)),
-                        color: GlooTheme.nearlyWhite,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 13),
-                          child: Text(
-                            label + " Deck",
-                            style: TextStyle(
-                                color: GlooTheme.purple, fontSize: 18),
-                          ),
-                        ),
-                        onPressed: callback,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.8,
-                    child: Center(
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32)),
-                        color: GlooTheme.nearlyWhite,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 13),
-                          child: Text(
-                            label + " Deck",
-                            style: TextStyle(
-                                color: GlooTheme.purple, fontSize: 18),
-                          ),
-                        ),
-                        onPressed: callback,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _visibility
+                ? loadingView()
+                : detailsView(label: label, callback: callback),
             Padding(
               //App bar da mettere anche nella pagina seguente
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -131,6 +77,10 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
   }
 
   void uploadDeck() async {
+    setState(() {
+      _visibility = true;
+    });
+
     DatabaseService db = DatabaseService();
     String id = await db.createPublicDeck(
         university: widget.deck.university,
@@ -139,7 +89,13 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
         year: widget.deck.year);
 
     List<Flashcard> list = await _getFlashcards();
+
     list.forEach((element) {
+      var i = 1;
+      setState(() {
+        _progress = i / list.length + 1;
+      });
+      i++;
       db.addPublicFlashcard(
           answer: element.answer, question: element.question, deckID: id);
       print(element.answer);
@@ -147,6 +103,10 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
   }
 
   void downloadDeck() async {
+    setState(() {
+      _visibility = true;
+    });
+
     User user = Provider.of<User>(context, listen: false);
     DatabaseService db = DatabaseService(uid: user.uid);
     String id = await db.createDeck(
@@ -161,5 +121,79 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
       db.addFlashcard(
           answer: element.answer, question: element.question, deckID: id);
     });
+  }
+
+  Widget detailsView({String label, Function callback}) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          DetailsView(
+            entries: {
+              'Nome Corso': widget.deck.course,
+              'Docente': widget.deck.prof,
+              'Anna Accademico': '20/21', //todo,
+              'Università': widget.deck.university,
+            },
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width / 1.8,
+            child: Center(
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
+                color: GlooTheme.nearlyWhite,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 13),
+                  child: Text(
+                    label + " Deck",
+                    style: TextStyle(color: GlooTheme.purple, fontSize: 18),
+                  ),
+                ),
+                onPressed: callback,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget loadingView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Container(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(GlooTheme.nearlyWhite),
+              backgroundColor: GlooTheme.purple,
+              strokeWidth: 10,
+              value: _progress,
+            ),
+          ),
+        ),
+        SizedBox(height: 16,),
+        RaisedButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+          color: GlooTheme.nearlyWhite,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 13),
+            child: Text(
+              "Ok",
+              style: TextStyle(color: GlooTheme.purple, fontSize: 18),
+            ),
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    );
   }
 }

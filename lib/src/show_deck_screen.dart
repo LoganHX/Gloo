@@ -126,7 +126,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MaterialButton(
+                        RaisedButton(
                           color: GlooTheme.purple.withOpacity(0.9),
                           child: Icon(
                             Icons.cloud_upload,
@@ -145,7 +145,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           },
                         ),
                         Center(
-                          child: MaterialButton(
+                          child: RaisedButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(32)),
                             color: GlooTheme.nearlyWhite,
@@ -174,7 +174,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             },
                           ),
                         ),
-                        MaterialButton(
+                        RaisedButton(
                           color: GlooTheme.purple.withOpacity(0.9),
                           child: Icon(
                             Icons.add,

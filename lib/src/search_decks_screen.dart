@@ -14,9 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 
 class SearchDecksScreen extends StatefulWidget {
-  final university;
 
-  const SearchDecksScreen({Key key, this.university}) : super(key: key);
+  const SearchDecksScreen({Key key}) : super(key: key);
   @override
   _SearchDecksScreenState createState() => _SearchDecksScreenState();
 }
@@ -54,7 +53,7 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                     child: Center(
                       child: Text(
                         //"Enterprise Mobile Application Development",
-                        "Scarica deck pubblico",
+                        "Cerca deck pubblico",
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
