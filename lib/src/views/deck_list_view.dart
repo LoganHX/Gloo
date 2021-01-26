@@ -129,6 +129,7 @@ class DeckView extends StatelessWidget {
                                           "Elimina Deck":
                                           Icon(Icons.delete),
                                         },
+                                        functions: [(){}, (){}],
                                       );
                                     });
                               },
@@ -169,7 +170,7 @@ class DeckView extends StatelessWidget {
                                                   deck.course.length < 25
                                                       ? Icons.person
                                                       : Icons
-                                                          .supervisor_account, //calendar
+                                                          .supervisor_account,
                                                   color: GlooTheme.purple,
                                                   size: 18,
                                                 ),

@@ -20,105 +20,64 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       decoration: BoxDecoration(gradient: GlooTheme.bgGradient),
       child: Stack(
         children: <Widget>[
-          ClipPath(
-            child: Container(color: GlooTheme.nearlyWhite),
-            clipper: getClipper(),
-          ),
           Center(
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: AppBar().preferredSize.height),
-                  Text(
-                    'Raffaella Carrà',
-                    style: TextStyle(
-                      color: GlooTheme.nearlyWhite,
-                      fontSize: 27.0,
-                      fontWeight: FontWeight.w600,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ClipPath(
+                      child: Container(color: GlooTheme.nearlyWhite),
+                      clipper: getClipper(),
                     ),
-                  ),
-                  SizedBox(height: 15.0),
-                  Container(
-                      width: 120.0,
-                      height: 120.0,
-                      decoration: BoxDecoration(
-                          color: GlooTheme.nearlyWhite,
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/carra.jpg'),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.all(Radius.circular(75.0)),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 7.0, color: GlooTheme.nearlyWhite)
-                          ])),
-                  SizedBox(height: 15.0),
-
-                  DetailsView(entries: {
-                    "Bio":"Com'è bello far l'amore da Trieste in Gloo",
-                    "E-mail":"raffaella@carra.it",
-                    "Università":"Università degli studi di Salerno",
-                  }),
-                  SizedBox(height: 15.0),
-
-                  MaterialButton(
-                    onPressed: () async {
-                      await _auth.signOut();
-                      Navigator.pushNamed(context, '/');
-                    },
-                    color: GlooTheme.purple,
-                    textColor: GlooTheme.nearlyWhite,
-                    child: Icon(
-                      Icons.logout,
-                      size: 24,
+                    Text(
+                      'Raffaella Carrà',
+                      style: TextStyle(
+                        color: GlooTheme.nearlyWhite,
+                        fontSize: 27.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    padding: EdgeInsets.all(16),
-                    shape: CircleBorder(),
-                  ),
-                ],
+                    Container(
+                        width: 120.0,
+                        height: 120.0,
+                        decoration: BoxDecoration(
+                            color: GlooTheme.nearlyWhite,
+                            image: DecorationImage(
+                                image: AssetImage('assets/images/carra.jpg'),
+                                fit: BoxFit.cover),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(75.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 7.0, color: GlooTheme.nearlyWhite)
+                            ])),
+                    DetailsView(entries: {
+                      "Bio": "Com'è bello far l'amore da Trieste in Gloo",
+                      "E-mail": "raffaella@carra.it",
+                      "Università": "Università degli studi di Salerno",
+                    }),
+                    MaterialButton(
+                      onPressed: () async {
+                        await _auth.signOut();
+                        Navigator.pushNamed(context, '/');
+                      },
+                      color: GlooTheme.purple,
+                      textColor: GlooTheme.nearlyWhite,
+                      child: Icon(
+                        Icons.logout,
+                        size: 24,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      shape: CircleBorder(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          SizedBox(height: 40.0),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-          //   child: Text(
-          //     "Com'è bello far l'amore da Trieste in Gloo",
-          //     style: TextStyle(
-          //       color: GlooTheme.nearlyWhite,
-          //       fontSize: 17.0,
-          //     ),
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
-          SizedBox(height: 25.0),
-          // MaterialButton(
-          //   onPressed: () {},
-          //   color: GlooTheme.grey,
-          //   textColor: GlooTheme.nearlyWhite,
-          //   child: Icon(
-          //     Icons.edit_outlined,
-          //     size: 24,
-          //   ),
-          //   padding: EdgeInsets.all(16),
-          //   shape: CircleBorder(),
-          // ),
-          // SizedBox(height: 25.0),
-          // MaterialButton(
-          //   onPressed: () async {
-          //     await _auth.signOut();
-          //     Navigator.pushNamed(context, '/');
-          //   },
-          //   color: GlooTheme.purple,
-          //   textColor: GlooTheme.nearlyWhite,
-          //   child: Icon(
-          //     Icons.logout,
-          //     size: 24,
-          //   ),
-          //   padding: EdgeInsets.all(16),
-          //   shape: CircleBorder(),
-          // ),
           Padding(
             //App bar da mettere anche nella pagina seguente
             padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),

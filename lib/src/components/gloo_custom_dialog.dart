@@ -6,10 +6,11 @@ class GlooCustomDialog extends StatelessWidget {
 
   final String image;
   final Map<String, Icon> entries;
+  final List<Function> functions;
 
-  const GlooCustomDialog({Key key, this.image, this.entries}) : super(key: key);
+  const GlooCustomDialog({Key key, this.image, this.entries, this.functions}) : super(key: key);
 
-
+//todo il costruttore fa schifo
   dialogContent(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -48,7 +49,7 @@ class GlooCustomDialog extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32)),
                 color: GlooTheme.purple,
-                onPressed: () {},
+                onPressed: functions.first,
               ),
             ),
             SizedBox(
@@ -64,7 +65,7 @@ class GlooCustomDialog extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32)),
                 color: GlooTheme.purple,
-                onPressed: () {},
+                onPressed: functions.last,
               ),
             ),
           ],

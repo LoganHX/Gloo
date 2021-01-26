@@ -43,9 +43,22 @@ class _GlooHomeState extends State<GlooHome> {
                         image: './assets/images/social-cuate.png',
                         entries: {
                           "Cerca deck pubblico": Icon(Icons.explore),
-                          "Crea deck pubblico":
-                              Icon(Icons.create_new_folder_rounded),
+                          "Crea deck": Icon(Icons.create_new_folder_rounded),
                         },
+                        functions: [
+                          () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchDecksScreen()),
+                            );
+                          },
+                          () {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/newDeck');
+                          }
+                        ],
                       );
                     });
 
@@ -117,6 +130,7 @@ class _GlooHomeState extends State<GlooHome> {
                   ),
                 ),
               ),
+
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(

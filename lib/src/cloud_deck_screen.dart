@@ -33,7 +33,8 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
   }
 
   bool _visibility = false;
-  double _progress = 0;
+  bool _operationConcluded = false;
+  double _progress = 0; //todo da fare per bene o rimuovere
   @override
   Widget build(BuildContext context) {
     Function callback = widget.isDownload ? downloadDeck : uploadDeck;
@@ -104,6 +105,9 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
           answer: element.answer, question: element.question, deckID: id);
       print(element.answer);
     });
+    setState(() {
+      _operationConcluded = true;
+    });
   }
 
   void downloadDeck() async {
@@ -131,6 +135,10 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
       await Future.delayed(const Duration(seconds: 2), () {});
       db.addFlashcard(
           answer: element.answer, question: element.question, deckID: id);
+    });
+
+    setState(() {
+      _operationConcluded = true;
     });
   }
 
@@ -182,26 +190,45 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
         Container(
             height: MediaQuery.of(context).size.height * 0.45,
             child: Image.asset('./assets/images/Launching-cuate.png')),
-        Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 16.0, bottom: 16),
-            child: SpinKitFadingGrid(
-              color: GlooTheme.nearlyPurple,
-              size: 50.0,
+        Column(
+          children: [
+            Text(
+              _operationConcluded
+                  ? "Operazione conclusa con successo"
+                  : "Attendere prego",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 22,
+                letterSpacing: 0.27,
+                color: GlooTheme.nearlyWhite,
+              ),
             ),
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        RaisedButton(
-          shape: CircleBorder(),
-          color: GlooTheme.nearlyWhite,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 13),
-            child: Icon(Icons.done, size: 32, color: GlooTheme.purple),
-          ),
-          onPressed: () => Navigator.pop(context),
+            SizedBox(
+              height: 16,
+            ),
+            _operationConcluded
+                ? RaisedButton(
+                    shape: CircleBorder(),
+                    color: GlooTheme.nearlyWhite,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 13),
+                      child:
+                          Icon(Icons.done, size: 32, color: GlooTheme.purple),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  )
+                : Center(
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                      child: SpinKitFadingGrid(
+                        color: GlooTheme.nearlyPurple,
+                        size: 50.0,
+                      ),
+                    ),
+                  )
+          ],
         ),
       ],
     );

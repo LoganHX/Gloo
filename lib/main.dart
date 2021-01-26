@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
             '/study_deck': (context) => StudyDeckScreen(),
             '/editor': (context) => EditorPage(),
             '/profile': (context) => UserProfileScreen(),
-            '/newDeck': (context) => AddDeckScreen(),
+            '/newDeck': (context) => NewDeckScreen(),
           }),
     );
   }
