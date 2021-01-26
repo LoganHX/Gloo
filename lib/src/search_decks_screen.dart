@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 
 class SearchDecksScreen extends StatefulWidget {
-
   const SearchDecksScreen({Key key}) : super(key: key);
   @override
   _SearchDecksScreenState createState() => _SearchDecksScreenState();
@@ -28,7 +27,6 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
   final _textController = TextEditingController();
 
   Widget build(BuildContext context) {
-
     //todo fa una query ogni volta che cambio valore a _optionVisibility? controllare se lo stesso accade anche altrove
     final totalHeight = MediaQuery.of(context).size.height;
     final barHeight = 90;
@@ -49,7 +47,9 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                   Container(
                     height: 70,
                     width: MediaQuery.of(context).size.width * 0.75,
-                    padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top * 1.47), //todo trovare una misura esatta di questo per allineare il titolo alla freccia per tornare indietro
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top *
+                            1.47), //todo trovare una misura esatta di questo per allineare il titolo alla freccia per tornare indietro
                     child: Center(
                       child: Text(
                         //"Enterprise Mobile Application Development",
@@ -70,18 +70,17 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-
                       SizedBox(
                         height: 20,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
-
                         children: [
-
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.13),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.75,
+                            width: MediaQuery.of(context).size.width * 0.725,
                             decoration: BoxDecoration(
                               color: GlooTheme.nearlyWhite,
                               borderRadius: BorderRadius.circular(32),
@@ -92,7 +91,8 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                               children: [
                                 Container(
                                   height: 50,
-                                  width: MediaQuery.of(context).size.width * 0.6,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.58,
                                   child: TextField(
                                     style: TextStyle(
                                       color: GlooTheme.purple,
@@ -118,44 +118,48 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                                     ),
                                   ),
                                 ),
-                                MaterialButton(
-                                  minWidth: 0,
-                                  shape: CircleBorder(),
-
-                                  splashColor: GlooTheme.nearlyWhite,
-                                  color: GlooTheme.purple,
-                                  onPressed: () {
-                                    setState(() {
-                                      _query = _textController.text;
-                                    });
-                                    print(_query);
-                                  },
-                                  child: Icon(
-                                    Icons.search,
-                                    color: GlooTheme.nearlyWhite,
-                                    size: 24,
+                                Container(
+                                  width: 55,
+                                  child: MaterialButton(
+                                    minWidth: 0,
+                                    shape: CircleBorder(),
+                                    splashColor: GlooTheme.nearlyWhite,
+                                    color: GlooTheme.purple,
+                                    onPressed: () {
+                                      setState(() {
+                                        _query = _textController.text;
+                                      });
+                                      print(_query);
+                                    },
+                                    child: Icon(
+                                      Icons.search,
+                                      color: GlooTheme.nearlyWhite,
+                                      size: 24,
+                                    ),
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
-                          MaterialButton(
-                            elevation: 0,
-                            minWidth: 0,
-                            shape: CircleBorder(),
-                            splashColor: GlooTheme.nearlyWhite,
-                            color: Colors.transparent,
-                            onPressed: () {
-                              setState(() {
-                                this._optionsVisibility =
-                                !this._optionsVisibility;
-                              });
-                            },
-                            child: Icon(
-                              _optionsVisibility ? Icons.close : Icons.tune,
-                              color: GlooTheme.nearlyWhite,
-                              size: 24,
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.14,
+                            child: MaterialButton(
+                              elevation: 0,
+                              minWidth: 0,
+                              shape: CircleBorder(),
+                              splashColor: GlooTheme.nearlyWhite,
+                              color: Colors.transparent,
+                              onPressed: () {
+                                setState(() {
+                                  this._optionsVisibility =
+                                      !this._optionsVisibility;
+                                });
+                              },
+                              child: Icon(
+                                _optionsVisibility ? Icons.close : Icons.tune,
+                                color: GlooTheme.nearlyWhite,
+                                size: 24,
+                              ),
                             ),
                           ),
                         ],
@@ -168,7 +172,9 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                         child: Container(
                           height: 60,
                           child: Text(
-                            _query != "" || _choice != ""? 'Risultati Ricerca' : '',
+                            _query != "" || _choice != ""
+                                ? 'Risultati Ricerca'
+                                : '',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -184,7 +190,6 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                         child: Container(
                           height: 60,
                           child: Column(
-
                             children: [
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
@@ -192,11 +197,12 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      width: 21,
+                                      width: 32,
                                     ),
                                     Container(
-                                        width: MediaQuery.of(context).size.width *
-                                            0.85,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.85,
                                         child: GlooDropdownButton(
                                           items: [
                                             "Università degli studi di Salerno",
@@ -216,8 +222,9 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                                       width: 12,
                                     ),
                                     Container(
-                                        width: MediaQuery.of(context).size.width *
-                                            0.367,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.367,
                                         child: GlooDropdownButton(
                                           items: [
                                             "★",

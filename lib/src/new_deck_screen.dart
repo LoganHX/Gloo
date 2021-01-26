@@ -1,10 +1,11 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
+import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/shared/loading.dart';
+import 'package:alpha_gloo/src/components/gloo_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
-
 
 class NewDeckScreen extends StatefulWidget {
   @override
@@ -12,7 +13,6 @@ class NewDeckScreen extends StatefulWidget {
 }
 
 class _NewDeckScreenState extends State<NewDeckScreen> {
-
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -25,178 +25,138 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    return loading ? Loading() : Scaffold(
-      // backgroundColor: Colors.brown[100],
-      // appBar: AppBar(
-      //   backgroundColor: Colors.brown[400],
-      //   elevation: 0.0,
-      //   title: Text("Sign up to Gloo"),
-      //   actions: <Widget>[
-      //     FlatButton.icon(
-      //       icon: Icon(Icons.person),
-      //       label: Text("Sign in"),
-      //       onPressed: () {
-      //         widget.toggleView();
-      //       },
-      //     )
-      //   ],
-      // ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: GlooTheme.bgGradient,
-        ),
-        padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 20.0),
-                Text("Crea Nuovo Deck", style: TextStyle(color: GlooTheme.nearlyWhite, fontSize: 32),),
-
-                SizedBox(height: 20.0),
-                TextFormField(
-
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(
-                         12.0,
-                      ),
-                      isCollapsed: true,
-                      fillColor: GlooTheme.nearlyWhite,
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: "Nome Corso",
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.purple),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyWhite ),
-                      )
+    return loading
+        ? Loading()
+        : Scaffold(
+            body: Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    gradient: GlooTheme.bgGradient,
                   ),
-                  validator: (val) => val.isEmpty ? "Inserisci un corso" : null,
-                  onChanged: (val) {
-                    setState(() => course = val);
-                  },
-                ),
-                SizedBox(height: 20.0),
-                TextFormField(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: AppBar().preferredSize.height,
+                          ),
+                          Text(
+                            'Crea nuovo Deck',
+                            style: TextStyle(
+                              color: GlooTheme.nearlyWhite,
+                              fontSize: 27.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                          GlooTextField(
+                            // validator: (val) =>
+                            //     val.isEmpty ? "Inserisci un corso" : null,
+                            onChanged: (val) {
+                              setState(() => course = val);
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          GlooTextField(
+                            // validator: (val) =>
+                            //     val.isEmpty ? "Inserisci un corso" : null,
+                            onChanged: (val) {
+                              setState(() => course = val);
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          GlooTextField(
+                            // validator: (val) =>
+                            //     val.isEmpty ? "Inserisci un corso" : null,
+                            onChanged: (val) {
+                              setState(() => course = val);
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          GlooTextField(
+                            // validator: (val) =>
+                            //     val.isEmpty ? "Inserisci un corso" : null,
+                            onChanged: (val) {
+                              setState(() => course = val);
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          Center(
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32)),
+                              color: GlooTheme.nearlyWhite,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 13),
+                                child: Text(
+                                  "Crea Deck",
+                                  style: TextStyle(
+                                      color: GlooTheme.purple, fontSize: 18),
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => loading = true);
 
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(
-                        12.0,
+                                  await DatabaseService(uid: user.uid)
+                                      .createDeck(
+                                          deck: Deck(
+                                    university: university,
+                                    course: course,
+                                    prof: prof,
+                                    year: year,
+                                    cardNumber: 0,
+                                  ));
+                                  loading = false;
+                                  Navigator.pop(context);
+                                }
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 12.0,
+                          ),
+                          Text(error,
+                              style: TextStyle(
+                                  color: GlooTheme.purple, fontSize: 14.0)),
+                        ],
                       ),
-                      isCollapsed: true,
-                      fillColor: GlooTheme.nearlyWhite,
-                      filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.purple),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: "Nome Prof",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyWhite),
-                      )
-                  ),
-                  validator: (val) => val.isEmpty ? "Inserisci un prof" : null,
-                  onChanged: (val) {
-                    setState(() => prof = val);
-                  },
-
-                ),
-                SizedBox(height: 20.0),
-                TextFormField(
-
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(
-                        12.0,
-                      ),
-                      isCollapsed: true,
-                      fillColor: GlooTheme.nearlyWhite,
-                      filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.purple),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: "Nome Università",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyWhite),
-                      )
-                  ),
-                  validator: (val) => val.isEmpty ? "Inserisci l'università" : null,
-                  onChanged: (val) {
-                    setState(() => university = val);
-                  },
-
-                ),
-                SizedBox(height: 20.0),
-                TextFormField(
-
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(
-                        12.0,
-                      ),
-                      isCollapsed: true,
-                      fillColor: GlooTheme.nearlyWhite,
-                      filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.purple),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: "Anno",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: GlooTheme.nearlyWhite),
-                      )
-                  ),
-                  validator: (val) => val.isEmpty ? "Inserisci un anno" : null,
-                  onChanged: (val) {
-                    setState(() => year = val);
-                  },
-
-                ),
-                SizedBox(height: 20.0),
-                RaisedButton(
-                  color: GlooTheme.purple,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    child: Text(
-                      "Crea Deck",
-                      style: TextStyle(color: GlooTheme.nearlyWhite),
                     ),
                   ),
-                  onPressed: () async {
-                    if(_formKey.currentState.validate()){
-                      setState(() => loading = true);
-                      await DatabaseService(uid: user.uid).createDeck(university: university, course: course, prof: prof, year: year);
-                      loading = false;
-                      Navigator.pop(context);
-                    }
-                  },
                 ),
-                SizedBox(height: 12.0,),
-                Text(
-                    error,
-                    style: TextStyle(color: GlooTheme.purple, fontSize: 14.0)
+                Padding(
+                  //App bar da mettere anche nella pagina seguente
+                  padding:
+                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                  child: SizedBox(
+                    width: AppBar().preferredSize.height,
+                    height: AppBar().preferredSize.height,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(
+                            AppBar().preferredSize.height),
+                        child: Icon(
+                          Icons.arrow_back_ios, //ios
+                          color: GlooTheme.nearlyWhite,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
-
-
-
-

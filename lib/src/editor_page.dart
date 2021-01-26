@@ -5,7 +5,6 @@ import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/src/components/flutter_summernote.dart';
 import 'package:flutter/material.dart';
-import 'package:html_editor/html_editor.dart';
 import 'package:provider/provider.dart';
 
 class EditorPage extends StatefulWidget {
@@ -24,13 +23,17 @@ class _EditorPageState extends State<EditorPage> {
   String result = "";
   Flashcard flashcard;
 
+  bool toIncrement = false;
+
   @override
   void initState() {
     super.initState();
     if (widget.flashcard != null)
       flashcard = widget.flashcard;
-    else
+    else {
       flashcard = Flashcard(answer: "", question: "", id: "");
+      toIncrement = true;
+    }
   }
 
   @override
@@ -54,21 +57,25 @@ class _EditorPageState extends State<EditorPage> {
             icon: const Icon(Icons.save),
             tooltip: 'Salva flashcard',
             onPressed: () async {
-              flashcard = await keyEditor.currentState.getEditedFlashcard();
-              if (widget.flashcard != null)
-                DatabaseService(
-                        uid: Provider.of<User>(context, listen: false).uid)
-                    .updateFlashcardData(flashcard.id, widget.deck.id,
-                        flashcard.question, flashcard.answer);
-              else
-                DatabaseService(
-                        uid: Provider.of<User>(context, listen: false).uid)
-                    .createFlashcard(
-                        deckID: widget.deck.id,
-                        question: flashcard.question,
-                        answer: flashcard.answer);
+              DatabaseService db = DatabaseService(
+                  uid: Provider.of<User>(context, listen: false).uid);
 
-              //Navigator.pop(context);
+              flashcard = await keyEditor.currentState.getEditedFlashcard();
+
+              if (widget.flashcard != null)
+                db.updateFlashcardData(flashcard.id, widget.deck.id,
+                    flashcard.question, flashcard.answer);
+              else {
+                db.createFlashcard(
+                    deckID: widget.deck.id,
+                    question: flashcard.question,
+                    answer: flashcard.answer);
+                db.changeCardNumberDeckData(
+                    cardNumber: widget.deck.cardNumber + 1,
+                    deckID: widget.deck.id);
+              }
+
+              Navigator.pop(context, "Saved");
             },
           ),
         ],

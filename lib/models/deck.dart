@@ -1,15 +1,22 @@
 import 'package:alpha_gloo/models/flashcard.dart';
 
-class Deck{
+class Deck {
   final String id;
   final String university;
   final String course;
   final String prof;
   final String year;
+  final int cardNumber;
+  final int retainedCards;
 
-  Deck({this.id, this.university, this.course, this.prof, this.year});
-
-
+  Deck(
+      {this.retainedCards,
+      this.cardNumber,
+      this.id,
+      this.university,
+      this.course,
+      this.prof,
+      this.year});
 }
 // class DeckWithCards{
 //   //todo dovrebbe esserci una lista di Flashcards

@@ -84,11 +84,7 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
     });
 
     DatabaseService db = DatabaseService();
-    String id = await db.createPublicDeck(
-        university: widget.deck.university,
-        course: widget.deck.course,
-        prof: widget.deck.prof,
-        year: widget.deck.year);
+    String id = await db.createPublicDeck(deck: widget.deck);
 
     List<Flashcard> list = await _getFlashcards();
 
@@ -117,11 +113,7 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
 
     User user = Provider.of<User>(context, listen: false);
     DatabaseService db = DatabaseService(uid: user.uid);
-    String id = await db.createDeck(
-        university: widget.deck.university,
-        course: widget.deck.course,
-        prof: widget.deck.prof,
-        year: widget.deck.year);
+    String id = await db.createDeck(deck: widget.deck);
 
     List<Flashcard> list = await _getPublicFlashcards();
     print(list.first.question);

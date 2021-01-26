@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             secondaryHeaderColor: GlooTheme.nearlyPurple,
             accentColor: GlooTheme.nearlyWhite,
             textTheme: TextTheme(
-              subhead: TextStyle(color: GlooTheme.purple),
+              subtitle1: TextStyle(color: GlooTheme.purple),
             ),
           ),
           home: Wrapper(),

@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 import '../graphics/gloo_theme.dart';
 
 class StudyDeckScreen extends StatefulWidget {
-  //final List<Flashcard> flashcards;
   final Deck deck;
 
   const StudyDeckScreen({Key key, this.deck}) : super(key: key);
@@ -32,7 +31,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   CarouselController carouselController = CarouselController();
   var labels = {'answer': "Risposta", 'question': "Domanda"};
 
-  Stream<List<Flashcard>> _getFlashcards() {
+  Stream<List<Flashcard>> _getFlashcards(){
     final user = Provider.of<User>(context);
     return DatabaseService(uid: user.uid).flashcards(widget.deck.id);
   }
@@ -134,81 +133,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                   carouselController.nextPage(duration: Duration(milliseconds: 512));
                 },
                 ),
-                // child: Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: (){
-                //         print(item.toString());
-                //         carouselController.nextPage();
-                //       },
-                //       child: Card(
-                //         color: GlooTheme.nearlyWhite,
-                //         shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(50.0)),
-                //         elevation: 10.0,
-                //         child: Container(
-                //           width: 50,
-                //           height: 50,
-                //           child: Center(
-                //             child: Icon(
-                //               Icons.thumb_down, //icona aggiungi carta
-                //               color: GlooTheme.purple,
-                //               size: 25,
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //     // GestureDetector(
-                //     //   onTap: (){
-                //     //     print(item.toString());
-                //     //     carouselController.nextPage();
-                //     //   },
-                //     //   child: Card(
-                //     //     color: GlooTheme.nearlyWhite,
-                //     //     shape: RoundedRectangleBorder(
-                //     //         borderRadius: BorderRadius.circular(50.0)),
-                //     //     elevation: 10.0,
-                //     //     child: Container(
-                //     //       width: 50,
-                //     //       height: 50,
-                //     //       child: Center(
-                //     //         child: Icon(
-                //     //           Icons.sentiment_satisfied, //icona aggiungi carta
-                //     //           color: GlooTheme.purple,
-                //     //           size: 25,
-                //     //         ),
-                //     //       ),
-                //     //     ),
-                //     //   ),
-                //     // ),
-                //     SizedBox( width: MediaQuery.of(context).size.width*0.6-100,),
-                //     GestureDetector(
-                //       onTap: (){
-                //         print(item.toString());
-                //         carouselController.nextPage();
-                //       },
-                //       child: Card(
-                //         color: GlooTheme.nearlyWhite,
-                //         shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(50.0)),
-                //         elevation: 10.0,
-                //         child: Container(
-                //           width: 50,
-                //           height: 50,
-                //           child: Center(
-                //             child: Icon(
-                //               Icons.thumb_up, //icona aggiungi carta
-                //               color: GlooTheme.purple,
-                //               size: 25,
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // )
+
              ),
           ),
         ],

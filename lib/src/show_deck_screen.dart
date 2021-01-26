@@ -1,5 +1,7 @@
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
+import 'package:alpha_gloo/models/user.dart';
+import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/cloud_deck_screen.dart';
@@ -7,6 +9,7 @@ import 'package:alpha_gloo/src/views/details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/bubble_indication_painter.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ShowDeckScreen extends StatefulWidget {
@@ -22,7 +25,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<double> ratings;
-
+  Deck updatedDeck;
   Animation<double> animation;
   AnimationController animationController;
   PageController _pageController;
@@ -35,6 +38,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   double opacity3 = 0.0;
 
   Future<void> setData() async {
+    updatedDeck == null
+        ? updatedDeck = widget.deck
+        : print("sono quiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
     animationController.forward();
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     setState(() {
@@ -53,179 +59,184 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-       decoration: BoxDecoration(
-      gradient: GlooTheme.bgGradient,
-    ),
-
-      child:
-        Scaffold(
-          key: _scaffoldKey,
-
-          body: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: GlooTheme.bgGradient,
-                ),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top*1.48), //todo trovare una misura esatta di questo per allineare il titolo alla freccia per tornare indietro
-                      child: Center(
-                        child: Text(
-                          //"Enterprise Mobile Application Development",
-                          widget.deck.course,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 24,
-                            //letterSpacing: 0.27,
-                            color: GlooTheme.nearlyWhite,
-                          ),
+      decoration: BoxDecoration(
+        gradient: GlooTheme.bgGradient,
+      ),
+      child: Scaffold(
+        key: _scaffoldKey,
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: GlooTheme.bgGradient,
+              ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top *
+                            1.48), //todo trovare una misura esatta di questo per allineare il titolo alla freccia per tornare indietro
+                    child: Center(
+                      child: Text(
+                        //"Enterprise Mobile Application Development",
+                        updatedDeck.course,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24,
+                          //letterSpacing: 0.27,
+                          color: GlooTheme.nearlyWhite,
                         ),
                       ),
                     ),
-                    Divider(),
-                    _buildMenuBar(context),
-                    Expanded(
-                      flex: 2,
-                      child: PageView(
-                        controller: _pageController,
-                        onPageChanged: (i) {
-                          if (i == 0) {
-                            setState(() {
-                              right = GlooTheme.purple;
-                              left = GlooTheme.nearlyWhite;
-                            });
-                          } else if (i == 1) {
-                            setState(() {
-                              right = GlooTheme.nearlyWhite;
-                              left = GlooTheme.purple;
-                            });
-                          }
+                  ),
+                  Divider(),
+                  _buildMenuBar(context),
+                  Expanded(
+                    flex: 2,
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (i) {
+                        if (i == 0) {
+                          setState(() {
+                            right = GlooTheme.purple;
+                            left = GlooTheme.nearlyWhite;
+                          });
+                        } else if (i == 1) {
+                          setState(() {
+                            right = GlooTheme.nearlyWhite;
+                            left = GlooTheme.purple;
+                          });
+                        }
+                      },
+                      children: <Widget>[
+                        ConstrainedBox(
+                          constraints: const BoxConstraints.expand(),
+                          child: _buildStats(context),
+                        ),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints.expand(),
+                          child: _buildShowDeckScreen(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RaisedButton(
+                        color: GlooTheme.purple.withOpacity(0.9),
+                        child: Icon(
+                          Icons.cloud_upload,
+                          color: GlooTheme.nearlyWhite,
+                        ),
+                        padding: EdgeInsets.all(13),
+                        shape: CircleBorder(),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CloudDeckScreen(
+                                        deck: widget.deck,
+                                        isDownload: false,
+                                      )));
                         },
-                        children: <Widget>[
-                          ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildStats(context),
-                          ),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildShowDeckScreen(context),
-                          ),
-                        ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RaisedButton(
-                          color: GlooTheme.purple.withOpacity(0.9),
-                          child: Icon(
-                            Icons.cloud_upload,
-                            color: GlooTheme.nearlyWhite,
-                          ),
-                          padding: EdgeInsets.all(13),
-                          shape: CircleBorder(),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CloudDeckScreen(
-                                          deck: widget.deck,
-                                          isDownload: false,
-                                        )));
-                          },
-                        ),
-                        Center(
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32)),
-                            color: GlooTheme.nearlyWhite,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 13),
-                              child: Text(
-                                "Studia Deck",
-                                style: TextStyle(
-                                    color: GlooTheme.purple, fontSize: 18),
-                              ),
+                      Center(
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32)),
+                          color: GlooTheme.nearlyWhite,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 13),
+                            child: Text(
+                              "Studia Deck",
+                              style: TextStyle(
+                                  color: GlooTheme.purple, fontSize: 18),
                             ),
-                            onPressed: () async {
-                              setState(() {
-                                loading = true;
-                              });
+                          ),
+                          onPressed: () async {
+                            setState(() {
+                              loading = true;
+                            });
 
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          StudyDeckScreen(deck: widget.deck)));
-                              setState(() {
-                                loading = false;
-                              });
-                            },
-                          ),
-                        ),
-                        RaisedButton(
-                          color: GlooTheme.purple.withOpacity(0.9),
-                          child: Icon(
-                            Icons.add,
-                            color: GlooTheme.nearlyWhite,
-                          ),
-                          padding: EdgeInsets.all(13),
-                          shape: CircleBorder(),
-                          onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        EditorPage(deck: widget.deck)));
+                                        StudyDeckScreen(deck: widget.deck)));
+                            setState(() {
+                              loading = false;
+                            });
                           },
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 16,
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                //App bar da mettere anche nella pagina seguente
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top),
-                child: SizedBox(
-                  width: AppBar().preferredSize.height,
-                  height: AppBar().preferredSize.height,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(
-                          AppBar().preferredSize.height),
-                      child: Icon(
-                        Icons.arrow_back_ios, //ios
-                        color: GlooTheme.nearlyWhite,
-
                       ),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+                      RaisedButton(
+                        color: GlooTheme.purple.withOpacity(0.9),
+                        child: Icon(
+                          Icons.note_add,
+                          color: GlooTheme.nearlyWhite,
+                        ),
+                        padding: EdgeInsets.all(13),
+                        shape: CircleBorder(),
+                        onPressed: () async {
+                          var result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditorPage(deck: updatedDeck)));
+
+                          if (result == "Saved") {
+                            updatedDeck = await DatabaseService(
+                                    uid: Provider.of<User>(context,
+                                            listen: false)
+                                        .uid)
+                                .getDeck(deckID: widget.deck.id);
+                            setState(() {
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              //App bar da mettere anche nella pagina seguente
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: SizedBox(
+                width: AppBar().preferredSize.height,
+                height: AppBar().preferredSize.height,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius:
+                        BorderRadius.circular(AppBar().preferredSize.height),
+                    child: Icon(
+                      Icons.arrow_back_ios, //ios
+                      color: GlooTheme.nearlyWhite,
                     ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-
+      ),
     );
   }
 
@@ -305,10 +316,10 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
         children: [
           DetailsView(
             entries: {
-              'Corso': widget.deck.course,
-              'Docente': widget.deck.prof,
+              'Corso': updatedDeck.course,
+              'Docente': updatedDeck.prof,
               'Anno Accademico': '20/21', //todo,
-              'Università': widget.deck.university,
+              'Università': updatedDeck.university,
             },
           )
           // Container(
@@ -330,7 +341,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
           //         ),
           //       ),
           //       Text(
-          //         widget.deck.course,
+          //         updatedDeck.course,
           //         textAlign: TextAlign.center,
           //         style: TextStyle(
           //             fontSize: 24,
@@ -346,7 +357,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
           //         ),
           //       ),
           //       Text(
-          //         widget.deck.prof,
+          //         updatedDeck.prof,
           //         style: TextStyle(
           //             fontSize: 24,
           //             fontWeight: FontWeight.w600,
@@ -376,7 +387,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
           //         ),
           //       ),
           //       Text(
-          //         widget.deck.university,
+          //         updatedDeck.university,
           //         style: TextStyle(
           //             fontSize: 24,
           //             fontWeight: FontWeight.w600,
@@ -394,7 +405,9 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   }
 
   Widget _buildStats(BuildContext context) {
-    final fakeValue = 71.0;
+    double retainmentValue = updatedDeck.cardNumber != 0
+        ? 100 * updatedDeck.retainedCards / updatedDeck.cardNumber
+        : 0;
     return Container(
       color: Colors.transparent,
       //padding: EdgeInsets.only(top: 23.0),
@@ -424,7 +437,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     ),
                     pointers: <GaugePointer>[
                       RangePointer(
-                        value: fakeValue,
+                        value: retainmentValue,
                         width: 0.20,
                         color: GlooTheme.purple.withOpacity(0.85),
                         pointerOffset: 0.1,
@@ -437,7 +450,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           positionFactor: 0.48,
                           angle: 90,
                           widget: Text(
-                            fakeValue.toStringAsFixed(0) + '%',
+                            retainmentValue.toStringAsFixed(0) + '%',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,

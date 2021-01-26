@@ -144,7 +144,7 @@ class DeckView extends StatelessWidget {
                                       spreadRadius: 2,
                                       blurRadius: 1,
                                       offset: Offset(
-                                          -5, 3), // changes position of shadow
+                                          -5, 4), // changes position of shadow
                                     ),
                                   ],
                                   // border: new Border.all(
