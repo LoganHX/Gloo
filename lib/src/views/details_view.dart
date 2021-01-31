@@ -19,7 +19,7 @@ class DetailsView extends StatelessWidget {
       height: (105 * labels.length+1) < MediaQuery.of(context).size.height * 0.525
           ? (105 * labels.length+1).toDouble()
           : MediaQuery.of(context).size.height *
-              0.525, //TODO ha senso usare una misura basata sugli items, però ci sta il fatto delle righe
+              0.525,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),

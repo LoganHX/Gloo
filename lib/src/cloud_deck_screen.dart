@@ -60,7 +60,7 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius:
-                        BorderRadius.circular(AppBar().preferredSize.height),
+                    BorderRadius.circular(AppBar().preferredSize.height),
                     child: Icon(
                       Icons.arrow_back_ios, //ios
                       color: GlooTheme.nearlyWhite,
@@ -201,25 +201,25 @@ class _CloudDeckScreenState extends State<CloudDeckScreen> {
             ),
             _operationConcluded
                 ? RaisedButton(
-                    shape: CircleBorder(),
-                    color: GlooTheme.nearlyWhite,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 13),
-                      child:
-                          Icon(Icons.done, size: 32, color: GlooTheme.purple),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  )
+              shape: CircleBorder(),
+              color: GlooTheme.nearlyWhite,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0, vertical: 13),
+                child:
+                Icon(Icons.done, size: 32, color: GlooTheme.purple),
+              ),
+              onPressed: () => Navigator.pop(context),
+            )
                 : Center(
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
-                      child: SpinKitFadingGrid(
-                        color: GlooTheme.nearlyPurple,
-                        size: 50.0,
-                      ),
-                    ),
-                  )
+              child: Container(
+                padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                child: SpinKitFadingGrid(
+                  color: GlooTheme.nearlyPurple,
+                  size: 50.0,
+                ),
+              ),
+            )
           ],
         ),
       ],

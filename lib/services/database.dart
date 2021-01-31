@@ -69,7 +69,7 @@ class DatabaseService {
       String prof,
       String university,
       String year}) async {
-    DateTime now = DateTime.now();
+   
     return await userCollection
         .document(uid)
         .collection("decks")
@@ -89,6 +89,16 @@ class DatabaseService {
         .document(deckID)
         .updateData({
       "cardNumber": cardNumber,
+    });
+  }
+
+  Future changeRetainedCardDeckData({String deckID, int retainedCards}) async {
+    return await userCollection
+        .document(uid)
+        .collection("decks")
+        .document(deckID)
+        .updateData({
+      "retainedCards": retainedCards,
     });
   }
 
@@ -251,6 +261,7 @@ class DatabaseService {
         id: doc.documentID,
         question: doc.data['question'] ?? '',
         answer: doc.data['answer'] ?? '',
+        rating: doc.data['rating'] ?? 0,
       );
     }).toList();
   }

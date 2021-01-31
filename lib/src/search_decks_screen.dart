@@ -4,6 +4,7 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/src/cloud_deck_screen.dart';
+import 'package:alpha_gloo/src/components/gloo_back_arrow.dart';
 import 'package:alpha_gloo/src/components/gloo_dropdown_button.dart';
 import 'package:alpha_gloo/src/components/gloo_text_field.dart';
 import 'package:alpha_gloo/src/show_deck_screen.dart';
@@ -197,7 +198,7 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      width: 32,
+                                      width: 28,
                                     ),
                                     Container(
                                         width:
@@ -257,28 +258,7 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
               ),
             ),
           ),
-          Padding(
-            //App bar da mettere anche nella pagina seguente
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: SizedBox(
-              width: AppBar().preferredSize.height,
-              height: AppBar().preferredSize.height,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius:
-                      BorderRadius.circular(AppBar().preferredSize.height),
-                  child: Icon(
-                    Icons.arrow_back_ios, //ios
-                    color: GlooTheme.nearlyWhite,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          ),
+          GlooBackArrow(),
         ],
       ),
     );
@@ -353,7 +333,7 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                   MaterialPageRoute(
                       builder: (context) => CloudDeckScreen(
                             deck: deck,
-                            isDownload: true,
+                        isDownload: true,
                           )),
                 );
               },

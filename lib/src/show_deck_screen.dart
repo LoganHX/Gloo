@@ -2,6 +2,7 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
+import 'package:alpha_gloo/src/components/gloo_back_arrow.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
 import 'package:alpha_gloo/src/cloud_deck_screen.dart';
@@ -166,12 +167,19 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                             setState(() {
                               loading = true;
                             });
-
-                            Navigator.push(
+                            var result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        StudyDeckScreen(deck: widget.deck)));
+                                        StudyDeckScreen(deck: updatedDeck)));
+                            if (result != 0 && result != null) {
+                              updatedDeck = await DatabaseService(
+                                      uid: Provider.of<User>(context,
+                                              listen: false)
+                                          .uid)
+                                  .getDeck(deckID: widget.deck.id);
+                              setState(() {});
+                            }
                             setState(() {
                               loading = false;
                             });
@@ -199,8 +207,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                                             listen: false)
                                         .uid)
                                 .getDeck(deckID: widget.deck.id);
-                            setState(() {
-                            });
+                            setState(() {});
                           }
                         },
                       ),
@@ -212,28 +219,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                 ],
               ),
             ),
-            Padding(
-              //App bar da mettere anche nella pagina seguente
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: SizedBox(
-                width: AppBar().preferredSize.height,
-                height: AppBar().preferredSize.height,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius:
-                        BorderRadius.circular(AppBar().preferredSize.height),
-                    child: Icon(
-                      Icons.arrow_back_ios, //ios
-                      color: GlooTheme.nearlyWhite,
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
-            ),
+            GlooBackArrow(),
           ],
         ),
       ),
@@ -405,9 +391,12 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
   }
 
   Widget _buildStats(BuildContext context) {
-    double retainmentValue = updatedDeck.cardNumber != 0
-        ? 100 * updatedDeck.retainedCards / updatedDeck.cardNumber
-        : 0;
+    double retainmentValue = 0;
+    if (updatedDeck.retainedCards != null) {
+      retainmentValue = updatedDeck.cardNumber != 0
+          ? 100 * updatedDeck.retainedCards / updatedDeck.cardNumber
+          : 0;
+    }
     return Container(
       color: Colors.transparent,
       //padding: EdgeInsets.only(top: 23.0),

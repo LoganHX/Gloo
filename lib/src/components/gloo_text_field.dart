@@ -9,7 +9,6 @@ class GlooTextField extends StatelessWidget {
   final TextEditingController controller;
 
   const GlooTextField({Key key, this.title, this.onChanged, this.icon, this.controller}) : super(key: key);
-//todo utile per login etc
   @override
   Widget build(BuildContext context) {
     return TextField(

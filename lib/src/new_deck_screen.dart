@@ -1,6 +1,7 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/shared/loading.dart';
+import 'package:alpha_gloo/src/components/gloo_back_arrow.dart';
 import 'package:alpha_gloo/src/components/gloo_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -132,29 +133,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  //App bar da mettere anche nella pagina seguente
-                  padding:
-                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                  child: SizedBox(
-                    width: AppBar().preferredSize.height,
-                    height: AppBar().preferredSize.height,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(
-                            AppBar().preferredSize.height),
-                        child: Icon(
-                          Icons.arrow_back_ios, //ios
-                          color: GlooTheme.nearlyWhite,
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                GlooBackArrow(),
               ],
             ),
           );

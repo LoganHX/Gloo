@@ -1,5 +1,6 @@
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/services/auth.dart';
+import 'package:alpha_gloo/src/components/gloo_back_arrow.dart';
 import 'package:alpha_gloo/src/home/gloo_home.dart';
 import 'package:alpha_gloo/src/views/details_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,28 +79,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
             ),
           ),
-          Padding(
-            //App bar da mettere anche nella pagina seguente
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: SizedBox(
-              width: AppBar().preferredSize.height,
-              height: AppBar().preferredSize.height,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius:
-                      BorderRadius.circular(AppBar().preferredSize.height),
-                  child: Icon(
-                    Icons.arrow_back_ios, //ios
-                    color: GlooTheme.nearlyWhite,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          )
+         GlooBackArrow(),
         ],
       ),
     ));

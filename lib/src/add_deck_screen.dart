@@ -3,6 +3,7 @@ import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/services/database.dart';
 import 'package:alpha_gloo/shared/loading.dart';
+import 'package:alpha_gloo/src/components/gloo_back_arrow.dart';
 import 'package:alpha_gloo/src/editor_page.dart';
 import 'package:alpha_gloo/src/search_decks_screen.dart';
 import 'package:alpha_gloo/src/study_deck_screen.dart';
@@ -111,28 +112,7 @@ class _AddDeckScreenState extends State<AddDeckScreen>
               ],
             ),
           ),
-          Padding(
-            //App bar da mettere anche nella pagina seguente
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: SizedBox(
-              width: AppBar().preferredSize.height,
-              height: AppBar().preferredSize.height,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius:
-                      BorderRadius.circular(AppBar().preferredSize.height),
-                  child: Icon(
-                    Icons.arrow_back_ios, //ios
-                    color: GlooTheme.nearlyWhite,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          )
+          GlooBackArrow(),
         ],
       ),
     );

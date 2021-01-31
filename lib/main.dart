@@ -30,10 +30,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
       systemNavigationBarColor: GlooTheme.nearlyPurple,
       systemNavigationBarDividerColor: GlooTheme.purple,
       systemNavigationBarIconBrightness: Brightness.light,
+
     ));
 
     return MultiProvider(
