@@ -140,6 +140,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
               child: SliderWidget(
                 //todo controllare se è stato aggiustato il bug https://github.com/flutter/flutter/issues/28115
                 onSelectedValue: (value) {
+                  //todo da rifare da zero questa funzione
                   if (flashcard.rating == null) {
                     Flashcard fl = flashcard;
                     fl.rating = value;
@@ -153,19 +154,35 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                       changedValue[item] = 0;
                     return;
                   }
+
                   if (flashcard.rating != value) {
                     Flashcard fl = flashcard;
                     fl.rating = value;
                     userFeedback[item] = fl;
-                  } else
+                  } else {
                     userFeedback[item] = null;
+                  }
 
-                  if (flashcard.rating <= 3 && value > 3)
-                    changedValue[item] = 1;
-                  else if (flashcard.rating > 3 && value <= 3) {
-                    changedValue[item] = -1;
-                  } else
-                    changedValue[item] = 0;
+                  if(flashcard.rating != null) {
+                    if (flashcard.rating <= 3 && value > 3) {
+                      changedValue[item] = 1;
+                    }
+                    else if (flashcard.rating > 3 && value <= 3) {
+                      changedValue[item] = -1;
+                    } else
+                      changedValue[item] = 0;
+                  }
+                  else{
+                    if (value > 3) {
+
+                      changedValue[item] = 1;
+                    }
+                    else if (value < 3) {
+                      changedValue[item] = -1;
+                    } else
+                      changedValue[item] = 0;
+
+                  }
 
                   carouselController.nextPage(
                       duration: Duration(milliseconds: 512));
@@ -334,6 +351,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
   }
 
   Widget loadingView() {
+    //todo codice duplicato da cloud_deck_screen
     return Scaffold(
       body: Stack(
         children: [

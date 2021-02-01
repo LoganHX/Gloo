@@ -1,11 +1,8 @@
 import 'package:alpha_gloo/models/deck.dart';
-import 'package:alpha_gloo/models/user.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/gloo_custom_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:alpha_gloo/services/database.dart';
 
 class DeckListView extends StatefulWidget {
   const DeckListView({Key key, this.callBack, this.getData}) : super(key: key);
@@ -26,10 +23,6 @@ class _DeckListViewState extends State<DeckListView>
     super.initState();
   }
 
-  // Stream<List<Deck>> getData() {
-  //   return DatabaseService(uid: Provider.of<User>(context).uid).decks;
-  // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +35,15 @@ class _DeckListViewState extends State<DeckListView>
           //print(snapshot.data.last.course);
           return GridView(
             padding:
-                const EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
+            const EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             children: List<Widget>.generate(
               snapshot.data.length,
-              (int index) {
+                  (int index) {
                 final int count = snapshot.data.length;
                 final Animation<double> animation =
-                    Tween<double>(begin: 0.0, end: 1.0).animate(
+                Tween<double>(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
                     parent: animationController,
                     curve: Interval((1 / count) * index, 1.0,
@@ -82,10 +75,10 @@ class _DeckListViewState extends State<DeckListView>
 class DeckView extends StatelessWidget {
   const DeckView(
       {Key key,
-      this.deck,
-      this.animationController,
-      this.animation,
-      this.callback})
+        this.deck,
+        this.animationController,
+        this.animation,
+        this.callback})
       : super(key: key);
 
   final Function(Deck deck) callback;
@@ -159,9 +152,9 @@ class DeckView extends StatelessWidget {
                                           top: 8, left: 16, right: 16, bottom: 8),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
                                             child: Row(
@@ -170,7 +163,7 @@ class DeckView extends StatelessWidget {
                                                   deck.course.length < 25
                                                       ? Icons.person
                                                       : Icons
-                                                          .supervisor_account,
+                                                      .supervisor_account,
                                                   color: GlooTheme.purple,
                                                   size: 18,
                                                 ),
@@ -220,9 +213,9 @@ class DeckView extends StatelessWidget {
                                         child: Center(
                                           child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                             children: <Widget>[
                                               Padding(
                                                 padding: const EdgeInsets.only(
@@ -234,8 +227,8 @@ class DeckView extends StatelessWidget {
                                                     deck.course,
                                                     textAlign: TextAlign.center,
                                                     overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 3,
+                                                    TextOverflow.ellipsis,
+                                                    maxLines: 4,
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.w600,
                                                       fontSize: 16,
