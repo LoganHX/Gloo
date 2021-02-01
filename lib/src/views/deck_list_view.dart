@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class DeckListView extends StatefulWidget {
   const DeckListView({Key key, this.callBack, this.getData}) : super(key: key);
-  final Function getData; //funzione con cui prendo i dati dal db (tramite db Service) simile alla funzione getData() commentata in questo file
+  final Function getData;
   final Function(Deck deck) callBack;
   @override
   _DeckListViewState createState() => _DeckListViewState();
@@ -23,7 +23,6 @@ class _DeckListViewState extends State<DeckListView>
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Deck>>(
@@ -35,15 +34,15 @@ class _DeckListViewState extends State<DeckListView>
           //print(snapshot.data.last.course);
           return GridView(
             padding:
-            const EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
+                const EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             children: List<Widget>.generate(
               snapshot.data.length,
-                  (int index) {
+              (int index) {
                 final int count = snapshot.data.length;
                 final Animation<double> animation =
-                Tween<double>(begin: 0.0, end: 1.0).animate(
+                    Tween<double>(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
                     parent: animationController,
                     curve: Interval((1 / count) * index, 1.0,
@@ -75,10 +74,10 @@ class _DeckListViewState extends State<DeckListView>
 class DeckView extends StatelessWidget {
   const DeckView(
       {Key key,
-        this.deck,
-        this.animationController,
-        this.animation,
-        this.callback})
+      this.deck,
+      this.animationController,
+      this.animation,
+      this.callback})
       : super(key: key);
 
   final Function(Deck deck) callback;
@@ -111,18 +110,18 @@ class DeckView extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: GestureDetector(
-                              onLongPress: (){
+                              onLongPress: () {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return GlooCustomDialog(
-                                        image: './assets/images/warning-cuate.png',
+                                        image:
+                                            './assets/images/warning-cuate.png',
                                         entries: {
                                           "Modifica deck": Icon(Icons.edit),
-                                          "Elimina Deck":
-                                          Icon(Icons.delete),
+                                          "Elimina Deck": Icon(Icons.delete),
                                         },
-                                        functions: [(){}, (){}],
+                                        functions: [() {}, () {}],
                                       );
                                     });
                               },
@@ -133,7 +132,8 @@ class DeckView extends StatelessWidget {
                                       Radius.circular(20.0)),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: GlooTheme.cardColor.withOpacity(0.5),
+                                      color:
+                                          GlooTheme.cardColor.withOpacity(0.5),
                                       spreadRadius: 2,
                                       blurRadius: 1,
                                       offset: Offset(
@@ -149,12 +149,15 @@ class DeckView extends StatelessWidget {
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 8, left: 16, right: 16, bottom: 8),
+                                          top: 8,
+                                          left: 16,
+                                          right: 16,
+                                          bottom: 8),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
                                             child: Row(
@@ -163,7 +166,7 @@ class DeckView extends StatelessWidget {
                                                   deck.course.length < 25
                                                       ? Icons.person
                                                       : Icons
-                                                      .supervisor_account,
+                                                          .supervisor_account,
                                                   color: GlooTheme.purple,
                                                   size: 18,
                                                 ),
@@ -196,7 +199,9 @@ class DeckView extends StatelessWidget {
                                                     color: GlooTheme.purple,
                                                   ),
                                                 ),
-                                                SizedBox(width: 2,),
+                                                SizedBox(
+                                                  width: 2,
+                                                ),
                                                 Icon(
                                                   Icons.calendar_today,
                                                   color: GlooTheme.purple,
@@ -213,9 +218,9 @@ class DeckView extends StatelessWidget {
                                         child: Center(
                                           child: Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                             children: <Widget>[
                                               Padding(
                                                 padding: const EdgeInsets.only(
@@ -227,10 +232,11 @@ class DeckView extends StatelessWidget {
                                                     deck.course,
                                                     textAlign: TextAlign.center,
                                                     overflow:
-                                                    TextOverflow.ellipsis,
+                                                        TextOverflow.ellipsis,
                                                     maxLines: 4,
                                                     style: TextStyle(
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       fontSize: 16,
                                                       letterSpacing: 0.27,
                                                       color: GlooTheme.purple,

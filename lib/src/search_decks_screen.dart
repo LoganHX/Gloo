@@ -333,8 +333,8 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
           Flexible(
             child: DeckListView(
               getData: () {
-
-                return DatabaseService().searchDecks(university: this._choice);
+                if(_query == "") return DatabaseService().searchDecksByUniversity(university: this._choice);
+                return DatabaseService().searchDecks(university: this._choice, course: this._query);
               },
               callBack: (Deck deck) {
                 Navigator.push(
