@@ -58,6 +58,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                           ),
                           SizedBox(height: 20.0),
                           GlooTextField(
+                            title: "Corso",
                             // validator: (val) =>
                             //     val.isEmpty ? "Inserisci un corso" : null,
                             onChanged: (val) {
@@ -66,26 +67,29 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                           ),
                           SizedBox(height: 20.0),
                           GlooTextField(
+                            title: "Università",
                             // validator: (val) =>
                             //     val.isEmpty ? "Inserisci un corso" : null,
                             onChanged: (val) {
-                              setState(() => course = val);
+                              setState(() => university = val);
                             },
                           ),
                           SizedBox(height: 20.0),
                           GlooTextField(
+                            title: "Professore/ssa",
                             // validator: (val) =>
                             //     val.isEmpty ? "Inserisci un corso" : null,
                             onChanged: (val) {
-                              setState(() => course = val);
+                              setState(() => prof = val);
                             },
                           ),
                           SizedBox(height: 20.0),
                           GlooTextField(
+                            title: "Anno Accademico",
                             // validator: (val) =>
                             //     val.isEmpty ? "Inserisci un corso" : null,
                             onChanged: (val) {
-                              setState(() => course = val);
+                              setState(() => year = val);
                             },
                           ),
                           SizedBox(height: 20.0),

@@ -12,11 +12,14 @@ class GlooTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+
       style: TextStyle(
         color: GlooTheme.purple,
       ),
+
       controller: this.controller,
       decoration: InputDecoration(
+
         labelStyle: TextStyle(
           color: GlooTheme.purple.withOpacity(0.65),
         ),

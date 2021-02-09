@@ -109,10 +109,10 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                         child: Html(
                           style: {
                             "html": Style(
-                              fontSize: text.length < 70
+                              fontSize: text.length < 150
                                   ? FontSize(20)
                                   : FontSize(16),
-                              textAlign: text.length < 70
+                              textAlign: text.length < 150
                                   ? TextAlign.center
                                   : TextAlign.left,
                               // qui assumo che il testo delle domande sia sostanzialmente plain text e non html
@@ -141,8 +141,10 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                 //todo controllare se è stato aggiustato il bug https://github.com/flutter/flutter/issues/28115
                 onSelectedValue: (value) {
                   //todo da rifare da zero questa funzione
+                  print(flashcard.rating.toString() + " ############# " );
+                  Flashcard fl = Flashcard(answer: flashcard.answer, question: flashcard.question, id: flashcard.id, rating: flashcard.rating);
                   if (flashcard.rating == null) {
-                    Flashcard fl = flashcard;
+
                     fl.rating = value;
                     userFeedback[item] = fl;
 
@@ -156,12 +158,13 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                   }
 
                   if (flashcard.rating != value) {
-                    Flashcard fl = flashcard;
+
                     fl.rating = value;
                     userFeedback[item] = fl;
                   } else {
                     userFeedback[item] = null;
                   }
+                  //print(flashcard.rating.toString() + " ############# " + value.toString());
 
                   if(flashcard.rating != null) {
                     if (flashcard.rating <= 3 && value > 3) {
@@ -172,6 +175,9 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                     } else
                       changedValue[item] = 0;
                   }
+
+
+
                   else{
                     if (value > 3) {
 
@@ -183,9 +189,10 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                       changedValue[item] = 0;
 
                   }
+                  //print(flashcard.rating.toString() + " ############# " + value.toString() + " ######## " + changedValue[item].toString());
 
-                  carouselController.nextPage(
-                      duration: Duration(milliseconds: 512));
+                  // carouselController.nextPage(
+                  //     duration: Duration(milliseconds: 512));
                 },
               ),
             ),
@@ -280,7 +287,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                                 // counter = 0;
                                 if (_loading)
                                   return Navigator.pop(
-                                      context); //todo inserire valore di ritorno
+                                      context, _newlyRetained); //todo inserire valore di ritorno
                                 else
                                   Navigator.pop(context);
                               },
@@ -317,7 +324,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                                     });
 
                                     if (i == userFeedback.length)
-                                      Navigator.pop(context);
+                                      Navigator.pop(context, _newlyRetained);
 
                                     if (widget.deck.retainedCards != null)
                                       sum = sum + widget.deck.retainedCards;
@@ -374,17 +381,34 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      child: Text(
-                        _operationConcluded
-                            ? "Complimenti!\nHai aggiunto altre "+_newlyRetained.toString()+" flashcards a quelle che ricordi con sicurezza" //todo qualcosa di meglio
-                            : "Stiamo caricando i tuoi risultati sul cloud",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 22,
-                          letterSpacing: 0.27,
-                          color: GlooTheme.nearlyWhite,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            _operationConcluded
+                                ? "Complimenti!" //todo qualcosa di meglio
+                                : "",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 24,
+                              letterSpacing: 0.27,
+                              color: GlooTheme.nearlyWhite,
+                            ),
+                          ),
+                          SizedBox(height: 8,),
+                          Text(
+                            _operationConcluded
+                                ? "Hai migliorato le tue performance di memorizzazione per ben "+ _newlyRetained.toString()+ " flashcards!" //todo qualcosa di meglio
+                                : "",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                              letterSpacing: 0.27,
+                              color: GlooTheme.nearlyWhite,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -400,7 +424,7 @@ class _StudyDeckScreenState extends State<StudyDeckScreen> {
                               child: Icon(Icons.done,
                                   size: 32, color: GlooTheme.purple),
                             ),
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () => Navigator.pop(context, _newlyRetained),
                           )
                         : Center(
                             child: Container(

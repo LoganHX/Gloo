@@ -2,12 +2,15 @@ import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/shared/loading.dart';
 import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/src/components/gloo_custom_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DeckListView extends StatefulWidget {
-  const DeckListView({Key key, this.callBack, this.getData}) : super(key: key);
+  const DeckListView({Key key, this.callBack, this.getData, this.showInfo})
+      : super(key: key);
   final Function getData;
   final Function(Deck deck) callBack;
+  final bool showInfo;
   @override
   _DeckListViewState createState() => _DeckListViewState();
 }
@@ -51,6 +54,7 @@ class _DeckListViewState extends State<DeckListView>
                 );
                 animationController.forward();
                 return DeckView(
+                  showInfo: widget.showInfo,
                   callback: widget.callBack,
                   deck: snapshot.data[index],
                   animation: animation,
@@ -77,10 +81,12 @@ class DeckView extends StatelessWidget {
       this.deck,
       this.animationController,
       this.animation,
-      this.callback})
+      this.callback,
+      this.showInfo})
       : super(key: key);
 
   final Function(Deck deck) callback;
+  final bool showInfo;
   final Deck deck;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -160,37 +166,40 @@ class DeckView extends StatelessWidget {
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  deck.course.length < 25
-                                                      ? Icons.person
-                                                      : Icons
-                                                          .supervisor_account,
-                                                  color: GlooTheme.purple,
-                                                  size: 18,
-                                                ),
-                                                // Text(
-                                                //   //'${deck.year} ',
-                                                //   '20/21',
-                                                //   textAlign: TextAlign.right,
-                                                //   style: TextStyle(
-                                                //     fontWeight: FontWeight.w200,
-                                                //     fontSize: 12,
-                                                //     letterSpacing: 0.0,
-                                                //     color: GlooTheme.purple,
-                                                //   ),
-                                                // ),
-                                                // ),
-                                              ],
-                                            ),
+                                            child: this.showInfo
+                                                ? Row(
+                                                    children: <Widget>[
+                                                      Text(
+                                                        //'${deck.year} ',
+                                                        deck.university.length < 25
+                                                            ? "4.2"
+                                                            : "4.6",
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontSize: 12,
+                                                          letterSpacing: 0.0,
+                                                          color:
+                                                              GlooTheme.purple,
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: GlooTheme.purple,
+                                                        size: 12,
+                                                      ),
+                                                    ],
+                                                  )
+                                                : Padding(
+                                                    padding: EdgeInsets.zero),
                                           ),
                                           Container(
                                             child: Row(
                                               children: <Widget>[
                                                 Text(
-                                                  //'${deck.year} ',
-                                                  '20/21',
+                                                  '${deck.year} ',
                                                   textAlign: TextAlign.right,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,
@@ -233,7 +242,7 @@ class DeckView extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    maxLines: 4,
+                                                    maxLines: 3,
                                                     style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w600,
@@ -244,6 +253,35 @@ class DeckView extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+                                              this.showInfo
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 16,
+                                                              right: 16,
+                                                              bottom: 0),
+                                                      child: Center(
+                                                        child: Text(
+                                                          deck.university,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 12,
+                                                            letterSpacing: 0.27,
+                                                            color: GlooTheme
+                                                                .purple,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Padding(
+                                                      padding: EdgeInsets.zero,
+                                                    ),
                                             ],
                                           ),
                                         ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:alpha_gloo/models/deck.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:alpha_gloo/models/user.dart';
@@ -24,7 +26,7 @@ class ShowDeckScreen extends StatefulWidget {
 class _ShowDeckScreenState extends State<ShowDeckScreen>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  Random randomGenerator = Random();
   List<double> ratings;
   Deck updatedDeck;
   Animation<double> animation;
@@ -426,7 +428,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                     ),
                     pointers: <GaugePointer>[
                       RangePointer(
-                        value: retainmentValue,
+                        value: 0.71*100,
                         width: 0.20,
                         color: GlooTheme.purple.withOpacity(0.85),
                         pointerOffset: 0.1,
@@ -439,7 +441,7 @@ class _ShowDeckScreenState extends State<ShowDeckScreen>
                           positionFactor: 0.48,
                           angle: 90,
                           widget: Text(
-                            retainmentValue.toStringAsFixed(0) + '%',
+                              (100*0.71).toStringAsFixed(0) + '%',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,

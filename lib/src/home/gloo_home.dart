@@ -168,6 +168,8 @@ class _GlooHomeState extends State<GlooHome> {
         children: <Widget>[
           Flexible(
             child: DeckListView(
+
+              showInfo: false,
               getData: () {
                 final user = Provider.of<User>(context);
                 return DatabaseService(uid: user.uid).decks;

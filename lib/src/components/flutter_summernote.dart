@@ -3,6 +3,7 @@ library flutter_sume;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alpha_gloo/graphics/gloo_theme.dart';
 import 'package:alpha_gloo/models/flashcard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -12,8 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-
 
 class FlutterSummernote extends StatefulWidget {
   final String value;
@@ -29,11 +28,11 @@ class FlutterSummernote extends StatefulWidget {
     this.value,
     this.height,
     this.decoration,
-    this.widthImage:"100%",
+    this.widthImage: "100%",
     this.hint,
     this.customToolbar,
     this.flashcard,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   FlutterSummernoteState createState() => FlutterSummernoteState();
@@ -85,6 +84,19 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
           ),
       child: Column(
         children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(8),
+
+            child: Text(
+              isQuestion ? 'Domanda' : 'Risposta',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: GlooTheme.purple.withOpacity(0.85)),
+            ),
+          ),
           Expanded(
             child: WebView(
               key: _mapKey,
@@ -93,14 +105,15 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
               },
               onWebViewCreated: (webViewController) {
                 _controller = webViewController;
-                final String contentBase64 = base64Encode(const Utf8Encoder().convert(_page));
+                final String contentBase64 =
+                    base64Encode(const Utf8Encoder().convert(_page));
                 _controller.loadUrl('data:text/html;base64,$contentBase64');
               },
               javascriptMode: JavascriptMode.unrestricted,
               gestureNavigationEnabled: true,
               gestureRecognizers: [
                 Factory(
-                        () => VerticalDragGestureRecognizer()..onUpdate = (_) {}),
+                    () => VerticalDragGestureRecognizer()..onUpdate = (_) {}),
               ].toSet(),
               javascriptChannels: <JavascriptChannel>[
                 getTextJavascriptChannel(context)
@@ -126,7 +139,9 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
                 child: GestureDetector(
                   onTap: () => _changeContext(),
                   child: Row(children: <Widget>[
-                    Icon(isQuestion? Icons.help_outline : Icons.article_outlined),
+                    Icon(isQuestion
+                        ? Icons.help_outline
+                        : Icons.article_outlined),
                     Text("")
                   ], mainAxisAlignment: MainAxisAlignment.center),
                 ),
@@ -146,17 +161,16 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
                     String data = await getText();
                     Clipboard.setData(new ClipboardData(text: data));
                   },
-                  child: Row(children: <Widget>[
-                    Icon(Icons.content_copy),
-                    Text("")
-                  ], mainAxisAlignment: MainAxisAlignment.center),
+                  child: Row(
+                      children: <Widget>[Icon(Icons.content_copy), Text("")],
+                      mainAxisAlignment: MainAxisAlignment.center),
                 ),
               ),
               Expanded(
                 child: GestureDetector(
                   onTap: () async {
                     ClipboardData data =
-                    await Clipboard.getData(Clipboard.kTextPlain);
+                        await Clipboard.getData(Clipboard.kTextPlain);
 
                     String txtIsi = data.text
                         .replaceAll("'", '\\"')
@@ -171,10 +185,9 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
                         "\$('.note-editable').append( '" + txtIsi + "');";
                     _controller.evaluateJavascript(txt);
                   },
-                  child: Row(children: <Widget>[
-                    Icon(Icons.content_paste),
-                    Text("")
-                  ], mainAxisAlignment: MainAxisAlignment.center),
+                  child: Row(
+                      children: <Widget>[Icon(Icons.content_paste), Text("")],
+                      mainAxisAlignment: MainAxisAlignment.center),
                 ),
               )
             ]),
@@ -207,23 +220,23 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
     return text;
   }
 
-  Future<Flashcard> getEditedFlashcard() async{
-    if(isQuestion) flashcard.question = await getText();
-    else flashcard.answer = await getText();
+  Future<Flashcard> getEditedFlashcard() async {
+    if (isQuestion)
+      flashcard.question = await getText();
+    else
+      flashcard.answer = await getText();
 
     return flashcard;
   }
 
   void _changeContext() async {
-    if(isQuestion) {
-
+    if (isQuestion) {
       flashcard.question = await getText();
       setText(flashcard.answer);
       setState(() {
         _title = "Modifica Risposta";
       });
-    }
-    else {
+    } else {
       flashcard.answer = await getText();
       setText(flashcard.question);
       setState(() {
@@ -294,12 +307,11 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
     );
   }
 
-  String _initPage(String customToolbar){
+  String _initPage(String customToolbar) {
     String toolbar;
-    if(customToolbar == null){
+    if (customToolbar == null) {
       toolbar = _defaultToolbar;
-    }
-    else {
+    } else {
       toolbar = customToolbar;
     }
 
@@ -345,10 +357,10 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
     ]
   """;
 
-  void _attach(BuildContext context){
+  void _attach(BuildContext context) {
     showModalBottomSheet(
         context: context,
-        builder: (context){
+        builder: (context) {
           return Column(children: <Widget>[
             ListTile(
               leading: Icon(Icons.camera_alt),
@@ -357,7 +369,7 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
               onTap: () async {
                 Navigator.pop(context);
                 final image = await _getImage(true);
-                if(image != null) _addImage(image);
+                if (image != null) _addImage(image);
               },
             ),
             ListTile(
@@ -367,33 +379,31 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
               onTap: () async {
                 Navigator.pop(context);
                 final image = await _getImage(false);
-                if(image != null) _addImage(image);
+                if (image != null) _addImage(image);
               },
             ),
           ], mainAxisSize: MainAxisSize.min);
-        }
-    );
+        });
   }
 
   Future<File> _getImage(bool fromCamera) async {
-    final picked = await _imagePicker.getImage(source: (fromCamera) ? ImageSource.camera : ImageSource.gallery);
-    if(picked != null){
+    final picked = await _imagePicker.getImage(
+        source: (fromCamera) ? ImageSource.camera : ImageSource.gallery);
+    if (picked != null) {
       return File(picked.path);
-    }
-    else {
+    } else {
       return null;
     }
   }
 
-  void _addImage(File image) async{
+  void _addImage(File image) async {
     String filename = basename(image.path);
     List<int> imageBytes = await image.readAsBytes();
     String base64Image =
         "<img width=\"${widget.widthImage}\" src=\"data:image/png;base64, "
         "${base64Encode(imageBytes)}\" data-filename=\"$filename\">";
 
-    String txt =
-        "\$('.note-editable').append( '" + base64Image + "');";
+    String txt = "\$('.note-editable').append( '" + base64Image + "');";
     _controller.evaluateJavascript(txt);
   }
 }

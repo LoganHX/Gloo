@@ -251,11 +251,9 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
                           SingleChildScrollView(
                             child: Container(
                               height: scrollableHeight, //dimensione area scrolling
-                              child: Flexible(
-                                child: _query != "" || _choice != ""
-                                    ? _getDeckListView(scrollableHeight)
-                                    : _getImage(scrollableHeight),
-                              ),
+                              child: _query != "" || _choice != ""
+                                  ? _getDeckListView(scrollableHeight)
+                                  : _getImage(scrollableHeight),
                             ),
                           ),
 
@@ -332,8 +330,10 @@ class _SearchDecksScreenState extends State<SearchDecksScreen> {
         children: <Widget>[
           Flexible(
             child: DeckListView(
+              showInfo: true,
               getData: () {
                 if(_query == "") return DatabaseService().searchDecksByUniversity(university: this._choice);
+                else if(_choice =="") return DatabaseService().searchDecksByCourse(course: this._query);
                 return DatabaseService().searchDecks(university: this._choice, course: this._query);
               },
               callBack: (Deck deck) {

@@ -185,6 +185,13 @@ class DatabaseService {
         .snapshots()
         .map(_deckListFromSnapshot);
   }
+  Stream<List<Deck>> searchDecksByCourse({String course}) {
+    return publicDecksCollection
+        .where("course", isEqualTo: course)
+        .snapshots()
+        .map(_deckListFromSnapshot);
+  }
+
 
   // get flashcards stream
   Stream<List<Flashcard>> flashcards(String id) {
